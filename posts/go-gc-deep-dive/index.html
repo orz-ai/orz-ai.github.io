@@ -5,8 +5,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>深入理解Go语言垃圾回收机制：原理、流程与优化 - Gang&#39;s Blog</title>
-<meta name="description"
-  content="
+<meta name="description" content="
 Go语言的垃圾回收（Garbage Collection，简称GC）机制是其内存管理的核心部分，它能够自动识别和回收不再使用的内存，让开发者免于手动内存管理的负担。本文将深入探讨Go语言GC的工作原理、演变历史、实现细节以及性能优化技巧。
 Go GC的演变历史 Go语言的垃圾回收器从诞生到现在经历了多次重大更新，每次 …">
 <meta name="keywords" content="Go, GC, 内存管理, 性能优化">
@@ -24,9 +23,12 @@ Go GC的演变历史 Go语言的垃圾回收器从诞生到现在经历了多次
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 
+<link rel="icon" href="https://orz-ai.github.io/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="https://orz-ai.github.io/favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="https://orz-ai.github.io/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://orz-ai.github.io/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="https://orz-ai.github.io/favicon-16x16.png">
+<link rel="manifest" href="https://orz-ai.github.io/site.webmanifest">
 <meta name="theme-color" content="#4a6cf7">
 
 
