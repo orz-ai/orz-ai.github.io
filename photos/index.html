@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>照片墙 - Gang&#39;s Blog</title>
+<meta name="description"
+  content="分享精彩瞬间和美好记忆">
+<meta name="keywords" content="博客, 技术, 生活, 编程, Go语言, Hugo">
+<meta name="author" content="Gang">
+
+
+<link rel="canonical" href="https://orz-ai.github.io/photos/">
+
+
+<link rel="stylesheet" href="https://orz-ai.github.io/css/style.css">
+<link rel="stylesheet" href="https://orz-ai.github.io/css/syntax.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://orz-ai.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://orz-ai.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://orz-ai.github.io/favicon-16x16.png">
+<meta name="theme-color" content="#4a6cf7">
+
+
+<meta property="og:title"
+  content="照片墙 - Gang&#39;s Blog">
+<meta property="og:description"
+  content="分享精彩瞬间和美好记忆">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://orz-ai.github.io/photos/">
+
+<meta property="og:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+<meta property="og:site_name" content="Gang&#39;s Blog">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title"
+  content="照片墙 - Gang&#39;s Blog">
+<meta name="twitter:description"
+  content="分享精彩瞬间和美好记忆">
+
+<meta name="twitter:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Gang\u0027s Blog",
+  "url": "https:\/\/orz-ai.github.io\/",
+  "description": "个人博客网站 - 分享技术、知识和生活感悟",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Gang\u0027s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/orz-ai.github.io\/favicon-32x32.png"
+    }
+  }
+}
+</script>
+
+    <style>
+         
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, #2ecc71, #48e494);
+            border-radius: 3px;
+        }
+
+         
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-gap: 25px;
+            margin-top: 30px;
+        }
+
+        .photo-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: #fff;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s forwards;
+            animation-delay: calc(var(--animation-order) * 0.1s);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .photo-item:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .photo-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding-top: 75%;
+             
+        }
+
+        .photo-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+            color: white;
+            padding: 30px 20px 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover .photo-caption {
+            transform: translateY(0);
+        }
+
+        .photo-info {
+            padding: 20px;
+            background: #fff;
+        }
+
+        .photo-title {
+            margin: 0 0 10px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .photo-date {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .photo-date i {
+            margin-right: 6px;
+            color: #2ecc71;
+        }
+
+         
+        .photo-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding-top: 15px;
+            margin-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .photo-tag {
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 30px;
+            background-color: rgba(46, 204, 113, 0.1);
+            color: #2ecc71;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .photo-tag:hover {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+         
+        .photo-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+             
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .photo-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+         
+        .modal-navigation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 5;
+            pointer-events: none;
+             
+        }
+
+        #prevPhoto,
+        #nextPhoto {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: white;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+            pointer-events: auto;
+             
+            z-index: 20;
+        }
+
+        #prevPhoto {
+            left: 5%;
+        }
+
+        #nextPhoto {
+            right: 5%;
+        }
+
+        #prevPhoto:hover,
+        #nextPhoto:hover {
+            background: rgba(46, 204, 113, 0.9);
+            opacity: 1;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        @media (max-width: 992px) {
+            #prevPhoto {
+                left: 30px;
+            }
+
+            #nextPhoto {
+                right: 30px;
+            }
+        }
+
+        .modal-content {
+            max-width: 75%;
+             
+            max-height: 80%;
+            position: relative;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.3s ease;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+            margin: 0 auto;
+            border-radius: 5px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-caption {
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .modal-caption h3 {
+            font-size: 24px;
+            margin: 0 0 10px;
+            font-weight: 600;
+        }
+
+        .modal-caption p {
+            margin: 15px 0;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .modal-info {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .modal-info span {
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-info i {
+            margin-right: 5px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1001;
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            transform: rotate(0deg);
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+         
+        .photo-filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 30px;
+            background: #f5f5f5;
+            color: #555;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #2ecc71;
+            color: white;
+        }
+
+         
+        @media (max-width: 768px) {
+            .photo-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                grid-gap: 15px;
+            }
+
+            .photo-caption {
+                padding: 20px 15px 15px;
+            }
+
+            .photo-title {
+                font-size: 16px;
+            }
+
+            .modal-content img {
+                max-height: 70vh;
+            }
+
+            .modal-caption h3 {
+                font-size: 20px;
+            }
+
+            .close-modal {
+                top: 15px;
+                right: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photo-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+        }
+
+        .photo-modal.active .modal-content {
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+    <div class="container">
+        <div class="header-inner">
+            <a href="https://orz-ai.github.io/" class="logo">
+                <h1>Gang&#39;s Blog</h1>
+            </a>
+            <div class="header-right">
+                <div class="search-box">
+                    <form action="https://orz-ai.github.io/%20search" method="get">
+                        <input type="text" name="q" placeholder="搜索..." aria-label="搜索">
+                        <button type="submit" aria-label="提交搜索"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                <nav class="nav">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/" class="nav-link">首页</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/posts/" class="nav-link">文章</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/photos/" class="nav-link active">照片墙</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/timeline/" class="nav-link">时间线</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/tags/" class="nav-link">标签</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/about/" class="nav-link">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+    <main class="main">
+        <div class="container">
+            
+            <div class="photo-filters">
+                <button class="filter-btn active" data-filter="all">全部</button>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                <button class="filter-btn" data-filter="%E6%B5%B7%E6%99%AF">海景</button>
+                
+                <button class="filter-btn" data-filter="%E6%97%A5%E8%90%BD">日落</button>
+                
+                <button class="filter-btn" data-filter="%E9%BB%84%E6%98%8F">黄昏</button>
+                
+                <button class="filter-btn" data-filter="%E8%87%AA%E7%84%B6">自然</button>
+                
+                <button class="filter-btn" data-filter="%E8%8A%B1%E5%8D%89">花卉</button>
+                
+                <button class="filter-btn" data-filter="%E7%89%B9%E5%86%99">特写</button>
+                
+                <button class="filter-btn" data-filter="%E5%9F%8E%E5%B8%82">城市</button>
+                
+                <button class="filter-btn" data-filter="%E5%A4%9C%E6%99%AF">夜景</button>
+                
+                <button class="filter-btn" data-filter="%E5%BB%BA%E7%AD%91">建筑</button>
+                
+                <button class="filter-btn" data-filter="%E9%A3%8E%E6%99%AF">风景</button>
+                
+            </div>
+
+            <div class="photo-gallery">
+                
+                <div class="photo-item" data-url="https://orz-ai.github.io/photos/sample-photo-5/"
+                    data-tags="%E6%B5%B7%E6%99%AF %E6%97%A5%E8%90%BD %E9%BB%84%E6%98%8F "
+                    style="--animation-order: 0">
+                    <div class="photo-image-wrapper">
+                        <img src="https://orz.ai/wp-content/uploads/2024/11/1731220415-233416-1711121656e5bd.jpg" alt="海滨日落">
+                        <div class="photo-caption">
+                            <h3>海滨日落</h3>
+                            
+                            <span><i class="fas fa-map-marker-alt"></i> 海边小镇</span>
+                            
+                        </div>
+                    </div>
+                    <div class="photo-info">
+                        <h3 class="photo-title">海滨日落</h3>
+                        <div class="photo-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            2023-10-05
+                        </div>
+                        
+                        <div class="photo-tags">
+                            
+                            <a href="https://orz-ai.github.io/%20tags/%E6%B5%B7%E6%99%AF/" class="photo-tag">海景</a>
+                            
+                            <a href="https://orz-ai.github.io/%20tags/%E6%97%A5%E8%90%BD/" class="photo-tag">日落</a>
+                            
+                            <a href="https://orz-ai.github.io/%20tags/%E9%BB%84%E6%98%8F/" class="photo-tag">黄昏</a>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-url="https://orz-ai.github.io/photos/sample-photo-3/"
+                    data-tags="%E8%87%AA%E7%84%B6 %E8%8A%B1%E5%8D%89 %E7%89%B9%E5%86%99 "
+                    style="--animation-order: 1">
+                    <div class="photo-image-wrapper">
+                        <img src="https://orz.ai/wp-content/uploads/2024/11/1731220448-%e5%be%ae%e4%bf%a1%e5%9b%be%e7%89%87_20240107164211-%e5%89%af%e6%9c%ac.jpg" alt="花卉特写">
+                        <div class="photo-caption">
+                            <h3>花卉特写</h3>
+                            
+                            <span><i class="fas fa-map-marker-alt"></i> 花园</span>
+                            
+                        </div>
+                    </div>
+                    <div class="photo-info">
+                        <h3 class="photo-title">花卉特写</h3>
+                        <div class="photo-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            2023-10-05
+                        </div>
+                        
+                        <div class="photo-tags">
+                            
+                            <a href="https://orz-ai.github.io/%20tags/%E8%87%AA%E7%84%B6/" class="photo-tag">自然</a>
+                            
+                            <a href="https://orz-ai.github.io/%20tags/%E8%8A%B1%E5%8D%89/" class="photo-tag">花卉</a>
+                            
+                            <a href="https://orz-ai.github.io/%20tags/%E7%89%B9%E5%86%99/" class="photo-tag">特写</a>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-url="https://orz-ai.github.io/photos/sample-photo-2/"
+                    data-tags="%E5%9F%8E%E5%B8%82 %E5%A4%9C%E6%99%AF %E5%BB%BA%E7%AD%91 "
+                    style="--animation-order: 2">
+                    <div class="photo-image-wrapper">
+                        <img src="https://orz.ai/wp-content/uploads/2024/11/1731220426-clouds-4215608_1280.jpg" alt="城市夜景">
+                        <div class="photo-caption">
+                            <h3>城市夜景</h3>
+                            
+                            <span><i class="fas fa-map-marker-alt"></i> 都市中心</span>
+                            
+                        </div>
+                    </div>
+                    <div class="photo-info">
+                        <h3 class="photo-title">城市夜景</h3>
+                        <div class="photo-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            2023-09-20
+                        </div>
+                        
+                        <div class="photo-tags">
+                            
+                            <a href="https://orz-ai.github.io/%20tags/%E5%9F%8E%E5%B8%82/" class="photo-tag">城市</a>
+                            
+                            <a href="https://orz-ai.github.io/%20tags/%E5%A4%9C%E6%99%AF/" class="photo-tag">夜景</a>
+                            
+                            <a href="https://orz-ai.github.io/%20tags/%E5%BB%BA%E7%AD%91/" class="photo-tag">建筑</a>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-url="https://orz-ai.github.io/photos/sample-photo-4/"
+                    data-tags="%E5%9F%8E%E5%B8%82 %E5%A4%9C%E6%99%AF %E5%BB%BA%E7%AD%91 "
+                    style="--animation-order: 3">
+                    <div class="photo-image-wrapper">
+                        <img src="https://orz.ai/wp-content/uploads/2024/05/1715111943-%e5%be%ae%e4%bf%a1%e5%9b%be%e7%89%87_20240430042431.jpg" alt="城市夜景">
+                        <div class="photo-caption">
+                            <h3>城市夜景</h3>
+                            
+                            <span><i class="fas fa-map-marker-alt"></i> 都市中心</span>
+                            
+                        </div>
+                    </div>
+                    <div class="photo-info">
+                        <h3 class="photo-title">城市夜景</h3>
+                        <div class="photo-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            2023-09-20
+                        </div>
+                        
+                        <div class="photo-tags">
+                            
+                            <a href="https://orz-ai.github.io/%20tags/%E5%9F%8E%E5%B8%82/" class="photo-tag">城市</a>
+                            
+                            <a href="https://orz-ai.github.io/%20tags/%E5%A4%9C%E6%99%AF/" class="photo-tag">夜景</a>
+                            
+                            <a href="https://orz-ai.github.io/%20tags/%E5%BB%BA%E7%AD%91/" class="photo-tag">建筑</a>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-url="https://orz-ai.github.io/photos/sample-photo-1/"
+                    data-tags="%E9%A3%8E%E6%99%AF %E8%87%AA%E7%84%B6 "
+                    style="--animation-order: 4">
+                    <div class="photo-image-wrapper">
+                        <img src="https://orz.ai/wp-content/uploads/2024/11/1731220438-street-5932230_1280.jpg" alt="美丽风景">
+                        <div class="photo-caption">
+                            <h3>美丽风景</h3>
+                            
+                            <span><i class="fas fa-map-marker-alt"></i> 山水之间</span>
+                            
+                        </div>
+                    </div>
+                    <div class="photo-info">
+                        <h3 class="photo-title">美丽风景</h3>
+                        <div class="photo-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            2023-08-15
+                        </div>
+                        
+                        <div class="photo-tags">
+                            
+                            <a href="https://orz-ai.github.io/%20tags/%E9%A3%8E%E6%99%AF/" class="photo-tag">风景</a>
+                            
+                            <a href="https://orz-ai.github.io/%20tags/%E8%87%AA%E7%84%B6/" class="photo-tag">自然</a>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-info">
+                <p>&copy; 2025 Gang&#39;s Blog. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const photoItems = document.querySelectorAll('.photo-item');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const filter = this.getAttribute('data-filter');
+
+                    
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    
+                    photoItems.forEach(item => {
+                        if (filter === 'all') {
+                            item.style.display = 'block';
+                        } else {
+                            const tags = item.getAttribute('data-tags');
+                            if (tags && tags.includes(filter)) {
+                                item.style.display = 'block';
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+
+            
+            photoItems.forEach((item) => {
+                item.addEventListener('click', function () {
+                    const url = item.getAttribute('data-url');
+                    if (url) {
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

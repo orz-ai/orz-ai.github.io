@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C&#43;&#43; - Gang&#39;s Blog</title>
+<meta name="description"
+  content="个人博客网站 - 分享技术、知识和生活感悟">
+<meta name="keywords" content="博客, 技术, 生活, 编程, Go语言, Hugo">
+<meta name="author" content="Gang">
+
+
+<link rel="canonical" href="https://orz-ai.github.io/categories/c&#43;&#43;/">
+
+
+<link rel="stylesheet" href="https://orz-ai.github.io/css/style.css">
+<link rel="stylesheet" href="https://orz-ai.github.io/css/syntax.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://orz-ai.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://orz-ai.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://orz-ai.github.io/favicon-16x16.png">
+<meta name="theme-color" content="#4a6cf7">
+
+
+<meta property="og:title"
+  content="C&#43;&#43; - Gang&#39;s Blog">
+<meta property="og:description"
+  content="个人博客网站 - 分享技术、知识和生活感悟">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://orz-ai.github.io/categories/c&#43;&#43;/">
+
+<meta property="og:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+<meta property="og:site_name" content="Gang&#39;s Blog">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title"
+  content="C&#43;&#43; - Gang&#39;s Blog">
+<meta name="twitter:description"
+  content="个人博客网站 - 分享技术、知识和生活感悟">
+
+<meta name="twitter:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Gang\u0027s Blog",
+  "url": "https:\/\/orz-ai.github.io\/",
+  "description": "个人博客网站 - 分享技术、知识和生活感悟",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Gang\u0027s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/orz-ai.github.io\/favicon-32x32.png"
+    }
+  }
+}
+</script>
+
+    <style>
+         
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, #4a6cf7, #6a89ff);
+            border-radius: 3px;
+        }
+
+         
+        .posts .post-card {
+            display: flex;
+            gap: 30px;
+            align-items: stretch;
+            padding: 30px !important;
+        }
+
+        .posts .post-image {
+            flex-shrink: 0;
+            width: 320px;
+            height: 220px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: block;
+        }
+
+        .posts .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .posts .post-content {
+            flex: 1;
+            padding: 0 !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .posts .post-title {
+            font-size: 1.5rem !important;
+            margin: 0 0 14px 0 !important;
+            padding: 0 !important;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .posts .post-title::before {
+            display: none !important;
+        }
+
+        .posts .post-title a {
+            background: none !important;
+            padding: 0 !important;
+        }
+
+        .posts .post-summary {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin: 0 0 20px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .posts .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            color: #999;
+            margin: 0;
+        }
+
+        .posts .post-meta time {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .posts .post-meta time::before {
+            content: '\f017';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 400;
+        }
+
+        .posts .post-category,
+        .posts .post-tags-list {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .posts .post-category a,
+        .posts .post-tag {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .posts .post-category a:hover,
+        .posts .post-tag:hover {
+            opacity: 0.7;
+        }
+
+         
+        .posts .post-card:not(:has(.post-image)) {
+            padding: 30px !important;
+        }
+
+        .posts .post-card:not(:has(.post-image)) .post-title {
+            font-size: 1.6rem !important;
+        }
+
+        .posts .post-card:not(:has(.post-image)) .post-summary {
+            -webkit-line-clamp: 3;
+        }
+
+         
+        @media (max-width: 768px) {
+            .posts .post-card {
+                flex-direction: column;
+                padding: 20px !important;
+            }
+
+            .posts .post-image {
+                width: 100%;
+                height: 200px;
+            }
+
+            .posts .post-summary {
+                -webkit-line-clamp: 3;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+    <div class="container">
+        <div class="header-inner">
+            <a href="https://orz-ai.github.io/" class="logo">
+                <h1>Gang&#39;s Blog</h1>
+            </a>
+            <div class="header-right">
+                <div class="search-box">
+                    <form action="https://orz-ai.github.io/%20search" method="get">
+                        <input type="text" name="q" placeholder="搜索..." aria-label="搜索">
+                        <button type="submit" aria-label="提交搜索"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                <nav class="nav">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/" class="nav-link">首页</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/posts/" class="nav-link">文章</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/photos/" class="nav-link">照片墙</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/timeline/" class="nav-link">时间线</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/tags/" class="nav-link">标签</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/about/" class="nav-link">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+    <main class="main">
+        <div class="container">
+            <div class="posts">
+                
+                <article class="post-card">
+                    
+                    <div class="post-content">
+                        <div>
+                            <h2 class="post-title"><a href="https://orz-ai.github.io/posts/2022-05-04-c&#43;&#43;%E7%BB%93%E6%9E%84%E4%BD%93/">C&#43;&#43;结构体和联合体</a></h2>
+                            
+                            <p class="post-summary">复习C++动态内存分配与指针~</p>
+                            
+                        </div>
+                        <div class="post-meta">
+                            <time>2022-05-04</time>
+                            
+                            <span class="post-category">
+                                <i class="fas fa-folder"></i>
+                                
+                                <a href="https://orz-ai.github.io/%20categories/c&#43;&#43;/">C&#43;&#43;</a>
+                                
+                            </span>
+                            
+                            
+                            <span class="post-tags-list">
+                                <i class="fas fa-tags"></i>
+                                
+                                <a href='https://orz-ai.github.io/tags/%E7%BB%93%E6%9E%84%E4%BD%93/' class="post-tag">结构体</a>
+                            </span>
+                            
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="post-card">
+                    
+                    <div class="post-content">
+                        <div>
+                            <h2 class="post-title"><a href="https://orz-ai.github.io/posts/2022-05-02-c&#43;&#43;%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E4%B8%8E%E6%8C%87%E9%92%88/">C&#43;&#43;动态内存分配与指针</a></h2>
+                            
+                            <p class="post-summary">复习C++动态内存分配与指针~</p>
+                            
+                        </div>
+                        <div class="post-meta">
+                            <time>2022-05-02</time>
+                            
+                            <span class="post-category">
+                                <i class="fas fa-folder"></i>
+                                
+                                <a href="https://orz-ai.github.io/%20categories/c&#43;&#43;/">C&#43;&#43;</a>
+                                
+                            </span>
+                            
+                            
+                            <span class="post-tags-list">
+                                <i class="fas fa-tags"></i>
+                                
+                                <a href='https://orz-ai.github.io/tags/%E6%8C%87%E9%92%88/' class="post-tag">指针</a>
+                            </span>
+                            
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="post-card">
+                    
+                    <div class="post-content">
+                        <div>
+                            <h2 class="post-title"><a href="https://orz-ai.github.io/posts/2022-04-30-c&#43;&#43;%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">C&#43;&#43;基本数据类型和计算</a></h2>
+                            
+                            <p class="post-summary">复习C++基础知识~</p>
+                            
+                        </div>
+                        <div class="post-meta">
+                            <time>2022-04-30</time>
+                            
+                            <span class="post-category">
+                                <i class="fas fa-folder"></i>
+                                
+                                <a href="https://orz-ai.github.io/%20categories/c&#43;&#43;/">C&#43;&#43;</a>
+                                
+                            </span>
+                            
+                            
+                            <span class="post-tags-list">
+                                <i class="fas fa-tags"></i>
+                                
+                                <a href='https://orz-ai.github.io/tags/c&#43;&#43;%E5%9F%BA%E7%A1%80/' class="post-tag">C&#43;&#43;基础</a>
+                            </span>
+                            
+                        </div>
+                    </div>
+                </article>
+                
+            </div>
+            
+
+        </div>
+    </main>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-info">
+                <p>&copy; 2025 Gang&#39;s Blog. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <a href="#" class="back-to-top" id="backToTop" aria-label="返回顶部">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            var backToTop = document.getElementById('backToTop');
+
+            window.addEventListener('scroll', function () {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+            });
+
+            backToTop.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+
+</html>

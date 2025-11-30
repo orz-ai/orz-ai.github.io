@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>编程技术 - Gang&#39;s Blog</title>
+<meta name="description"
+  content="个人博客网站 - 分享技术、知识和生活感悟">
+<meta name="keywords" content="博客, 技术, 生活, 编程, Go语言, Hugo">
+<meta name="author" content="Gang">
+
+
+<link rel="canonical" href="https://orz-ai.github.io/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/">
+
+
+<link rel="stylesheet" href="https://orz-ai.github.io/css/style.css">
+<link rel="stylesheet" href="https://orz-ai.github.io/css/syntax.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://orz-ai.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://orz-ai.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://orz-ai.github.io/favicon-16x16.png">
+<meta name="theme-color" content="#4a6cf7">
+
+
+<meta property="og:title"
+  content="编程技术 - Gang&#39;s Blog">
+<meta property="og:description"
+  content="个人博客网站 - 分享技术、知识和生活感悟">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://orz-ai.github.io/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/">
+
+<meta property="og:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+<meta property="og:site_name" content="Gang&#39;s Blog">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title"
+  content="编程技术 - Gang&#39;s Blog">
+<meta name="twitter:description"
+  content="个人博客网站 - 分享技术、知识和生活感悟">
+
+<meta name="twitter:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Gang\u0027s Blog",
+  "url": "https:\/\/orz-ai.github.io\/",
+  "description": "个人博客网站 - 分享技术、知识和生活感悟",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Gang\u0027s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/orz-ai.github.io\/favicon-32x32.png"
+    }
+  }
+}
+</script>
+
+    <style>
+         
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, #4a6cf7, #6a89ff);
+            border-radius: 3px;
+        }
+
+         
+        .posts .post-card {
+            display: flex;
+            gap: 30px;
+            align-items: stretch;
+            padding: 30px !important;
+        }
+
+        .posts .post-image {
+            flex-shrink: 0;
+            width: 320px;
+            height: 220px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: block;
+        }
+
+        .posts .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .posts .post-content {
+            flex: 1;
+            padding: 0 !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .posts .post-title {
+            font-size: 1.5rem !important;
+            margin: 0 0 14px 0 !important;
+            padding: 0 !important;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .posts .post-title::before {
+            display: none !important;
+        }
+
+        .posts .post-title a {
+            background: none !important;
+            padding: 0 !important;
+        }
+
+        .posts .post-summary {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin: 0 0 20px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .posts .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            color: #999;
+            margin: 0;
+        }
+
+        .posts .post-meta time {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .posts .post-meta time::before {
+            content: '\f017';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 400;
+        }
+
+        .posts .post-category,
+        .posts .post-tags-list {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .posts .post-category a,
+        .posts .post-tag {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .posts .post-category a:hover,
+        .posts .post-tag:hover {
+            opacity: 0.7;
+        }
+
+         
+        .posts .post-card:not(:has(.post-image)) {
+            padding: 30px !important;
+        }
+
+        .posts .post-card:not(:has(.post-image)) .post-title {
+            font-size: 1.6rem !important;
+        }
+
+        .posts .post-card:not(:has(.post-image)) .post-summary {
+            -webkit-line-clamp: 3;
+        }
+
+         
+        @media (max-width: 768px) {
+            .posts .post-card {
+                flex-direction: column;
+                padding: 20px !important;
+            }
+
+            .posts .post-image {
+                width: 100%;
+                height: 200px;
+            }
+
+            .posts .post-summary {
+                -webkit-line-clamp: 3;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+    <div class="container">
+        <div class="header-inner">
+            <a href="https://orz-ai.github.io/" class="logo">
+                <h1>Gang&#39;s Blog</h1>
+            </a>
+            <div class="header-right">
+                <div class="search-box">
+                    <form action="https://orz-ai.github.io/%20search" method="get">
+                        <input type="text" name="q" placeholder="搜索..." aria-label="搜索">
+                        <button type="submit" aria-label="提交搜索"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                <nav class="nav">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/" class="nav-link">首页</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/posts/" class="nav-link">文章</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/photos/" class="nav-link">照片墙</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/timeline/" class="nav-link">时间线</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/tags/" class="nav-link">标签</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/about/" class="nav-link">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+    <main class="main">
+        <div class="container">
+            <div class="posts">
+                
+                <article class="post-card">
+                    
+                    <div class="post-content">
+                        <div>
+                            <h2 class="post-title"><a href="https://orz-ai.github.io/posts/java%E9%9D%A2%E8%AF%95%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/">JAVA面试核心知识点整理</a></h2>
+                            
+                            <p class="post-summary">JVM (1) 基本概念：
+JVM是可运行Java代码的假想计算机 ，包括一套字节码指令集、一组寄存器、一个栈、一个垃圾回收，堆 和 一个存储方法域。JVM 是运行在操作系统之上的，它与硬件没有直接的交互。
+(2) 运行过程：
+我们都知道 Java 源文件，通过编译器，能够生产相应的.Class 文件，也就是字节码文件，而字节码文件又通过 Java 虚拟机中的解释器，编译成特定机器上的机器码 。
+也就是如下：
+① Java 源文件—-&gt;编译器—-&gt;字节码文件
+② 字节码文件—-&gt;JVM—-&gt;机器码
+每一种平台的解释器是不同的，但是实现的虚拟机是相同的，这也就是 Java 为什么能够跨平台的原因了 ，当一个程序从开始运行，这时虚拟机就开始实例化了，多个程序启动就会存在多个虚拟机实例。程序退出或者关闭，则虚拟机实例消亡，多个虚拟机实例之间数据不能共享。
+线程 这里所说的线程指程序执行过程中的一个线程实体。JVM 允许一个应用并发执行多个线程。 Hotspot JVM 中的 Java 线程与原生操作系统线程有直接的映射关系。当线程本地存储、缓冲区分配、同步对象、栈、程序计数器等准备好以后，就会创建一个操作系统原生线程。
+Java 线程结束，原生线程随之被回收。操作系统负责调度所有线程，并把它们分配到任何可用的 CPU 上。当原生线程初始化完毕，就会调用 Java 线程的 run() 方法。当线程结束时，会释放原生线程和 Java 线程的所有资源。
+Hotspot JVM 后台运行的系统线程主要有下面几个：
+虚拟机线程 （VM thread） 这个线程等待 JVM 到达安全点操作出现。这些操作必须要在独立的线程里执行，因为当堆修改无法进行时，线程都需要 JVM 位于安全点。这些操作的类型有：stop-the- world 垃圾回收、线程栈 dump、线程暂停、线程偏向锁（biased locking）解除。 周期性任务线程 这线程负责定时器事件（也就是中断），用来调度周期性操作的执行。 GC 线程 这些线程支持 JVM 中不同的垃圾回收活动。 编译器线程 这些线程在运行时将字节码动态编译成本地平台相关的机器码。 信号分发线程 这个线程接收发送到 JVM 的信号并调用适当的 JVM 方法处理。 JVM 内存区域 JVM 内存区域主要分为线程私有区域【程序计数器、虚拟机栈、本地方法区】、线程共享区域【JAVA 堆、方法区】、直接内存。</p>
+                            
+                        </div>
+                        <div class="post-meta">
+                            <time>2023-11-15</time>
+                            
+                            <span class="post-category">
+                                <i class="fas fa-folder"></i>
+                                
+                                <a href="https://orz-ai.github.io/%20categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/">编程技术</a>
+                                
+                            </span>
+                            
+                            
+                            <span class="post-tags-list">
+                                <i class="fas fa-tags"></i>
+                                
+                                <a href='https://orz-ai.github.io/tags/java/' class="post-tag">JAVA</a>
+                                <a href='https://orz-ai.github.io/tags/%E9%9D%A2%E8%AF%95/' class="post-tag">面试</a>
+                                <a href='https://orz-ai.github.io/tags/%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9/' class="post-tag">核心知识点</a>
+                            </span>
+                            
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="post-card">
+                    
+                    <div class="post-content">
+                        <div>
+                            <h2 class="post-title"><a href="https://orz-ai.github.io/posts/go-gc-deep-dive/">深入理解Go语言垃圾回收机制：原理、流程与优化</a></h2>
+                            
+                            <p class="post-summary"><p><img src="https://oss.hackfun.net/aurora-image/aurora/articles/6bc8178ffe84b39432920b18f4e5ad26.jpg" alt=""></p>
+<p>Go语言的垃圾回收（Garbage Collection，简称GC）机制是其内存管理的核心部分，它能够自动识别和回收不再使用的内存，让开发者免于手动内存管理的负担。本文将深入探讨Go语言GC的工作原理、演变历史、实现细节以及性能优化技巧。</p>
+<h2 id="go-gc的演变历史">Go GC的演变历史</h2>
+<p>Go语言的垃圾回收器从诞生到现在经历了多次重大更新，每次更新都显著提升了性能和减少了延迟：</p></p>
+                            
+                        </div>
+                        <div class="post-meta">
+                            <time>2023-11-15</time>
+                            
+                            <span class="post-category">
+                                <i class="fas fa-folder"></i>
+                                
+                                <a href="https://orz-ai.github.io/%20categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/">编程技术</a>
+                                
+                            </span>
+                            
+                            
+                            <span class="post-tags-list">
+                                <i class="fas fa-tags"></i>
+                                
+                                <a href='https://orz-ai.github.io/tags/go/' class="post-tag">Go</a>
+                                <a href='https://orz-ai.github.io/tags/gc/' class="post-tag">GC</a>
+                                <a href='https://orz-ai.github.io/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/' class="post-tag">内存管理</a>
+                            </span>
+                            
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="post-card">
+                    
+                    <div class="post-content">
+                        <div>
+                            <h2 class="post-title"><a href="https://orz-ai.github.io/posts/your-post-name/">Go语言入门指南</a></h2>
+                            
+                            <p class="post-summary">Explain函数 MySQL 的 EXPLAIN 语句用于分析 SQL 查询的执行计划，帮助开发者理解查询是如何执行的，以及优化查询性能。以下是 EXPLAIN 语句输出各个字段的详细深入解释：
+字段意义 测试SQL:
+1-- 演员表 2DROP TABLE IF EXISTS `actor`; 3CREATE TABLE `actor` ( 4 `id` int(11) NOT NULL, 5 `name` varchar(45) DEFAULT NULL, 6 `update_time` datetime DEFAULT NULL, 7 PRIMARY KEY (`id`) 8) ENGINE=InnoDB DEFAULT CHARSET=utf8; 9INSERT INTO `actor` (`id`, `name`, `update_time`) VALUES (1,&#39;a&#39;,&#39;2017-12-22 15:27:18&#39;), (2,&#39;b&#39;,&#39;2017-12-22 15:27:18&#39;), (3,&#39;c&#39;,&#39;2017-12-22 15:27:18&#39;); 10 11-- 电影表 12DROP TABLE IF EXISTS `film`; 13CREATE TABLE `film` ( 14 `id` int(11) NOT NULL AUTO_INCREMENT, 15 `name` varchar(10) DEFAULT NULL, 16 PRIMARY KEY (`id`), 17 KEY `idx_name` (`name`) 18) ENGINE=InnoDB DEFAULT CHARSET=utf8; 19INSERT INTO `film` (`id`, `name`) VALUES (3,&#39;film0&#39;),(1,&#39;film1&#39;),(2,&#39;film2&#39;); 20 21-- 电影和演员关联表 22DROP TABLE IF EXISTS `film_actor`; 23CREATE TABLE `film_actor` ( 24 `id` int(11) NOT NULL, 25 `film_id` int(11) NOT NULL, 26 `actor_id` int(11) NOT NULL, 27 `remark` varchar(255) DEFAULT NULL, 28 PRIMARY KEY (`id`), 29 KEY `idx_film_actor_id` (`film_id`,`actor_id`) 30) ENGINE=InnoDB DEFAULT CHARSET=utf8; 31INSERT INTO `film_actor` (`id`, `film_id`, `actor_id`) VALUES (1,1,1),(2,1,2),(3,2,1); 1.</p>
+                            
+                        </div>
+                        <div class="post-meta">
+                            <time>2023-10-15</time>
+                            
+                            <span class="post-category">
+                                <i class="fas fa-folder"></i>
+                                
+                                <a href="https://orz-ai.github.io/%20categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/">编程技术</a>
+                                
+                            </span>
+                            
+                            
+                            <span class="post-tags-list">
+                                <i class="fas fa-tags"></i>
+                                
+                                <a href='https://orz-ai.github.io/tags/go/' class="post-tag">Go</a>
+                                <a href='https://orz-ai.github.io/tags/%E7%BC%96%E7%A8%8B/' class="post-tag">编程</a>
+                                <a href='https://orz-ai.github.io/tags/%E6%95%99%E7%A8%8B/' class="post-tag">教程</a>
+                            </span>
+                            
+                        </div>
+                    </div>
+                </article>
+                
+            </div>
+            
+
+        </div>
+    </main>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-info">
+                <p>&copy; 2025 Gang&#39;s Blog. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <a href="#" class="back-to-top" id="backToTop" aria-label="返回顶部">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            var backToTop = document.getElementById('backToTop');
+
+            window.addEventListener('scroll', function () {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+            });
+
+            backToTop.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+
+</html>

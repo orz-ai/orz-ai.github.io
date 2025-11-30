@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+	<meta name="generator" content="Hugo 0.125.5">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gang&#39;s Blog</title>
+<meta name="description"
+  content="个人博客网站 - 分享技术、知识和生活感悟">
+<meta name="keywords" content="博客, 技术, 生活, 编程, Go语言, Hugo">
+<meta name="author" content="Gang">
+
+
+<link rel="canonical" href="https://orz-ai.github.io/">
+
+
+<link rel="stylesheet" href="https://orz-ai.github.io/css/style.css">
+<link rel="stylesheet" href="https://orz-ai.github.io/css/syntax.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://orz-ai.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://orz-ai.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://orz-ai.github.io/favicon-16x16.png">
+<meta name="theme-color" content="#4a6cf7">
+
+
+<meta property="og:title"
+  content="Gang&#39;s Blog">
+<meta property="og:description"
+  content="个人博客网站 - 分享技术、知识和生活感悟">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://orz-ai.github.io/">
+
+<meta property="og:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+<meta property="og:site_name" content="Gang&#39;s Blog">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title"
+  content="Gang&#39;s Blog">
+<meta name="twitter:description"
+  content="个人博客网站 - 分享技术、知识和生活感悟">
+
+<meta name="twitter:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Gang\u0027s Blog",
+  "url": "https:\/\/orz-ai.github.io\/",
+  "description": "个人博客网站 - 分享技术、知识和生活感悟",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Gang\u0027s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/orz-ai.github.io\/favicon-32x32.png"
+    }
+  }
+}
+</script>
+
+    <style>
+         
+        .homepage-container {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+         
+        .profile-section {
+            animation: fadeInUp 0.6s ease-out 0.1s both;
+        }
+
+        .content-section {
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+    <div class="container">
+        <div class="header-inner">
+            <a href="https://orz-ai.github.io/" class="logo">
+                <h1>Gang&#39;s Blog</h1>
+            </a>
+            <div class="header-right">
+                <div class="search-box">
+                    <form action="https://orz-ai.github.io/%20search" method="get">
+                        <input type="text" name="q" placeholder="搜索..." aria-label="搜索">
+                        <button type="submit" aria-label="提交搜索"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                <nav class="nav">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/" class="nav-link active">首页</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/posts/" class="nav-link">文章</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/photos/" class="nav-link">照片墙</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/timeline/" class="nav-link">时间线</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/tags/" class="nav-link">标签</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/about/" class="nav-link">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <main class="main">
+        
+        <div class="homepage-container">
+            <div class="homepage-content">
+                
+                <div class="profile-section">
+                    
+                    <div class="profile-card">
+                        <div class="profile-avatar">
+                            <img src="https://orz.ai/wp-content/uploads/2025/03/1742489817-7d82f2d0fec986b2fc7c71bdd52d48d9.jpg"
+                                alt="博主头像" />
+                        </div>
+                        <h2 class="profile-name">Gang</h2>
+                        <p class="profile-bio">分享技术，记录生活，探索世界的无限可能</p>
+
+                        
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-number">11</div>
+                                <div class="stat-label">文章</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">5</div>
+                                <div class="stat-label">照片</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">1.2k</div>
+                                <div class="stat-label">访问</div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="social-links">
+                            <a href="#" class="social-link" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="social-link" title="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-link" title="微博">
+                                <i class="fab fa-weibo"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    
+                    <div class="skills-card">
+                        <h3 class="card-title">
+                            <i class="fas fa-code"></i>
+                            技能标签
+                        </h3>
+                        <div class="skills-cloud">
+                            <span class="skill-tag skill-primary">Go</span>
+                            <span class="skill-tag skill-primary">JavaScript</span>
+                            <span class="skill-tag skill-secondary">React</span>
+                            <span class="skill-tag skill-secondary">Vue</span>
+                            <span class="skill-tag skill-accent">Docker</span>
+                            <span class="skill-tag skill-secondary">Kubernetes</span>
+                            <span class="skill-tag skill-primary">Python</span>
+                            <span class="skill-tag skill-accent">AI/ML</span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="activity-card">
+                        <h3 class="card-title">
+                            <i class="fas fa-clock"></i>
+                            最近动态
+                        </h3>
+                        <div class="activity-timeline">
+                            
+                            
+                            
+                            <div class="activity-item">
+                                <div class="activity-dot"></div>
+                                <div class="activity-content">
+                                    <div class="activity-text">
+                                        
+                                        发布了新文章《<a href="https://orz-ai.github.io/posts/%E7%9B%B2%E4%BA%BA%E8%A7%86%E8%A7%89%E5%8A%A9%E7%90%86/">VisionMate — 面向视障人群的AI视觉场景理解助手</a>》
+                                        
+                                    </div>
+                                    <div class="activity-time relative-time" data-timestamp="1760832000">2025-10-19</div>
+                                </div>
+                            </div>
+                            
+                            <div class="activity-item">
+                                <div class="activity-dot"></div>
+                                <div class="activity-content">
+                                    <div class="activity-text">
+                                        
+                                        发布了新文章《<a href="https://orz-ai.github.io/posts/welcome/">欢迎使用GBlog主题</a>》
+                                        
+                                    </div>
+                                    <div class="activity-time relative-time" data-timestamp="1704067200">2024-01-01</div>
+                                </div>
+                            </div>
+                            
+                            <div class="activity-item">
+                                <div class="activity-dot"></div>
+                                <div class="activity-content">
+                                    <div class="activity-text">
+                                        
+                                        发布了新文章《<a href="https://orz-ai.github.io/posts/java%E9%9D%A2%E8%AF%95%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/">JAVA面试核心知识点整理</a>》
+                                        
+                                    </div>
+                                    <div class="activity-time relative-time" data-timestamp="1700006400">2023-11-15</div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="content-section">
+                    
+                    <div class="featured-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-star"></i>
+                            精选文章
+                        </h2>
+                        <div class="featured-posts">
+                            
+                            
+                            <article class="featured-post">
+                                <h3 class="post-title">
+                                    <a href="https://orz-ai.github.io/posts/%E7%9B%B2%E4%BA%BA%E8%A7%86%E8%A7%89%E5%8A%A9%E7%90%86/">VisionMate — 面向视障人群的AI视觉场景理解助手</a>
+                                </h3>
+                                <time class="post-date">2025-10-19</time>
+                            </article>
+                            
+                            <article class="featured-post">
+                                <h3 class="post-title">
+                                    <a href="https://orz-ai.github.io/posts/welcome/">欢迎使用GBlog主题</a>
+                                </h3>
+                                <time class="post-date">2024-01-01</time>
+                            </article>
+                            
+                            <article class="featured-post">
+                                <h3 class="post-title">
+                                    <a href="https://orz-ai.github.io/posts/java%E9%9D%A2%E8%AF%95%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/">JAVA面试核心知识点整理</a>
+                                </h3>
+                                <time class="post-date">2023-11-15</time>
+                            </article>
+                            
+                        </div>
+                    </div>
+
+                    
+                    <div class="featured-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-camera"></i>
+                            精选照片
+                        </h2>
+                        <div class="featured-photos">
+                            
+                            
+                            <a href="https://orz-ai.github.io/photos/sample-photo-5/" class="featured-photo">
+                                <img src="https://orz.ai/wp-content/uploads/2024/11/1731220415-233416-1711121656e5bd.jpg" alt="海滨日落">
+                            </a>
+                            
+                            <a href="https://orz-ai.github.io/photos/sample-photo-3/" class="featured-photo">
+                                <img src="https://orz.ai/wp-content/uploads/2024/11/1731220448-%e5%be%ae%e4%bf%a1%e5%9b%be%e7%89%87_20240107164211-%e5%89%af%e6%9c%ac.jpg" alt="花卉特写">
+                            </a>
+                            
+                            <a href="https://orz-ai.github.io/photos/sample-photo-2/" class="featured-photo">
+                                <img src="https://orz.ai/wp-content/uploads/2024/11/1731220426-clouds-4215608_1280.jpg" alt="城市夜景">
+                            </a>
+                            
+                            <a href="https://orz-ai.github.io/photos/sample-photo-4/" class="featured-photo">
+                                <img src="https://orz.ai/wp-content/uploads/2024/05/1715111943-%e5%be%ae%e4%bf%a1%e5%9b%be%e7%89%87_20240430042431.jpg" alt="城市夜景">
+                            </a>
+                            
+                        </div>
+                    </div>
+
+                    
+                    <div class="featured-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-compass"></i>
+                            快速导航
+                        </h2>
+                        <div class="nav-grid">
+                            <a href="https://orz-ai.github.io/posts/" class="nav-item">
+                                <i class="fas fa-edit"></i>
+                                <span>文章</span>
+                            </a>
+                            <a href="https://orz-ai.github.io/photos/" class="nav-item">
+                                <i class="fas fa-images"></i>
+                                <span>照片墙</span>
+                            </a>
+                            <a href="https://orz-ai.github.io/timeline/" class="nav-item">
+                                <i class="fas fa-clock"></i>
+                                <span>时间线</span>
+                            </a>
+                            <a href="https://orz-ai.github.io/about/" class="nav-item">
+                                <i class="fas fa-user"></i>
+                                <span>关于我</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-info">
+                <p>&copy; 2025 Gang&#39;s Blog. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+
+</html>
+
+<a href="#" class="back-to-top" id="backToTop" aria-label="返回顶部">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        var backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', function () {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        backToTop.addEventListener('click', function (e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    
+    function updateRelativeTime() {
+        const timeElements = document.querySelectorAll('.relative-time');
+        const now = Math.floor(Date.now() / 1000);
+
+        timeElements.forEach(function (element) {
+            const timestamp = parseInt(element.getAttribute('data-timestamp'));
+            const diff = now - timestamp;
+
+            let relativeTime = '';
+            if (diff < 60) {
+                relativeTime = '刚刚';
+            } else if (diff < 3600) {
+                const minutes = Math.floor(diff / 60);
+                relativeTime = minutes + '分钟前';
+            } else if (diff < 86400) {
+                const hours = Math.floor(diff / 3600);
+                relativeTime = hours + '小时前';
+            } else if (diff < 2592000) {
+                const days = Math.floor(diff / 86400);
+                relativeTime = days + '天前';
+            } else if (diff < 31536000) {
+                const months = Math.floor(diff / 2592000);
+                relativeTime = months + '个月前';
+            } else {
+                const years = Math.floor(diff / 31536000);
+                relativeTime = years + '年前';
+            }
+
+            element.textContent = relativeTime;
+        });
+    }
+
+    
+    updateRelativeTime();
+
+    
+    setInterval(updateRelativeTime, 60000);
+</script>
+</body>
+
+</html>

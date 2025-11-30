@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>服务器Hexo博客部署和Git同步 - Gang&#39;s Blog</title>
+<meta name="description"
+  content="搬瓦工服务器搭建Hexo博客并使用git同步">
+<meta name="keywords" content="Linux">
+<meta name="author" content="Gang">
+
+
+<link rel="canonical" href="https://orz-ai.github.io/posts/2022-03-27-%E6%9C%8D%E5%8A%A1%E5%99%A8hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%92%8Cgit%E5%90%8C%E6%AD%A5/">
+
+
+<link rel="stylesheet" href="https://orz-ai.github.io/css/style.css">
+<link rel="stylesheet" href="https://orz-ai.github.io/css/syntax.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://orz-ai.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://orz-ai.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://orz-ai.github.io/favicon-16x16.png">
+<meta name="theme-color" content="#4a6cf7">
+
+
+<meta property="og:title"
+  content="服务器Hexo博客部署和Git同步 - Gang&#39;s Blog">
+<meta property="og:description"
+  content="搬瓦工服务器搭建Hexo博客并使用git同步">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://orz-ai.github.io/posts/2022-03-27-%E6%9C%8D%E5%8A%A1%E5%99%A8hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%92%8Cgit%E5%90%8C%E6%AD%A5/">
+
+<meta property="og:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+<meta property="og:site_name" content="Gang&#39;s Blog">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title"
+  content="服务器Hexo博客部署和Git同步 - Gang&#39;s Blog">
+<meta name="twitter:description"
+  content="搬瓦工服务器搭建Hexo博客并使用git同步">
+
+<meta name="twitter:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "服务器Hexo博客部署和Git同步",
+  "description": "搬瓦工服务器搭建Hexo博客并使用git同步",
+  "author": {
+    "@type": "Person",
+    "name": "Gang"
+  },
+  "datePublished": "2022-03-27T23:54:00Z",
+  "dateModified": "2022-03-27T23:54:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https:\/\/orz-ai.github.io\/posts\/2022-03-27-%E6%9C%8D%E5%8A%A1%E5%99%A8hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%92%8Cgit%E5%90%8C%E6%AD%A5\/"
+  },
+  
+  "image": "https:\/\/orz-ai.github.io\/images\/hero-bg.jpg",
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Gang\u0027s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/orz-ai.github.io\/favicon-32x32.png"
+    }
+  }
+}
+</script>
+
+</head>
+
+<body>
+    <header class="header">
+    <div class="container">
+        <div class="header-inner">
+            <a href="https://orz-ai.github.io/" class="logo">
+                <h1>Gang&#39;s Blog</h1>
+            </a>
+            <div class="header-right">
+                <div class="search-box">
+                    <form action="https://orz-ai.github.io/%20search" method="get">
+                        <input type="text" name="q" placeholder="搜索..." aria-label="搜索">
+                        <button type="submit" aria-label="提交搜索"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                <nav class="nav">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/" class="nav-link">首页</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/posts/" class="nav-link active">文章</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/photos/" class="nav-link">照片墙</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/timeline/" class="nav-link">时间线</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/tags/" class="nav-link">标签</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/about/" class="nav-link">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+    <main class="main">
+        <div class="container">
+            <article class="post">
+                <header class="post-header">
+                    <h1 class="post-title">服务器Hexo博客部署和Git同步</h1>
+                    <div class="post-meta">
+                        <time datetime=" 2022-03-27T23:54:00Z">
+                            2022-03-27
+                        </time>
+
+                        
+
+                        
+
+                        <span class="post-reading-time">
+                            <i class="fas fa-clock"></i> 2 分钟阅读
+                        </span>
+                    </div>
+
+                    
+                    <div class="post-tags">
+                        
+                        <a href='https://orz-ai.github.io/tags/linux/' class="tag">Linux</a>
+                        
+                    </div>
+                    
+                </header>
+
+                <div class="post-content">
+                    <h1 id="安装hexo">安装hexo</h1>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="ln">1</span><span class="cl">npm install -g hexo-cli
+</span></span><span class="line"><span class="ln">2</span><span class="cl">npm install hexo-deployer-git --save
+</span></span></code></pre></div><h1 id="搭建git服务器">搭建git服务器</h1>
+<h2 id="安装git环境">安装git环境</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1"># 查看是否安装</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">git --version
+</span></span><span class="line"><span class="ln">3</span><span class="cl">
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1"># 若未安装，需先安装git</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">sudo apt-get install git
+</span></span></code></pre></div><h2 id="创建git用户">创建git用户</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">adduser git 
+</span></span><span class="line"><span class="ln">2</span><span class="cl">passwd git // 设置密码
+</span></span><span class="line"><span class="ln">3</span><span class="cl">su git // 切换用户
+</span></span></code></pre></div><h2 id="创建git仓库">创建git仓库</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl"><span class="nb">cd</span> /home/git/
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1"># 创建文件来放置hexo静态工程</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">mkdir -p projects/blog
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1"># 创建文件放置git仓库</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">mkdir repos <span class="o">&amp;&amp;</span> <span class="nb">cd</span> repos
+</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="c1"># 创建一个裸露的仓库</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl">git init --bare blog.git
+</span></span></code></pre></div><h2 id="创建钩子函数">创建钩子函数</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="nb">cd</span> blog.git/hooks
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="c1"># 创建hook钩子函数 git提交时自动部署博客内容</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">vi post-receive 
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">hook钩子函数内容:
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="c1">#!/bin/sh</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">git --work-tree<span class="o">=</span>/home/git/projects/blog --git-dir<span class="o">=</span>/home/git/repos/blog.git checkout -f
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl">chmod +x post-receive
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="c1"># 退出git用户</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="nb">exit</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="c1"># 添加权限</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">chown -R git:git /home/git/repos/blog.git
+</span></span></code></pre></div><h2 id="测试git仓库">测试git仓库</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-BASH" data-lang="BASH"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1"># 如果ssh是22端口</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">git clone git@server_ip:/home/git/repos/blog.git
+</span></span><span class="line"><span class="ln">3</span><span class="cl">
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1"># 如果ssh非22端口</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">git clone ssh://git@server_ip:port/home/git/repos/blog.git
+</span></span></code></pre></div><h2 id="配置ssh免密登录">配置SSH免密登录</h2>
+<h3 id="客户端windows这边">客户端（Windows这边）</h3>
+<blockquote>
+<p>方法一</p>
+</blockquote>
+<p><code>git bash</code>中生成git客户的的公私密钥对</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">ssh-keygen
+</span></span><span class="line"><span class="ln">2</span><span class="cl">
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="c1"># 接下来可以一直回车</span>
+</span></span></code></pre></div><p>会在<code>C:\Users\用户名</code>下生成一个<code>.ssh</code>中生成密钥对，复制公钥<code>id_rsa.pub</code>中的内容，准备粘贴到下面创建的<code>authorized_keys</code>文件中</p>
+<blockquote>
+<p>方法二</p>
+</blockquote>
+<ol>
+<li>
+<p>生成密钥对</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">ssh-keygen -t rsa -C <span class="s2">&#34;youremail@example.com&#34;</span>
+</span></span></code></pre></div></li>
+<li>
+<p>将公钥传送给服务器</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1"># ssh 使用的是22端口</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">ssh-copy-id -i ~/.ssh/id_rsa.pub username@server_ip
+</span></span><span class="line"><span class="ln">3</span><span class="cl">
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1"># ssh 使用的非22端口</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">ssh-copy-id -p <span class="s1">&#39;port&#39;</span> -i ~/.ssh/id_rsa.pub username@server_ip
+</span></span></code></pre></div></li>
+</ol>
+<h3 id="服务器linux这边">服务器（Linux这边）</h3>
+<ol>
+<li>
+<p>编辑<code>/etc/ssh/sshd_config</code>文件开启免密登录</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">RSAAuthentication yes
+</span></span><span class="line"><span class="ln">2</span><span class="cl">PubkeyAuthentication yes
+</span></span><span class="line"><span class="ln">3</span><span class="cl">
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1"># 配置修改完重启ssh服务</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">service sshd restart
+</span></span></code></pre></div></li>
+<li>
+<p>创建指定用户目录下<code>authorized_keys</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="nb">cd</span> /home/git/.ssh
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="c1"># 存放客户端的ssh公钥 id_rsa.pub</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">touch authorized_keys
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="c1"># 粘贴客户端公钥</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1"># 配置权限</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">chmod <span class="m">600</span> authorized_keys
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">chmod <span class="m">700</span> ~/.ssh
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"># 权限给的太大可能会失败? SSH不允许.ssh目录权限过大？</span>
+</span></span></code></pre></div></li>
+<li>
+<p>限制git用户登录权限, 只能clone, push;</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1"># 查看`git-shell`是否在登录方式里面，有则跳过</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">cat /etc/shells
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="c1"># 查看是否安装 </span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">which git-shell
+</span></span><span class="line"><span class="ln">5</span><span class="cl">vi /etc/shells
+</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="c1"># 添加(which git-shell)显示出来的路劲，通常在 /usr/bin/git-shell</span>
+</span></span></code></pre></div><p>修改<code>/etc/passwd</code>中的权限</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1"># 将原来的</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">git:x:1000:1000:,,,:/home/git:/bin/bash
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="c1"># 修改为:</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">git:x:1000:1000:,,,:/home/git:/usr/bin/git-shell
+</span></span></code></pre></div></li>
+</ol>
+<h1 id="配置nginx">配置nginx</h1>
+<p>nginx.conf配置文件内容：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-nginx" data-lang="nginx"><span class="line"><span class="ln">1</span><span class="cl"><span class="k">location</span> <span class="s">/</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">    <span class="kn">root</span>   <span class="s">/home/git/projects/blog</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">    <span class="kn">index</span>  <span class="s">index.html</span> <span class="s">index.htm</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">
+</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="c1"># 同时将user改为root
+</span></span></span></code></pre></div><h1 id="选择主题">选择主题</h1>
+<p><a href="https://hexo.io/themes/">官方主题</a></p>
+<p>选择一个下载到本地</p>
+<p>选择<code>NexT</code></p>
+<h1 id="启动">启动</h1>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">npm run deploy
+</span></span></code></pre></div><h1 id="遇到的问题">遇到的问题</h1>
+<ol>
+<li>
+<p><code>ERROR Deployer not found: git</code>报错</p>
+<p>需要安装<code>hexo-deployer-git</code> 模块： <code>npm install hexo-deployer-git --save</code></p>
+<p>确认配置文件<code>_config.yml</code>中是否添加git仓库信息：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bas" data-lang="bas"><span class="line"><span class="ln">1</span><span class="cl"><span class="nl">deploy:</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="w">  </span><span class="nl">type:</span><span class="w"> </span><span class="vg">git</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="w">  </span><span class="nl">repo:</span><span class="w"> </span><span class="nl">ssh:</span><span class="o">//</span><span class="vg">git@</span><span class="nl">server_ip:</span><span class="vg">port</span><span class="o">/</span><span class="vg">home</span><span class="o">/</span><span class="vg">git</span><span class="o">/</span><span class="vg">repos</span><span class="o">/</span><span class="vg">blog</span><span class="o">.</span><span class="vg">git</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="w">  </span><span class="nl">branch:</span><span class="w"> </span><span class="vg">master</span>
+</span></span></code></pre></div></li>
+<li>
+<p><code>yum</code>安装<code>nodejs</code>后没有安装<code>npm</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1"># 指定仓库地址</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">curl --silent --location https://rpm.nodesource.com/setup_10.x <span class="p">|</span> bash -
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="c1"># 再安装</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">yum install -y nodejs
+</span></span><span class="line"><span class="ln">5</span><span class="cl">
+</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="c1"># 切换至国内的源（如果是过内服务器的话）</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl">npm install -g cnpm --registry<span class="o">=</span>https://registry.npm.taobao.org 
+</span></span></code></pre></div></li>
+</ol>
+
+
+                    <div class="content-end">
+                        <div class="end-line"></div>
+                        <div class="end-text">— END —</div>
+                    </div>
+                </div>
+
+                <div class="post-extra">
+                    
+                    <div class="extra-section">
+                        <div class="extra-title">相关标签</div>
+                        <div class="tags-list">
+                            
+                            <a href='https://orz-ai.github.io/tags/linux/' class="tag-link">Linux</a>
+                            
+                        </div>
+                    </div>
+                    
+
+                    <div class="extra-section">
+                        <div class="extra-title">推荐阅读</div>
+                        <div class="recommend-grid">
+                            
+                            
+                            
+                            <a href="https://orz-ai.github.io/posts/%E6%9C%AC%E5%9C%B0vm%E4%B8%80%E4%BA%9B%E9%85%8D%E7%BD%AE/" class="recommend-card">
+                                <div class="recommend-image">
+                                    
+                                    <div class="recommend-placeholder"></div>
+                                    
+                                </div>
+                                <div class="recommend-info">
+                                    <div class="recommend-title"></div>
+                                    <div class="recommend-date">0001-01-01</div>
+                                </div>
+                            </a>
+                            
+                            <a href="https://orz-ai.github.io/search/" class="recommend-card">
+                                <div class="recommend-image">
+                                    
+                                    <div class="recommend-placeholder"></div>
+                                    
+                                </div>
+                                <div class="recommend-info">
+                                    <div class="recommend-title">搜索</div>
+                                    <div class="recommend-date">0001-01-01</div>
+                                </div>
+                            </a>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-footer">
+                    <div class="post-nav">
+                        
+                        <a href="https://orz-ai.github.io/posts/%E6%9C%AC%E5%9C%B0vm%E4%B8%80%E4%BA%9B%E9%85%8D%E7%BD%AE/" class="post-nav-prev">
+                            <i class="fas fa-arrow-left"></i>
+                            <span></span>
+                        </a>
+                        
+
+                        
+                        <a href="https://orz-ai.github.io/posts/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="post-nav-next">
+                            <span>2.编译原理-编译系统设计</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+            </article>
+
+            
+            <div class="toc-container" id="tocContainer">
+                <div class="toc-header">
+                    <span><i class="fas fa-list"></i> 目录</span>
+                    <button class="toc-hide-btn" id="tocHideBtn" title="收起目录">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <nav class="toc-nav" id="tocNav">
+                    
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-info">
+                <p>&copy; 2025 Gang&#39;s Blog. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <a href="#" class="back-to-top" id="backToTop" aria-label="返回顶部">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    
+    <button class="toc-show-btn" id="tocShowBtn" title="显示目录" style="display: none;">
+        <i class="fas fa-list"></i>
+    </button>
+
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            var backToTop = document.getElementById('backToTop');
+
+            window.addEventListener('scroll', function () {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+            });
+
+            backToTop.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            
+            document.querySelectorAll('.highlight').forEach(function (highlight) {
+                
+                if (!highlight.querySelector('.copy-button')) {
+                    let copyButton = document.createElement('button');
+                    copyButton.className = 'copy-button';
+                    copyButton.textContent = '复制';
+
+                    highlight.appendChild(copyButton);
+
+                    copyButton.addEventListener('click', function () {
+                        let codeElement = highlight.querySelector('code');
+                        let textToCopy = codeElement.textContent;
+
+                        navigator.clipboard.writeText(textToCopy).then(function () {
+                            copyButton.textContent = '已复制!';
+                            setTimeout(function () {
+                                copyButton.textContent = '复制';
+                            }, 2000);
+                        }).catch(function (err) {
+                            console.error('无法复制文本: ', err);
+                        });
+                    });
+                }
+
+                
+                let codeClass = highlight.querySelector('code').className;
+                let langMatch = codeClass.match(/language-(\w+)/);
+
+                if (langMatch && langMatch[1]) {
+                    let lang = langMatch[1];
+                    
+                    let existingIndicator = highlight.querySelector('.language-indicator');
+                    if (existingIndicator) {
+                        existingIndicator.remove();
+                    }
+
+                    
+                    let langIndicator = document.createElement('div');
+                    langIndicator.className = 'language-indicator';
+                    langIndicator.textContent = lang;
+                    highlight.insertBefore(langIndicator, highlight.firstChild);
+                }
+            });
+
+            
+            const tocContainer = document.getElementById('tocContainer');
+            const tocNav = document.getElementById('tocNav');
+            const postContent = document.querySelector('.post-content');
+
+            if (!postContent) return;
+
+            
+            function addHeadingNumbers() {
+                const headings = postContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                let counters = [0, 0, 0, 0, 0, 0]; 
+
+                headings.forEach(heading => {
+                    const level = parseInt(heading.tagName.charAt(1)) - 1; 
+
+                    
+                    counters[level]++;
+
+                    
+                    for (let i = level + 1; i < counters.length; i++) {
+                        counters[i] = 0;
+                    }
+
+                    
+                    let numberStr = '';
+                    for (let i = 0; i <= level; i++) {
+                        if (counters[i] > 0) {
+                            numberStr += (numberStr ? '.' : '') + counters[i];
+                        }
+                    }
+                    numberStr += '. ';
+
+                    
+                    const numberSpan = document.createElement('span');
+                    numberSpan.className = 'heading-number';
+                    numberSpan.textContent = numberStr;
+                    heading.insertBefore(numberSpan, heading.firstChild);
+                });
+            }
+
+            
+            function generateTOC() {
+                const headings = postContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                if (headings.length === 0) {
+                    tocContainer.style.display = 'none';
+                    return;
+                }
+
+                tocNav.innerHTML = '';
+                let levelStack = [];
+
+                headings.forEach((heading, index) => {
+                    const level = parseInt(heading.tagName.charAt(1));
+                    const id = heading.id || `heading-${index}`;
+                    heading.id = id;
+
+                    
+                    while (levelStack.length > 0 && levelStack[levelStack.length - 1].level >= level) {
+                        levelStack.pop();
+                    }
+
+                    const listItem = document.createElement('li');
+                    listItem.className = `toc-item toc-level-${level}`;
+
+                    const link = document.createElement('a');
+                    link.href = `#${id}`;
+                    link.className = 'toc-link';
+                    link.setAttribute('data-target', id);
+                    link.innerHTML = `<span class="toc-text">${heading.textContent}</span>`;
+
+                    listItem.appendChild(link);
+
+                    
+                    if (levelStack.length === 0) {
+                        tocNav.appendChild(listItem);
+                    } else {
+                        const parent = levelStack[levelStack.length - 1];
+                        let subList = parent.element.querySelector('ul');
+                        if (!subList) {
+                            subList = document.createElement('ul');
+                            subList.className = 'toc-list';
+                            parent.element.appendChild(subList);
+
+                            
+                            const parentLink = parent.element.querySelector('.toc-link');
+                            if (parentLink && !parentLink.classList.contains('toc-expandable')) {
+                                parentLink.classList.add('toc-expandable');
+                                parentLink.addEventListener('click', function (e) {
+                                    if (e.target.closest('.toc-link') === this) {
+                                        e.preventDefault();
+                                        subList.classList.toggle('toc-collapsed');
+                                        this.classList.toggle('toc-expanded');
+                                    }
+                                });
+                            }
+                        }
+                        subList.appendChild(listItem);
+                    }
+
+                    levelStack.push({ level: level, element: listItem });
+                });
+            }
+
+            
+            function updateActiveHeading() {
+                const headings = postContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+
+                let activeHeading = null;
+                let closestHeading = null;
+                let closestDistance = Infinity;
+
+                
+                headings.forEach(heading => {
+                    const rect = heading.getBoundingClientRect();
+                    const headingCenter = rect.top + rect.height / 2;
+                    const viewportCenter = windowHeight / 2;
+                    const distance = Math.abs(headingCenter - viewportCenter);
+
+                    
+                    if (headingCenter <= viewportCenter && distance < closestDistance) {
+                        closestDistance = distance;
+                        closestHeading = heading;
+                    }
+                });
+
+                activeHeading = closestHeading;
+
+                
+                if (!activeHeading) {
+                    const isNearBottom = (scrollTop + windowHeight) >= documentHeight - 100;
+                    if (isNearBottom && headings.length > 0) {
+                        activeHeading = headings[headings.length - 1];
+                    }
+                }
+
+                
+                document.querySelectorAll('.toc-link').forEach(link => {
+                    link.classList.remove('active');
+                    link.parentElement.classList.remove('active');
+                });
+
+                
+                if (activeHeading) {
+                    const activeLink = document.querySelector(`[data-target="${activeHeading.id}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                        activeLink.parentElement.classList.add('active');
+
+                        
+                        let parent = activeLink.parentElement.parentElement;
+                        while (parent && parent.classList.contains('toc-list')) {
+                            parent.style.display = 'block';
+                            parent = parent.parentElement.parentElement;
+                        }
+                    }
+                }
+            }
+
+            
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('.toc-link')) {
+                    e.preventDefault();
+                    const targetId = e.target.closest('.toc-link').getAttribute('data-target');
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - 100;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+
+            
+            addHeadingNumbers(); 
+            generateTOC(); 
+            updateActiveHeading();
+
+            
+            const tocHideBtn = document.getElementById('tocHideBtn');
+            const tocShowBtn = document.getElementById('tocShowBtn');
+
+            if (tocHideBtn) {
+                tocHideBtn.addEventListener('click', function () {
+                    
+                    tocContainer.classList.add('hidden');
+                    if (tocShowBtn) {
+                        tocShowBtn.style.display = 'block';
+                    }
+                });
+            }
+
+            if (tocShowBtn) {
+                tocShowBtn.addEventListener('click', function () {
+                    
+                    tocContainer.classList.remove('hidden');
+                    tocShowBtn.style.display = 'none';
+                });
+            }
+
+            
+            let ticking = false;
+            window.addEventListener('scroll', function () {
+                if (!ticking) {
+                    requestAnimationFrame(function () {
+                        updateActiveHeading();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

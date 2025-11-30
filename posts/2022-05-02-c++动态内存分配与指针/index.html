@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C&#43;&#43;动态内存分配与指针 - Gang&#39;s Blog</title>
+<meta name="description"
+  content="复习C&#43;&#43;动态内存分配与指针~">
+<meta name="keywords" content="指针">
+<meta name="author" content="Gang">
+
+
+<link rel="canonical" href="https://orz-ai.github.io/posts/2022-05-02-c&#43;&#43;%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E4%B8%8E%E6%8C%87%E9%92%88/">
+
+
+<link rel="stylesheet" href="https://orz-ai.github.io/css/style.css">
+<link rel="stylesheet" href="https://orz-ai.github.io/css/syntax.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://orz-ai.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://orz-ai.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://orz-ai.github.io/favicon-16x16.png">
+<meta name="theme-color" content="#4a6cf7">
+
+
+<meta property="og:title"
+  content="C&#43;&#43;动态内存分配与指针 - Gang&#39;s Blog">
+<meta property="og:description"
+  content="复习C&#43;&#43;动态内存分配与指针~">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://orz-ai.github.io/posts/2022-05-02-c&#43;&#43;%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E4%B8%8E%E6%8C%87%E9%92%88/">
+
+<meta property="og:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+<meta property="og:site_name" content="Gang&#39;s Blog">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title"
+  content="C&#43;&#43;动态内存分配与指针 - Gang&#39;s Blog">
+<meta name="twitter:description"
+  content="复习C&#43;&#43;动态内存分配与指针~">
+
+<meta name="twitter:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "C\u002b\u002b动态内存分配与指针",
+  "description": "复习C\u002b\u002b动态内存分配与指针~",
+  "author": {
+    "@type": "Person",
+    "name": "Gang"
+  },
+  "datePublished": "2022-05-02T20:28:00Z",
+  "dateModified": "2022-05-02T20:28:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https:\/\/orz-ai.github.io\/posts\/2022-05-02-c\u002b\u002b%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E4%B8%8E%E6%8C%87%E9%92%88\/"
+  },
+  
+  "image": "https:\/\/orz-ai.github.io\/images\/hero-bg.jpg",
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Gang\u0027s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/orz-ai.github.io\/favicon-32x32.png"
+    }
+  }
+}
+</script>
+
+</head>
+
+<body>
+    <header class="header">
+    <div class="container">
+        <div class="header-inner">
+            <a href="https://orz-ai.github.io/" class="logo">
+                <h1>Gang&#39;s Blog</h1>
+            </a>
+            <div class="header-right">
+                <div class="search-box">
+                    <form action="https://orz-ai.github.io/%20search" method="get">
+                        <input type="text" name="q" placeholder="搜索..." aria-label="搜索">
+                        <button type="submit" aria-label="提交搜索"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                <nav class="nav">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/" class="nav-link">首页</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/posts/" class="nav-link active">文章</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/photos/" class="nav-link">照片墙</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/timeline/" class="nav-link">时间线</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/tags/" class="nav-link">标签</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/about/" class="nav-link">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+    <main class="main">
+        <div class="container">
+            <article class="post">
+                <header class="post-header">
+                    <h1 class="post-title">C&#43;&#43;动态内存分配与指针</h1>
+                    <div class="post-meta">
+                        <time datetime=" 2022-05-02T20:28:00Z">
+                            2022-05-02
+                        </time>
+
+                        
+                        <span class="post-category">
+                            <i class="fas fa-folder"></i>
+                            
+                            <a href="https://orz-ai.github.io/%20categories/c&#43;&#43;/">C&#43;&#43;</a>
+                            
+                        </span>
+                        
+
+                        
+
+                        <span class="post-reading-time">
+                            <i class="fas fa-clock"></i> 11 分钟阅读
+                        </span>
+                    </div>
+
+                    
+                    <div class="post-tags">
+                        
+                        <a href='https://orz-ai.github.io/tags/%E6%8C%87%E9%92%88/' class="tag">指针</a>
+                        
+                    </div>
+                    
+                </header>
+
+                <div class="post-content">
+                    <h1 id="c-内存操作">C 内存操作</h1>
+<h2 id="malloc">malloc</h2>
+<p>C语言中动态分配内存指令：<code>malloc</code></p>
+<p><code>void* malloc(size_t size)</code></p>
+<p><code>malloc</code>将为用户分配size_t字节个内存，并且返回内存分配地址，如果分配失败，则返回0。</p>
+<p>如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1">// pa是分配好的内存首地址，4是分配的内存大小
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1"></span><span class="kt">int</span><span class="o">*</span> <span class="n">pa</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1">// 如果分配失败则pa=0
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">unsigned</span> <span class="n">in</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">in</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="n">pa</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">in</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">pa</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;内存分配失败&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="p">}</span> 
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="k">else</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">		<span class="n">pa</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">		<span class="n">pa</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">		<span class="n">pa</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">pa</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">pa</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">
+</span></span><span class="line"><span class="ln">18</span><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">pa</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">pa</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">pa</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">
+</span></span><span class="line"><span class="ln">21</span><span class="cl">
+</span></span><span class="line"><span class="ln">22</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="calloc">calloc</h2>
+<p><code>void* calloc(size_t count, size_t size)</code></p>
+<p>为用户分配<code>count * size_t</code>字节个内存，并返回内存分配的首地址，如果分配失败则返回0。</p>
+<p>如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">pa</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span> <span class="n">calloc</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span></span></code></pre></div><p>其中，pa是分配好的内存首地址，1是要分配的元素个数，4是要分配的每个元素的大小。</p>
+<p>如果内存分配失败则返回0。</p>
+<p><strong>calloc命令会讲分配好的内存区域设置为0。</strong></p>
+<h2 id="realloc">realloc</h2>
+<p><code>void* realloc(void* _block, size_t size);</code></p>
+<p>为用户重新分配内存，_block是用户已经奉陪好的内存，size是要求重新分配的大小，函数返回重新分配后的内存首地址。</p>
+<p>如果分配失败，那么返回0；</p>
+<p>如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">pa</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">     <span class="n">pa</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">realloc</span><span class="p">(</span><span class="n">pa</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="err">#</span><span class="n">include</span><span class="o">&lt;</span><span class="n">iostream</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="w"></span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="w">	</span><span class="n">unsigned</span><span class="w"> </span><span class="n">in</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="w">	</span><span class="n">std</span><span class="p">::</span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">in</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="w">	</span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">pa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">in</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="w">	</span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">copy_pa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pa</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pa</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">nullptr</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="w">	</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="w">		</span><span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&#34;内存分配失败&#34;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="w">	</span><span class="k">else</span><span class="w">
+</span></span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="w">	</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="w">		</span><span class="n">pa</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">12</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="w">		</span><span class="n">pa</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">20</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="w">		</span><span class="n">pa</span><span class="o">[</span><span class="n">2</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pa</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pa</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="w">		</span><span class="nl">std</span><span class="p">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">pa</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&#34; &#34;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">pa</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&#34; &#34;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">pa</span><span class="o">[</span><span class="n">2</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="ln">22</span><span class="cl"><span class="w">	</span><span class="nl">std</span><span class="p">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&#34;请输入重新分配内存大小：&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="ln">23</span><span class="cl"><span class="w">	</span><span class="n">std</span><span class="p">::</span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">in</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="ln">24</span><span class="cl"><span class="w">	</span><span class="n">pa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">realloc</span><span class="p">(</span><span class="n">pa</span><span class="p">,</span><span class="w"> </span><span class="n">in</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="ln">25</span><span class="cl"><span class="w">	</span><span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&#34;realloc之后内存中的值：&#34;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">pa</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&#34; &#34;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">pa</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&#34; &#34;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">pa</span><span class="o">[</span><span class="n">2</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="ln">26</span><span class="cl"><span class="w">	</span><span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&#34;未重新分配前的pa地址：&#34;</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">copy_pa</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&#34;\nrealloc之后pa地址：&#34;</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">pa</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="ln">27</span><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="ln">28</span><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="ln">29</span><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="ln">30</span><span class="cl"><span class="w"></span><span class="cm">/**
+</span></span></span><span class="line"><span class="ln">31</span><span class="cl"><span class="cm">输出：
+</span></span></span><span class="line"><span class="ln">32</span><span class="cl"><span class="cm">100
+</span></span></span><span class="line"><span class="ln">33</span><span class="cl"><span class="cm">12 20 240
+</span></span></span><span class="line"><span class="ln">34</span><span class="cl"><span class="cm">请输入重新分配内存大小：1000
+</span></span></span><span class="line"><span class="ln">35</span><span class="cl"><span class="cm">realloc之后内存中的值：12 20 240
+</span></span></span><span class="line"><span class="ln">36</span><span class="cl"><span class="cm">未重新分配前的pa地址：00E20A50
+</span></span></span><span class="line"><span class="ln">37</span><span class="cl"><span class="cm">realloc之后pa地址：00E21C40
+</span></span></span><span class="line"><span class="ln">38</span><span class="cl"><span class="cm">**/</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>realloc函数会保留内存中已有的值，只是内存地址重新分配了</li>
+<li>如果重新分配的内存小于原来的内存，那么首地址不变。</li>
+<li>如果重新分配的内存大于原来的内存，那么先判断扩大的内存中是否有已经被分配的，如果没有可以直接重新分配，如果已经有了，那么就需要重新找一段符合需求大小的内存段来重新分配。原内存中的值将会被拷贝过来。</li>
+</ul>
+<h2 id="free">free</h2>
+<p><code>void free(void* _block);</code></p>
+<p>_block为需要释放的内存地址；</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">pa</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="n">free</span><span class="p">(</span><span class="n">pa</span><span class="p">);</span>
+</span></span></code></pre></div><p>pa所占用的内存被释放</p>
+<h1 id="c内存操作">C++内存操作</h1>
+<h2 id="分配">分配</h2>
+<p><code>数据类型* 指针变量名称 = new 数据类型;</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">pa</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">;</span>
+</span></span></code></pre></div><p><code>数据类型* 指针变量名称 = new 数据类型[数量]</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">pa</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+</span></span></code></pre></div><p>分配失败pa返回0；</p>
+<p>底层还是使用malloc来实现的。</p>
+<h2 id="释放">释放</h2>
+<p><code>delete 指针</code></p>
+<p>释放new分配的内存</p>
+<p><code>delete[] 指针</code></p>
+<p>释放<code>new 数据类型[]</code>分配的内存</p>
+<h1 id="悬挂指针">悬挂指针</h1>
+<p>内存使用使用完毕之后，使用free或者delete释放之后，原指向该内存区域的指针就称之为悬挂指针，若此时再次使用该指针，可能就会出现问题。</p>
+<p>不要使用已被释放的指针</p>
+<p>不要重复释放内存</p>
+<h1 id="内存碎片">内存碎片</h1>
+<p>频繁的申请和释放小快内存会造成内存随便，虽然原则上还有内存可以使用，但是实际上由于剩余内存碎片化的存在，使得我们无法分配新的内存，当然，现在也不必担心这样的情况，因为new和delete背后的算法会尽力规避这个风险。</p>
+<h1 id="memcpy">memcpy</h1>
+<p><code>void* memcpy(void* _dst, const void* _src, size_t size);</code>
+memcpy可以将_src区域的内存复制到_dst区域，复制长度为_size</p>
+<p>如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">5</span><span class="p">]{</span><span class="mi">1001</span><span class="p">,</span> <span class="mi">1002</span><span class="p">,</span> <span class="mi">1003</span><span class="p">,</span> <span class="mi">1004</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="n">memcpy</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="mi">5</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">5</span><span class="p">]{</span> <span class="mi">1001</span><span class="p">,</span> <span class="mi">1002</span><span class="p">,</span> <span class="mi">1003</span><span class="p">,</span> <span class="mi">1004</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="n">copy_a</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="n">memcpy</span><span class="p">(</span><span class="n">copy_a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">copy_a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="cm">输出：
+</span></span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="cm">1001
+</span></span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="cm">1002
+</span></span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="cm">1003
+</span></span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="cm">1004
+</span></span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="cm">0
+</span></span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="cm">**/</span>
+</span></span></code></pre></div><p>如果拷贝的空间大于_src的空间，则会将_src后面的的空间也拷贝到_dst，且会将_dst后面的空间覆盖掉。</p>
+<h1 id="memset">memset</h1>
+<p><code>void* memset(void* _dst, int value, size_t _size)</code></p>
+<p>value的值实际上是0~0xFF。</p>
+<p>将指定内存区域的每一个自己的值都设置为val，_size</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="mi">100</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="n">memset</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">5</span><span class="p">]{</span> <span class="mi">1001</span><span class="p">,</span> <span class="mi">1002</span><span class="p">,</span> <span class="mi">1003</span><span class="p">,</span> <span class="mi">1004</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="n">copy_a</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">    <span class="c1">// 尝试设置四个字节，实际上只接受了最低的两个字节(34)
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="c1"></span>	<span class="n">memset</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mh">0x1234</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">4</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="n">memcpy</span><span class="p">(</span><span class="n">copy_a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">hex</span> <span class="o">&lt;&lt;</span> <span class="n">copy_a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="cm">输出：
+</span></span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="cm">34343434
+</span></span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="cm">34343434
+</span></span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="cm">34343434
+</span></span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="cm">34343434
+</span></span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="cm">34343434
+</span></span></span><span class="line"><span class="ln">22</span><span class="cl"><span class="cm">**/</span>
+</span></span></code></pre></div><p>指针的本质是一种特殊的变量类型</p>
+<h1 id="声明">声明</h1>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1">// 多个指针变量定义不可以如下定义
+</span></span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>
+</span></span></code></pre></div><h1 id="取址运算">取址运算</h1>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">pA</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">;</span>
+</span></span></code></pre></div><h1 id="间接运算符">间接运算符</h1>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1">// 将pA地址里的值设置为400
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1"></span><span class="o">*</span><span class="n">pA</span> <span class="o">=</span> <span class="mi">400</span><span class="p">;</span>
+</span></span></code></pre></div><h1 id="指针数组">指针数组</h1>
+<p>指针也可以通过数组的方式声明</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">	<span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">5</span><span class="p">]{</span> <span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="n">pA</span><span class="p">[</span><span class="mi">5</span><span class="p">]{};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">		<span class="n">pA</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;a[&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;] 的地址为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">pA</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="err">打印内容：</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="err">的地址为：</span><span class="mo">001</span><span class="n">EF864</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="err">的地址为：</span><span class="mo">001</span><span class="n">EF868</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="err">的地址为：</span><span class="mo">001</span><span class="n">EF86C</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="err">的地址为：</span><span class="mo">001</span><span class="n">EF870</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="n">a</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="err">的地址为：</span><span class="mo">001</span><span class="n">EF874</span>
+</span></span></code></pre></div><h1 id="指针大小">指针大小</h1>
+<p>使用<code>sizeof()</code>方法来获得指针的大小</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">	<span class="kt">int</span>		  <span class="n">a</span><span class="p">{</span> <span class="mi">111</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="n">pA</span><span class="p">{</span> <span class="o">&amp;</span><span class="n">a</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">pA</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl">
+</span></span><span class="line"><span class="ln">8</span><span class="cl"><span class="err">打印结果：</span>
+</span></span><span class="line"><span class="ln">9</span><span class="cl"><span class="mi">4</span>
+</span></span></code></pre></div><h1 id="指针类型转换">指针类型转换</h1>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">	<span class="kt">unsigned</span> <span class="n">ua</span><span class="p">{</span> <span class="mi">222</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="n">pA</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">ua</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="o">*</span><span class="n">pA</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">pA</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ua</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="err">输出：</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="mf">004FF</span><span class="mi">968</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="mi">4294967295</span>
+</span></span></code></pre></div><h1 id="场景">场景</h1>
+<h2 id="ptr">*ptr++</h2>
+<p>地址增加。<code>指针加1= 该指针指向地址 +  1 * 改指针类型的大小</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> 
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span> <span class="n">a</span><span class="p">[]{</span><span class="mi">10001</span><span class="p">,</span> <span class="mi">20001</span><span class="p">,</span> <span class="mi">30001</span><span class="p">,</span> <span class="mi">40001</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="n">pA</span><span class="p">{</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">pA</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;，值为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">pA</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;*</span><span class="n">pA</span><span class="o">++&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址为：&#34;</span> <span class="o">&lt;&lt;</span><span class="n">pA</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;，值为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">pA</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="err">输出：</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="err">地址为：</span><span class="mf">0073F</span><span class="n">CC8</span><span class="err">，值为：</span><span class="mi">10001</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="mi">10001</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="err">地址为：</span><span class="mf">0073F</span><span class="n">CCC</span><span class="err">，值为：</span><span class="mi">20001</span>
+</span></span></code></pre></div><h2 id="ptr-1">(*ptr)++</h2>
+<p>ptr指针指向地址中的值增加</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span> <span class="n">a</span><span class="p">[]{</span> <span class="mi">10001</span><span class="p">,</span> <span class="mi">20001</span><span class="p">,</span> <span class="mi">30001</span><span class="p">,</span> <span class="mi">40001</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="n">pA</span><span class="p">{</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">pA</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;，值为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">pA</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="o">*</span><span class="n">pA</span><span class="p">)</span><span class="o">++</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">pA</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;，值为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">pA</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="err">输出：</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="err">地址为：</span><span class="mf">0077F</span><span class="n">B40</span><span class="err">，值为：</span><span class="mi">10001</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="mi">10001</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="err">地址为：</span><span class="mf">0077F</span><span class="n">B40</span><span class="err">，值为：</span><span class="mi">10002</span>
+</span></span></code></pre></div><h1 id="指针的指针">指针的指针</h1>
+<p>指针变量也是一个变量，在内容空间中也有具体的地址</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span> <span class="n">a</span><span class="p">[]{</span> <span class="mi">10001</span><span class="p">,</span> <span class="mi">20001</span><span class="p">,</span> <span class="mi">30001</span><span class="p">,</span> <span class="mi">40001</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="n">pA</span><span class="p">{</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="kt">int</span><span class="o">**</span> <span class="n">ppA</span><span class="p">{</span><span class="o">&amp;</span><span class="n">pA</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ppA</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;，值为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ppA</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ppA</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;，值为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">**</span><span class="n">ppA</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="err">输出：</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="err">地址为：</span><span class="mo">00</span><span class="n">EFF984</span><span class="err">，值为：</span><span class="mo">00</span><span class="n">EFF990</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="err">地址为：</span><span class="mo">00</span><span class="n">EFF990</span><span class="err">，值为：</span><span class="mi">10001</span>
+</span></span></code></pre></div><p>修改指针的指向</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span> <span class="n">a</span><span class="p">[]{</span> <span class="mi">10001</span><span class="p">,</span> <span class="mi">20001</span><span class="p">,</span> <span class="mi">30001</span><span class="p">,</span> <span class="mi">40001</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="n">pA</span><span class="p">{</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="kt">int</span><span class="o">**</span> <span class="n">ppA</span><span class="p">{</span> <span class="o">&amp;</span><span class="n">pA</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ppA</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;，值为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ppA</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ppA</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;，值为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">**</span><span class="n">ppA</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">pA</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;，值为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">pA</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">
+</span></span><span class="line"><span class="ln">12</span><span class="cl">    <span class="c1">// *ppA 即 pA 
+</span></span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="c1"></span>	<span class="o">*</span><span class="n">ppA</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ppA</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;，值为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ppA</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ppA</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;，值为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">**</span><span class="n">ppA</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">pA</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;，值为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">pA</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">
+</span></span><span class="line"><span class="ln">20</span><span class="cl">
+</span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="err">输出：</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl"><span class="err">地址为：</span><span class="mo">005</span><span class="n">CF82C</span><span class="err">，值为：</span><span class="mo">005</span><span class="n">CF838</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl"><span class="err">地址为：</span><span class="mo">005</span><span class="n">CF838</span><span class="err">，值为：</span><span class="mi">10001</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl"><span class="err">地址为：</span><span class="mo">005</span><span class="n">CF82C</span><span class="err">，值为：</span><span class="mo">005</span><span class="n">CF83C</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl"><span class="err">地址为：</span><span class="mo">005</span><span class="n">CF83C</span><span class="err">，值为：</span><span class="mi">20001</span>
+</span></span></code></pre></div><h1 id="常量指针">常量指针</h1>
+<p>定义：</p>
+<p><code>const 变量类型*</code></p>
+<p>所谓常量指针，即这个指针指向的是一个常量的地址，常量指针中，不能对其指向的内存地址进行改变，但是指针指向的这个地址可以改变</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> 
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="k">const</span> <span class="kt">int</span> <span class="n">a</span><span class="p">{</span> <span class="mi">100</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="k">const</span> <span class="kt">int</span> <span class="n">b</span><span class="p">{</span> <span class="mi">2500</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="kt">int</span>		  <span class="n">c</span><span class="p">{</span> <span class="mi">3000</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="k">const</span> <span class="kt">int</span><span class="o">*</span> <span class="n">ptr</span><span class="p">{</span> <span class="o">&amp;</span><span class="n">a</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="n">ptr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">
+</span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="c1">// 不能进行如下操作
+</span></span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="c1"></span>	<span class="c1">//*ptr = 500;
+</span></span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">	<span class="n">ptr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">	<span class="c1">// 虽然c不是常量，但是依然不能进行如下操作，因为ptr是const修饰的
+</span></span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="c1"></span>	<span class="c1">//*ptr = 500;
+</span></span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><h1 id="指针常量">指针常量</h1>
+<p>定义：
+<code>变量类型* const</code></p>
+<p>所谓的指针常量，即这个指针变量是一个常量，一旦初始化就不可以再指向其他内存地址，但是内存地址中的数据可以读写</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span> <span class="n">a</span><span class="p">{</span> <span class="mi">100</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="kt">int</span> <span class="n">b</span><span class="p">{</span> <span class="mi">2500</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="kt">int</span> <span class="n">c</span><span class="p">{</span> <span class="mi">3000</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="k">const</span> <span class="n">ptr</span><span class="p">{</span> <span class="o">&amp;</span><span class="n">a</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="c1">// 虽然指针的地址不可以改变，但是指针指向地址中的值可以改变
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"></span>	<span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="c1">// 不能进行如下操作
+</span></span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="c1"></span>	<span class="c1">// ptr = &amp;b;
+</span></span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><h1 id="指向常量的常量指针">指向常量的常量指针</h1>
+<p>定义：</p>
+<p><code>const 变量类型* const</code></p>
+<p>指向常量的常量指针：即这个指针变量是一个常量，一旦初始化就不可以再指向其他内存地址，因为其本身就是一个指向常量的指针，所以其指向的内存区域也不可以修改。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span> <span class="n">a</span><span class="p">{</span> <span class="mi">100</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="kt">int</span> <span class="n">b</span><span class="p">{</span> <span class="mi">2500</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="kt">int</span> <span class="n">c</span><span class="p">{</span> <span class="mi">3000</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="k">const</span> <span class="kt">int</span><span class="o">*</span> <span class="k">const</span> <span class="n">ptr</span><span class="p">{</span> <span class="o">&amp;</span><span class="n">a</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="c1">// 不能进行 如下操作
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"></span>	<span class="c1">// *ptr = 500;
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="c1">// 也不能进行如下操作
+</span></span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="c1"></span>	<span class="c1">// ptr = &amp;b;
+</span></span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><p>可以通过如下方式修改</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="k">const</span> <span class="kt">int</span> <span class="n">a</span><span class="p">{</span> <span class="mi">1000</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="k">const</span> <span class="kt">int</span> <span class="n">b</span><span class="p">{</span> <span class="mi">2500</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="k">const</span> <span class="kt">int</span> <span class="n">c</span><span class="p">{</span> <span class="mi">3000</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="k">const</span> <span class="kt">int</span><span class="o">*</span> <span class="k">const</span> <span class="n">ptr</span><span class="p">{</span> <span class="o">&amp;</span><span class="n">a</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="c1">// 不能进行 如下操作
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"></span>	<span class="c1">// *ptr = 500;
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="c1">// 也不能进行如下操作
+</span></span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="c1"></span>	<span class="c1">// ptr = &amp;b;
+</span></span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">	<span class="c1">// 去掉a变量的const之后 *ptr 和 *ptrA的值都改变了
+</span></span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="c1"></span>	<span class="kt">int</span><span class="o">*</span> <span class="n">ptrA</span><span class="p">{</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">a</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">	<span class="o">*</span><span class="n">ptrA</span> <span class="o">=</span> <span class="mi">9500</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">&amp;</span><span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;，值为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址：&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ptrA</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;，值为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ptrA</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h1 id="指针和数组">指针和数组</h1>
+<h2 id="相同">相同</h2>
+<p>数组的底层实现是利用了指针</p>
+<p>从原来上将，指针和数组是同一个方法的不同表达方式，而数组名本身就是一个指针，数组元素只是这个指针按照一定量偏移后对应的内存区域里的内容。</p>
+<p><font color="red">指针同样可以使用[]符号来操作内存</font></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> 
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span> <span class="n">a</span><span class="p">[]{</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">3000</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="n">ptrA</span><span class="p">{</span> <span class="n">a</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1001</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3003</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="c1">// 指针同样可以使用[]符号来操作内存
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="c1"></span>	<span class="n">ptrA</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2002</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	
+</span></span><span class="line"><span class="ln">13</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>对应的汇编代码</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln"> 1</span><span class="cl">	;int a[]{ 1000, 2000, 3000 };
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">007F34E2  mov         dword ptr [a],3E8h  
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">007F34E9  mov         dword ptr [ebp-10h],7D0h  
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">007F34F0  mov         dword ptr [ebp-0Ch],0BB8h  
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	;int* ptrA{ a };
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">007F34F7  lea         eax,[a]  
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">007F34FA  mov         dword ptr [ptrA],eax  
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	;a[0] = 1001;
+</span></span><span class="line"><span class="ln">10</span><span class="cl">007F34FD  mov         eax,4  
+</span></span><span class="line"><span class="ln">11</span><span class="cl">007F3502  imul        ecx,eax,0  
+</span></span><span class="line"><span class="ln">12</span><span class="cl">007F3505  mov         dword ptr a[ecx],3E9h  
+</span></span><span class="line"><span class="ln">13</span><span class="cl">	;a[2] = 3003;
+</span></span><span class="line"><span class="ln">14</span><span class="cl">007F350D  mov         eax,4  
+</span></span><span class="line"><span class="ln">15</span><span class="cl">007F3512  shl         eax,1		; eax左移1位，等于将eax中的值（4）乘以2
+</span></span><span class="line"><span class="ln">16</span><span class="cl">007F3514  mov         dword ptr a[eax],0BBBh  
+</span></span></code></pre></div><h2 id="不同">不同</h2>
+<p>在使用`size函数来获取数组大小的时候，返回是整个数组的大小</p>
+<p>而指针返回的则是指针类型的大小。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> 
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span> <span class="n">a</span><span class="p">[]{</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">3000</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="n">ptrA</span><span class="p">{</span> <span class="n">a</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1001</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3003</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="c1">// 指针同样可以使用[]符号来操作内存
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="c1"></span>	<span class="n">ptrA</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2002</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	
+</span></span><span class="line"><span class="ln">13</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;数组a大小&#34;</span> <span class="o">&lt;&lt;</span><span class="k">sizeof</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;指针ptrA的大小&#34;</span> <span class="o">&lt;&lt;</span><span class="k">sizeof</span><span class="p">(</span><span class="n">ptrA</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">
+</span></span><span class="line"><span class="ln">16</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">
+</span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="err">输出：</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="err">数组</span><span class="n">a大小12</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="err">指针</span><span class="n">ptrA的大小4</span>
+</span></span></code></pre></div><h2 id="多维数组">多维数组</h2>
+<p>数组的本质是连续的内存区域，所以所谓的多维数组其实是不存在的，多维只是方便理解而创造出来的逻辑方法。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">		<span class="p">{</span><span class="mi">1001</span><span class="p">,</span> <span class="mi">1002</span><span class="p">,</span> <span class="mi">1003</span><span class="p">,</span> <span class="mi">1004</span><span class="p">,</span> <span class="mi">1005</span><span class="p">},</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">		<span class="p">{</span><span class="mi">2001</span><span class="p">,</span> <span class="mi">2002</span><span class="p">,</span> <span class="mi">2003</span><span class="p">,</span> <span class="mi">2004</span><span class="p">,</span> <span class="mi">2005</span><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="kt">int</span> <span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">6</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">		<span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1001</span><span class="p">,</span> <span class="mi">1002</span><span class="p">,</span> <span class="mi">1003</span><span class="p">,</span> <span class="mi">1004</span><span class="p">,</span> <span class="mi">1005</span><span class="p">},</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">		<span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2001</span><span class="p">,</span> <span class="mi">2002</span><span class="p">,</span> <span class="mi">2003</span><span class="p">,</span> <span class="mi">2004</span><span class="p">,</span> <span class="mi">2005</span><span class="p">}</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">	<span class="p">};</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">
+</span></span><span class="line"><span class="ln">16</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="n">pA</span><span class="p">{</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">	<span class="c1">// 因为是连续的内存空间
+</span></span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="c1"></span>	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">pA</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="数组指针">数组指针</h2>
+<p>注意和指针数组的区别</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">		<span class="p">{</span><span class="mi">1001</span><span class="p">,</span> <span class="mi">1002</span><span class="p">,</span> <span class="mi">1003</span><span class="p">,</span> <span class="mi">1004</span><span class="p">,</span> <span class="mi">1005</span><span class="p">},</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">		<span class="p">{</span><span class="mi">2001</span><span class="p">,</span> <span class="mi">2002</span><span class="p">,</span> <span class="mi">2003</span><span class="p">,</span> <span class="mi">2004</span><span class="p">,</span> <span class="mi">2005</span><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="kt">int</span> <span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">6</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">		<span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1001</span><span class="p">,</span> <span class="mi">1002</span><span class="p">,</span> <span class="mi">1003</span><span class="p">,</span> <span class="mi">1004</span><span class="p">,</span> <span class="mi">1005</span><span class="p">},</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">		<span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2001</span><span class="p">,</span> <span class="mi">2002</span><span class="p">,</span> <span class="mi">2003</span><span class="p">,</span> <span class="mi">2004</span><span class="p">,</span> <span class="mi">2005</span><span class="p">}</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">	<span class="p">};</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">
+</span></span><span class="line"><span class="ln">16</span><span class="cl">
+</span></span><span class="line"><span class="ln">17</span><span class="cl">	<span class="c1">// 指针数组
+</span></span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="c1"></span>	<span class="c1">//int* pArr[5];
+</span></span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="c1"></span>	
+</span></span><span class="line"><span class="ln">20</span><span class="cl">	<span class="c1">// 数组指针， 每一行中有5个数据，本质上是一个指针
+</span></span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="c1"></span>	<span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="n">pArr</span><span class="p">)[</span><span class="mi">5</span><span class="p">]{</span><span class="n">a</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">	<span class="c1">// 声明了数组指针之后可以按照二维数组的形式获取地址中的数据
+</span></span></span><span class="line"><span class="ln">23</span><span class="cl"><span class="c1"></span>	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;数组指针：&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">pArr</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;数组指针大小：&#34;</span> <span class="o">&lt;&lt;</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">pArr</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl">	
+</span></span><span class="line"><span class="ln">26</span><span class="cl">	<span class="c1">// 数组指针加1的时候，相当于维度*数据类型的大小，这里是6（维度）*4（int的大小）
+</span></span></span><span class="line"><span class="ln">27</span><span class="cl"><span class="c1"></span>	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;数组指针大小：&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">pArr</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">	<span class="n">pArr</span> <span class="o">=</span> <span class="n">pArr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;偏移之后数组指针大小：&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">pArr</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">
+</span></span><span class="line"><span class="ln">31</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">32</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">33</span><span class="cl">
+</span></span><span class="line"><span class="ln">34</span><span class="cl"><span class="err">输出：</span>
+</span></span><span class="line"><span class="ln">35</span><span class="cl"><span class="err">数组指针：</span><span class="mi">2005</span>
+</span></span><span class="line"><span class="ln">36</span><span class="cl"><span class="err">数组指针大小：</span><span class="mi">4</span>
+</span></span><span class="line"><span class="ln">37</span><span class="cl"><span class="err">数组指针大小：</span><span class="mf">006FF</span><span class="mi">91</span><span class="n">C</span>
+</span></span><span class="line"><span class="ln">38</span><span class="cl"><span class="err">偏移之后数组指针大小：</span><span class="mf">006FF</span><span class="mi">930</span>
+</span></span></code></pre></div><p><font color="red">数组指针加1的时候，相当于维度*数据类型的大小</font></p>
+<h1 id="sizeof">sizeof()</h1>
+<p><code>sizeof()</code>方法在编译期就已经知道了大小。</p>
+<h1 id="堆栈">堆栈</h1>
+<p>堆的本质是空闲内存，C++中把堆称之为自由存储区，只要是程序加载后没有占用的空闲内存，都是自由存储区域，使用new和malloc申请一块新的内存区域，都是由操作系统从对上操作的。</p>
+<p>栈是程序在编译时就确定了大小的一段内存区域，主要是用于里临时变量的存储，栈的效率要高于堆，但是容量有限。</p>
+<hr>
+<h1 id="定义">定义</h1>
+<p>引用是创建一个变量的引用名称</p>
+<p>语法：
+<code>数据类型&amp; 变量名称{引用对象名称}</code></p>
+<p>如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="kt">int</span> <span class="n">a</span><span class="p">{</span><span class="mi">500</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="kt">int</span><span class="o">&amp;</span> <span class="n">ra</span><span class="p">{</span><span class="n">a</span><span class="p">};</span>
+</span></span></code></pre></div><p>ra = 5200时，相当于a=5200</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span>  <span class="n">a</span><span class="p">{</span> <span class="mi">1500</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="kt">int</span><span class="o">&amp;</span> <span class="n">ref_a</span><span class="p">{</span> <span class="n">a</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;a=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; ref_a=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ref_a</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="n">ref_a</span> <span class="o">=</span> <span class="mi">2400</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;a=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; ref_a=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ref_a</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="err">输出：</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="cm">a=1500 ref_a=1500
+</span></span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="cm">a=2400 ref_a=2400
+</span></span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="cm">**/</span>
+</span></span></code></pre></div><p>引用一旦赋值就无法改变</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span>  <span class="n">a</span><span class="p">{</span> <span class="mi">1500</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="kt">int</span>	 <span class="n">b</span><span class="p">{</span> <span class="mi">2000</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="kt">int</span><span class="o">&amp;</span> <span class="n">ref_a</span><span class="p">{</span> <span class="n">a</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;a=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; ref_a=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ref_a</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="n">ref_a</span> <span class="o">=</span> <span class="mi">2400</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;a=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; ref_a=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ref_a</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">	
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="c1">// 这里并不是将ref_a设置成了b的引用，而是将a的值修改成了b
+</span></span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="c1"></span>	<span class="n">ref_a</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">
+</span></span><span class="line"><span class="ln">15</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h1 id="引用取址">引用取址</h1>
+<p>同一个变量的引用指向同一个地址</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span>  <span class="n">a</span><span class="p">{</span> <span class="mi">1500</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="kt">int</span>	 <span class="n">b</span><span class="p">{</span> <span class="mi">2000</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="kt">int</span><span class="o">&amp;</span> <span class="n">ref_a</span><span class="p">{</span> <span class="n">a</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="kt">int</span><span class="o">&amp;</span> <span class="n">ref_b</span><span class="p">{</span> <span class="n">a</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="kt">int</span><span class="o">&amp;</span> <span class="n">ref_c</span><span class="p">{</span> <span class="n">a</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="kt">int</span><span class="o">&amp;</span> <span class="n">ref_d</span><span class="p">{</span> <span class="n">a</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;a=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; ref_a=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ref_a</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="n">ref_a</span> <span class="o">=</span> <span class="mi">2400</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;a=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; ref_a=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ref_a</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址=&#34;</span><span class="o">&lt;&lt;</span> <span class="o">&amp;</span><span class="n">ref_a</span> <span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;a=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; ref_b=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ref_b</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址=&#34;</span><span class="o">&lt;&lt;</span> <span class="o">&amp;</span><span class="n">ref_b</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;a=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; ref_c=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ref_c</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址=&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">&amp;</span><span class="n">ref_c</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;a=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; ref_d=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ref_d</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址=&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">&amp;</span><span class="n">ref_d</span> <span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">	
+</span></span><span class="line"><span class="ln">18</span><span class="cl">	<span class="c1">// 这里并不是将ref_a设置成了b的引用，而是将a的值修改成了b
+</span></span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="c1"></span>	<span class="n">ref_a</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">
+</span></span><span class="line"><span class="ln">21</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">
+</span></span><span class="line"><span class="ln">24</span><span class="cl"><span class="err">输出：</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl"><span class="n">a</span><span class="o">=</span><span class="mi">1500</span> <span class="n">ref_a</span><span class="o">=</span><span class="mi">1500</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl"><span class="n">a</span><span class="o">=</span><span class="mi">2400</span> <span class="n">ref_a</span><span class="o">=</span><span class="mi">2400</span> <span class="err">地址</span><span class="o">=</span><span class="mf">0107F</span><span class="mi">750</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl"><span class="n">a</span><span class="o">=</span><span class="mi">2400</span> <span class="n">ref_b</span><span class="o">=</span><span class="mi">2400</span> <span class="err">地址</span><span class="o">=</span><span class="mf">0107F</span><span class="mi">750</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl"><span class="n">a</span><span class="o">=</span><span class="mi">2400</span> <span class="n">ref_c</span><span class="o">=</span><span class="mi">2400</span> <span class="err">地址</span><span class="o">=</span><span class="mf">0107F</span><span class="mi">750</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl"><span class="n">a</span><span class="o">=</span><span class="mi">2400</span> <span class="n">ref_d</span><span class="o">=</span><span class="mi">2400</span> <span class="err">地址</span><span class="o">=</span><span class="mf">0107F</span><span class="mi">750</span>
+</span></span></code></pre></div><h1 id="常量引用">常量引用</h1>
+<p>引用的值无法修改</p>
+<p><code>const int&amp; a{b}</code></p>
+<p>则无法修改a的值。</p>
+<hr>
+<h1 id="定义-1">定义</h1>
+<p><code>std::unique_ptr</code>是所谓智能指针中的一种，主要目的是为了解决原生指针安全性不足的弊端</p>
+<p>声明：</p>
+<p><code>std::unique_ptr&lt;类型&gt; 变量名称{};</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1">// 这里的150表示数组的size为150
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">unique</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrA</span><span class="p">{</span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">150</span><span class="p">)};</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1">// 这里的10表示初始化智能指针所指地址中的值初始化为10
+</span></span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">unique</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrA</span><span class="p">{</span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">10</span><span class="p">)};</span>
+</span></span></code></pre></div><h1 id="常用方法">常用方法：</h1>
+<h2 id="reset">reset()</h2>
+<p><code>reset()</code>方法会释放掉std::unique_ptr的内存空间，并且将<code>std::unique_ptr</code>设置为<code>nullptr</code>;</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="c1">// 这里的5表示数组的size为5
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1"></span>	<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">[]</span><span class="o">&gt;</span> <span class="n">ptr_arr</span><span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="c1">// 这里的5表示初始化智能指针所指地址中的值初始化为5
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="c1"></span>	<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptr</span><span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ptr</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;值为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="n">ptr</span><span class="p">.</span><span class="n">reset</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;地址为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ptr</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;值为：&#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="get">get()</h2>
+<p>会返回一个std::unique_ptr的指针</p>
+<p>用法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrA</span><span class="p">{</span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">150</span><span class="p">)};</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="n">ptrA</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+</span></span></code></pre></div><p><code>get()</code>等于ptrA申请内存时的地址。</p>
+<h2 id="release">release()</h2>
+<p>会返<code>std::unique_ptr</code>的指针，并将<code>std::unique_ptr</code>设置为<code>nullptr</code>，但是注意release并不会释放器占用的内存空间。</p>
+<p>用法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrA</span><span class="p">{</span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">150</span><span class="p">)};</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">ptrA</span><span class="p">.</span><span class="n">release</span><span class="p">();</span>
+</span></span></code></pre></div><p>此时ptrA所占用的内存空间没有被释放，只是将ptrA的值设置成了nullptr</p>
+<p>ptr等于ptrA申请内存时的地址。</p>
+<h2 id="stdmove">std::move</h2>
+<p><code>std::unique_ptr</code>指针具有唯一性，因此不能被复制，但是可以转移。</p>
+<p>转移语法：
+<code>转以后的指针变量 = std::move(转移前的指针变量);</code></p>
+<p>如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrA</span> <span class="p">{</span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">150</span><span class="p">)};</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrB</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="n">ptrB</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">ptrA</span><span class="p">);</span>
+</span></span></code></pre></div><p>转移后<code>ptrA</code>被设置为<code>nullptr</code>。</p>
+<h2 id="stdshared_ptr">std::shared_ptr</h2>
+<p>可以有多个<code>std::shared_ptr</code>指向同一个地址，同一个地址下只有当最后一个std::shared_ptr释放的时候，才会释放其所占用的内存空间，<code>std::shared_ptr</code>会记录当前地址有多少个智能指针调用。</p>
+<p>语法：</p>
+<p><code>std::shared_ptr&lt;类型&gt; 变量名称</code></p>
+<p>例如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrA</span><span class="p">{};</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrB</span> <span class="p">{</span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">5</span><span class="p">)};</span>
+</span></span></code></pre></div><p><code>std::make_shared</code>不支持数组</p>
+<p><code>std::shared_ptr&lt;int[]&gt; ptrC{new int[5]{1,2,3,4,5}}</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="n">a</span><span class="p">{};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrA</span><span class="p">{</span> <span class="k">new</span> <span class="kt">int</span><span class="p">{</span><span class="mi">5</span><span class="p">}</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrB</span><span class="p">{</span><span class="n">ptrA</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ptrA</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ptrA</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ptrB</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ptrB</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="err">输出：</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="mo">00</span><span class="n">BB6120</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="mo">00</span><span class="n">BB6120</span> <span class="mi">5</span>
+</span></span></code></pre></div><h3 id="use_count">use_count()</h3>
+<p>获取一个有多少个指针来调用当前对象：</p>
+<p><code> long std::shared_ptr.use_count();</code></p>
+<p>会返回当前指针共有多少对象调用。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="n">a</span><span class="p">{};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrA</span><span class="p">{</span> <span class="k">new</span> <span class="kt">int</span><span class="p">{</span><span class="mi">5</span><span class="p">}</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrB</span><span class="p">{</span><span class="n">ptrA</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrC</span><span class="p">{</span><span class="n">ptrA</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrD</span><span class="p">{</span><span class="n">ptrA</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrE</span><span class="p">{</span><span class="n">ptrA</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="c1">// 获取当前有多少指针指向ptrA
+</span></span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="c1"></span>	<span class="kt">long</span> <span class="n">use_count</span><span class="p">{</span> <span class="n">ptrA</span><span class="p">.</span><span class="n">use_count</span><span class="p">()</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">
+</span></span><span class="line"><span class="ln">14</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ptrA</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ptrA</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ptrB</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ptrB</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">use_count</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">
+</span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="err">输出：</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="mo">00</span><span class="n">D89E48</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl"><span class="mo">00</span><span class="n">D89E48</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl"><span class="mi">5</span>
+</span></span></code></pre></div><h3 id="unique">unique()</h3>
+<p>将会返回一个bool值，如果当前智能指针是唯一拥有该指针的，那么返回true，否则返回false;</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span><span class="o">*</span> <span class="n">a</span><span class="p">{};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrA</span><span class="p">{</span> <span class="k">new</span> <span class="kt">int</span><span class="p">{</span><span class="mi">5</span><span class="p">}</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="c1">// 获取当前有多少指针指向ptrA
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="c1"></span>	<span class="kt">int</span> <span class="n">use_count</span><span class="p">{</span> <span class="n">ptrA</span><span class="p">.</span><span class="n">unique</span><span class="p">()</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">use_count</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrB</span><span class="p">{</span><span class="n">ptrA</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrC</span><span class="p">{</span><span class="n">ptrA</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrD</span><span class="p">{</span><span class="n">ptrA</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ptrE</span><span class="p">{</span><span class="n">ptrA</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">
+</span></span><span class="line"><span class="ln">15</span><span class="cl">	<span class="c1">// 获取当前有多少指针指向ptrA
+</span></span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="c1"></span>	<span class="n">use_count</span> <span class="o">=</span> <span class="n">ptrA</span><span class="p">.</span><span class="n">unique</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">
+</span></span><span class="line"><span class="ln">18</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ptrA</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ptrA</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ptrB</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ptrB</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">use_count</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">
+</span></span><span class="line"><span class="ln">24</span><span class="cl"><span class="err">输出：</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl"><span class="mi">1</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl"><span class="mo">00</span><span class="n">EEF6C8</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl"><span class="mo">00</span><span class="n">EEF6C8</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl"><span class="mi">0</span>
+</span></span></code></pre></div><h3 id="reset-1">reset()</h3>
+<p><code>std::shared_ptr.reset()</code></p>
+<p><code>reset()</code>会将当前共享指针设置为<code>nullptr</code>，同事如果当前智能指针是最后一个拥有该指针的对象，那么将会释放内存。</p>
+<hr>
+
+
+                    <div class="content-end">
+                        <div class="end-line"></div>
+                        <div class="end-text">— END —</div>
+                    </div>
+                </div>
+
+                <div class="post-extra">
+                    
+                    <div class="extra-section">
+                        <div class="extra-title">相关标签</div>
+                        <div class="tags-list">
+                            
+                            <a href='https://orz-ai.github.io/tags/%E6%8C%87%E9%92%88/' class="tag-link">指针</a>
+                            
+                        </div>
+                    </div>
+                    
+
+                    <div class="extra-section">
+                        <div class="extra-title">推荐阅读</div>
+                        <div class="recommend-grid">
+                            
+                            
+                            
+                            <a href="https://orz-ai.github.io/posts/2022-04-30-c&#43;&#43;%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/" class="recommend-card">
+                                <div class="recommend-image">
+                                    
+                                    <div class="recommend-placeholder"></div>
+                                    
+                                </div>
+                                <div class="recommend-info">
+                                    <div class="recommend-title">C&#43;&#43;基本数据类型和计算</div>
+                                    <div class="recommend-date">2022-04-30</div>
+                                </div>
+                            </a>
+                            
+                            <a href="https://orz-ai.github.io/posts/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="recommend-card">
+                                <div class="recommend-image">
+                                    
+                                    <div class="recommend-placeholder"></div>
+                                    
+                                </div>
+                                <div class="recommend-info">
+                                    <div class="recommend-title">2.编译原理-编译系统设计</div>
+                                    <div class="recommend-date">2022-04-24</div>
+                                </div>
+                            </a>
+                            
+                            <a href="https://orz-ai.github.io/posts/2022-03-27-%E6%9C%8D%E5%8A%A1%E5%99%A8hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%92%8Cgit%E5%90%8C%E6%AD%A5/" class="recommend-card">
+                                <div class="recommend-image">
+                                    
+                                    <div class="recommend-placeholder"></div>
+                                    
+                                </div>
+                                <div class="recommend-info">
+                                    <div class="recommend-title">服务器Hexo博客部署和Git同步</div>
+                                    <div class="recommend-date">2022-03-27</div>
+                                </div>
+                            </a>
+                            
+                            <a href="https://orz-ai.github.io/posts/%E6%9C%AC%E5%9C%B0vm%E4%B8%80%E4%BA%9B%E9%85%8D%E7%BD%AE/" class="recommend-card">
+                                <div class="recommend-image">
+                                    
+                                    <div class="recommend-placeholder"></div>
+                                    
+                                </div>
+                                <div class="recommend-info">
+                                    <div class="recommend-title"></div>
+                                    <div class="recommend-date">0001-01-01</div>
+                                </div>
+                            </a>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-footer">
+                    <div class="post-nav">
+                        
+                        <a href="https://orz-ai.github.io/posts/2022-04-30-c&#43;&#43;%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/" class="post-nav-prev">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>C&#43;&#43;基本数据类型和计算</span>
+                        </a>
+                        
+
+                        
+                        <a href="https://orz-ai.github.io/posts/2022-05-04-c&#43;&#43;%E7%BB%93%E6%9E%84%E4%BD%93/" class="post-nav-next">
+                            <span>C&#43;&#43;结构体和联合体</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+            </article>
+
+            
+            <div class="toc-container" id="tocContainer">
+                <div class="toc-header">
+                    <span><i class="fas fa-list"></i> 目录</span>
+                    <button class="toc-hide-btn" id="tocHideBtn" title="收起目录">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <nav class="toc-nav" id="tocNav">
+                    
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-info">
+                <p>&copy; 2025 Gang&#39;s Blog. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <a href="#" class="back-to-top" id="backToTop" aria-label="返回顶部">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    
+    <button class="toc-show-btn" id="tocShowBtn" title="显示目录" style="display: none;">
+        <i class="fas fa-list"></i>
+    </button>
+
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            var backToTop = document.getElementById('backToTop');
+
+            window.addEventListener('scroll', function () {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+            });
+
+            backToTop.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            
+            document.querySelectorAll('.highlight').forEach(function (highlight) {
+                
+                if (!highlight.querySelector('.copy-button')) {
+                    let copyButton = document.createElement('button');
+                    copyButton.className = 'copy-button';
+                    copyButton.textContent = '复制';
+
+                    highlight.appendChild(copyButton);
+
+                    copyButton.addEventListener('click', function () {
+                        let codeElement = highlight.querySelector('code');
+                        let textToCopy = codeElement.textContent;
+
+                        navigator.clipboard.writeText(textToCopy).then(function () {
+                            copyButton.textContent = '已复制!';
+                            setTimeout(function () {
+                                copyButton.textContent = '复制';
+                            }, 2000);
+                        }).catch(function (err) {
+                            console.error('无法复制文本: ', err);
+                        });
+                    });
+                }
+
+                
+                let codeClass = highlight.querySelector('code').className;
+                let langMatch = codeClass.match(/language-(\w+)/);
+
+                if (langMatch && langMatch[1]) {
+                    let lang = langMatch[1];
+                    
+                    let existingIndicator = highlight.querySelector('.language-indicator');
+                    if (existingIndicator) {
+                        existingIndicator.remove();
+                    }
+
+                    
+                    let langIndicator = document.createElement('div');
+                    langIndicator.className = 'language-indicator';
+                    langIndicator.textContent = lang;
+                    highlight.insertBefore(langIndicator, highlight.firstChild);
+                }
+            });
+
+            
+            const tocContainer = document.getElementById('tocContainer');
+            const tocNav = document.getElementById('tocNav');
+            const postContent = document.querySelector('.post-content');
+
+            if (!postContent) return;
+
+            
+            function addHeadingNumbers() {
+                const headings = postContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                let counters = [0, 0, 0, 0, 0, 0]; 
+
+                headings.forEach(heading => {
+                    const level = parseInt(heading.tagName.charAt(1)) - 1; 
+
+                    
+                    counters[level]++;
+
+                    
+                    for (let i = level + 1; i < counters.length; i++) {
+                        counters[i] = 0;
+                    }
+
+                    
+                    let numberStr = '';
+                    for (let i = 0; i <= level; i++) {
+                        if (counters[i] > 0) {
+                            numberStr += (numberStr ? '.' : '') + counters[i];
+                        }
+                    }
+                    numberStr += '. ';
+
+                    
+                    const numberSpan = document.createElement('span');
+                    numberSpan.className = 'heading-number';
+                    numberSpan.textContent = numberStr;
+                    heading.insertBefore(numberSpan, heading.firstChild);
+                });
+            }
+
+            
+            function generateTOC() {
+                const headings = postContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                if (headings.length === 0) {
+                    tocContainer.style.display = 'none';
+                    return;
+                }
+
+                tocNav.innerHTML = '';
+                let levelStack = [];
+
+                headings.forEach((heading, index) => {
+                    const level = parseInt(heading.tagName.charAt(1));
+                    const id = heading.id || `heading-${index}`;
+                    heading.id = id;
+
+                    
+                    while (levelStack.length > 0 && levelStack[levelStack.length - 1].level >= level) {
+                        levelStack.pop();
+                    }
+
+                    const listItem = document.createElement('li');
+                    listItem.className = `toc-item toc-level-${level}`;
+
+                    const link = document.createElement('a');
+                    link.href = `#${id}`;
+                    link.className = 'toc-link';
+                    link.setAttribute('data-target', id);
+                    link.innerHTML = `<span class="toc-text">${heading.textContent}</span>`;
+
+                    listItem.appendChild(link);
+
+                    
+                    if (levelStack.length === 0) {
+                        tocNav.appendChild(listItem);
+                    } else {
+                        const parent = levelStack[levelStack.length - 1];
+                        let subList = parent.element.querySelector('ul');
+                        if (!subList) {
+                            subList = document.createElement('ul');
+                            subList.className = 'toc-list';
+                            parent.element.appendChild(subList);
+
+                            
+                            const parentLink = parent.element.querySelector('.toc-link');
+                            if (parentLink && !parentLink.classList.contains('toc-expandable')) {
+                                parentLink.classList.add('toc-expandable');
+                                parentLink.addEventListener('click', function (e) {
+                                    if (e.target.closest('.toc-link') === this) {
+                                        e.preventDefault();
+                                        subList.classList.toggle('toc-collapsed');
+                                        this.classList.toggle('toc-expanded');
+                                    }
+                                });
+                            }
+                        }
+                        subList.appendChild(listItem);
+                    }
+
+                    levelStack.push({ level: level, element: listItem });
+                });
+            }
+
+            
+            function updateActiveHeading() {
+                const headings = postContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+
+                let activeHeading = null;
+                let closestHeading = null;
+                let closestDistance = Infinity;
+
+                
+                headings.forEach(heading => {
+                    const rect = heading.getBoundingClientRect();
+                    const headingCenter = rect.top + rect.height / 2;
+                    const viewportCenter = windowHeight / 2;
+                    const distance = Math.abs(headingCenter - viewportCenter);
+
+                    
+                    if (headingCenter <= viewportCenter && distance < closestDistance) {
+                        closestDistance = distance;
+                        closestHeading = heading;
+                    }
+                });
+
+                activeHeading = closestHeading;
+
+                
+                if (!activeHeading) {
+                    const isNearBottom = (scrollTop + windowHeight) >= documentHeight - 100;
+                    if (isNearBottom && headings.length > 0) {
+                        activeHeading = headings[headings.length - 1];
+                    }
+                }
+
+                
+                document.querySelectorAll('.toc-link').forEach(link => {
+                    link.classList.remove('active');
+                    link.parentElement.classList.remove('active');
+                });
+
+                
+                if (activeHeading) {
+                    const activeLink = document.querySelector(`[data-target="${activeHeading.id}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                        activeLink.parentElement.classList.add('active');
+
+                        
+                        let parent = activeLink.parentElement.parentElement;
+                        while (parent && parent.classList.contains('toc-list')) {
+                            parent.style.display = 'block';
+                            parent = parent.parentElement.parentElement;
+                        }
+                    }
+                }
+            }
+
+            
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('.toc-link')) {
+                    e.preventDefault();
+                    const targetId = e.target.closest('.toc-link').getAttribute('data-target');
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - 100;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+
+            
+            addHeadingNumbers(); 
+            generateTOC(); 
+            updateActiveHeading();
+
+            
+            const tocHideBtn = document.getElementById('tocHideBtn');
+            const tocShowBtn = document.getElementById('tocShowBtn');
+
+            if (tocHideBtn) {
+                tocHideBtn.addEventListener('click', function () {
+                    
+                    tocContainer.classList.add('hidden');
+                    if (tocShowBtn) {
+                        tocShowBtn.style.display = 'block';
+                    }
+                });
+            }
+
+            if (tocShowBtn) {
+                tocShowBtn.addEventListener('click', function () {
+                    
+                    tocContainer.classList.remove('hidden');
+                    tocShowBtn.style.display = 'none';
+                });
+            }
+
+            
+            let ticking = false;
+            window.addEventListener('scroll', function () {
+                if (!ticking) {
+                    requestAnimationFrame(function () {
+                        updateActiveHeading();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

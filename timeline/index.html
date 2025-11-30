@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>时间线 - Gang&#39;s Blog</title>
+<meta name="description"
+  content="按时间顺序查看所有文章和照片">
+<meta name="keywords" content="博客, 技术, 生活, 编程, Go语言, Hugo">
+<meta name="author" content="Gang">
+
+
+<link rel="canonical" href="https://orz-ai.github.io/timeline/">
+
+
+<link rel="stylesheet" href="https://orz-ai.github.io/css/style.css">
+<link rel="stylesheet" href="https://orz-ai.github.io/css/syntax.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://orz-ai.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://orz-ai.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://orz-ai.github.io/favicon-16x16.png">
+<meta name="theme-color" content="#4a6cf7">
+
+
+<meta property="og:title"
+  content="时间线 - Gang&#39;s Blog">
+<meta property="og:description"
+  content="按时间顺序查看所有文章和照片">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://orz-ai.github.io/timeline/">
+
+<meta property="og:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+<meta property="og:site_name" content="Gang&#39;s Blog">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title"
+  content="时间线 - Gang&#39;s Blog">
+<meta name="twitter:description"
+  content="按时间顺序查看所有文章和照片">
+
+<meta name="twitter:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Gang\u0027s Blog",
+  "url": "https:\/\/orz-ai.github.io\/",
+  "description": "个人博客网站 - 分享技术、知识和生活感悟",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Gang\u0027s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/orz-ai.github.io\/favicon-32x32.png"
+    }
+  }
+}
+</script>
+
+    <style>
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 0;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background: linear-gradient(to bottom,
+                    rgba(74, 108, 247, 0.1) 0%,
+                    rgba(74, 108, 247, 0.6) 15%,
+                    rgba(106, 137, 255, 0.8) 50%,
+                    rgba(74, 108, 247, 0.6) 85%,
+                    rgba(74, 108, 247, 0.1) 100%);
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px rgba(74, 108, 247, 0.15);
+        }
+
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 100%;
+            background: repeating-linear-gradient(to bottom,
+                    transparent,
+                    transparent 10px,
+                    rgba(255, 255, 255, 0.3) 10px,
+                    rgba(255, 255, 255, 0.3) 20px);
+        }
+
+        .timeline-items {
+            position: relative;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 20px;
+            position: relative;
+            min-height: 40px;
+            opacity: 1;
+        }
+
+        .timeline-item.is-visible {
+            opacity: 1;
+        }
+
+        .timeline-item.year-collapsed {
+            display: none;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(135deg, #4a6cf7 0%, #6a89ff 100%);
+            border-radius: 50%;
+            z-index: 10;
+            box-shadow:
+                0 0 0 4px rgba(255, 255, 255, 0.9),
+                0 0 0 6px rgba(74, 108, 247, 0.2),
+                0 3px 10px rgba(74, 108, 247, 0.3);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateX(-50%) translateZ(0);
+            position: relative;
+        }
+
+        .timeline-dot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.9;
+        }
+
+        .timeline-dot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(106, 137, 255, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        .timeline-item:hover .timeline-dot {
+            transform: translateX(-50%) scale(1.15) translateZ(0);
+            box-shadow:
+                0 0 0 4px rgba(255, 255, 255, 1),
+                0 0 0 8px rgba(106, 137, 255, 0.3),
+                0 5px 15px rgba(74, 108, 247, 0.4);
+        }
+
+        .timeline-item:hover .timeline-dot::after {
+            animation: pulse-ring 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        .timeline-content {
+            width: 45%;
+            padding: 10px 15px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid rgba(74, 108, 247, 0.1);
+            position: relative;
+            transform: translateZ(0);
+        }
+
+         
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 30px;
+            height: 2px;
+            background: linear-gradient(to right, rgba(74, 108, 247, 0.3), transparent);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -30px;
+            top: 20px;
+            background: linear-gradient(to right, transparent, rgba(74, 108, 247, 0.3));
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -30px;
+            top: 20px;
+            background: linear-gradient(to left, transparent, rgba(74, 108, 247, 0.3));
+        }
+
+        .timeline-content:hover {
+            box-shadow: 0 8px 30px rgba(74, 108, 247, 0.15);
+            transform: translateY(-2px) translateZ(0);
+            border-color: rgba(74, 108, 247, 0.3);
+        }
+
+        .timeline-content:hover::before {
+            background: linear-gradient(to right, rgba(106, 137, 255, 0.5), transparent);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content:hover::before {
+            background: linear-gradient(to right, transparent, rgba(106, 137, 255, 0.5));
+        }
+
+        .timeline-item:nth-child(even) .timeline-content:hover::before {
+            background: linear-gradient(to left, transparent, rgba(106, 137, 255, 0.5));
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: #777;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-date i {
+            margin-right: 8px;
+            color: #4a6cf7;
+        }
+
+        .timeline-title {
+            font-size: 15px;
+            margin: 0 0 5px;
+            line-height: 1.2;
+            font-weight: 600;
+        }
+
+        .timeline-title a {
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            display: inline-block;
+        }
+
+        .timeline-title a:hover {
+            color: #4a6cf7;
+            transform: translateX(3px);
+        }
+
+        .timeline-title a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: linear-gradient(to right, #4a6cf7, #6a89ff);
+            transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .timeline-title a:hover::after {
+            width: 100%;
+        }
+
+        .timeline-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 5px;
+        }
+
+        .timeline-divider {
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #e0e0e0, transparent);
+            margin: 8px 0;
+        }
+
+        .timeline-type {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 6px;
+            font-size: 10px;
+            border-radius: 20px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .timeline-type.type-post {
+            background-color: rgba(74, 108, 247, 0.1);
+            color: #4a6cf7;
+        }
+
+        .timeline-type.type-photo {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: #2ecc71;
+        }
+
+        .timeline-summary {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: 55%;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 55%;
+        }
+
+        .timeline-year {
+            position: relative;
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 50px;
+        }
+
+        .timeline-year-label {
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(135deg, #4a6cf7, #6a89ff);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow:
+                0 4px 15px rgba(74, 108, 247, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+            z-index: 10;
+            letter-spacing: 1.5px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .timeline-year-label::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+            border-radius: 30px;
+            transition: opacity 0.3s ease;
+        }
+
+        .timeline-year-label:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 6px 25px rgba(74, 108, 247, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                0 0 0 3px rgba(106, 137, 255, 0.2);
+        }
+
+        .timeline-year-label:hover::before {
+            opacity: 0.7;
+        }
+
+        .timeline-year-label::after {
+            content: '\f107';
+             
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            margin-left: 10px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.9);
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .timeline-year-label.collapsed::after {
+            content: '\f105';
+             
+            transform: rotate(0deg);
+        }
+
+        .timeline-year-label:not(.collapsed)::after {
+            transform: rotate(0deg);
+        }
+
+        @media (max-width: 768px) {
+            .timeline-line {
+                left: 30px;
+            }
+
+            .timeline-dot {
+                left: 30px;
+                transform: translateX(-50%);
+            }
+
+            .timeline-content {
+                width: calc(100% - 80px);
+                margin-left: 80px !important;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content::before,
+            .timeline-item:nth-child(even) .timeline-content::before {
+                left: -30px;
+                width: 30px;
+                background: linear-gradient(to left, transparent, rgba(74, 108, 247, 0.3));
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-right: 0;
+            }
+
+            .timeline-year-label {
+                font-size: 14px;
+                padding: 8px 18px;
+                border-radius: 25px;
+            }
+        }
+
+         
+        .js-timeline-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+         
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, #4a6cf7, #6a89ff);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+    <div class="container">
+        <div class="header-inner">
+            <a href="https://orz-ai.github.io/" class="logo">
+                <h1>Gang&#39;s Blog</h1>
+            </a>
+            <div class="header-right">
+                <div class="search-box">
+                    <form action="https://orz-ai.github.io/%20search" method="get">
+                        <input type="text" name="q" placeholder="搜索..." aria-label="搜索">
+                        <button type="submit" aria-label="提交搜索"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                <nav class="nav">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/" class="nav-link">首页</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/posts/" class="nav-link">文章</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/photos/" class="nav-link">照片墙</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/timeline/" class="nav-link active">时间线</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/tags/" class="nav-link">标签</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/about/" class="nav-link">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+    <main class="main">
+        <div class="container">
+
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                <div class="timeline-items">
+                    
+                    
+                    
+                    
+
+                    
+                    
+                    
+
+                    
+                    <div class="timeline-year js-timeline-item">
+                        <div class="timeline-year-label" data-year="2025">2025</div>
+                    </div>
+                    
+                    
+
+                    <div class="timeline-item js-timeline-item year-2025">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-meta">
+                                
+                                <span class="timeline-type type-post">
+                                    <i class="fas fa-file-alt"></i> 文章
+                                </span>
+                                
+
+                                <div class="timeline-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="relative-time" data-timestamp="1760832000">2025-10-19</span>
+                                </div>
+                            </div>
+
+                            <hr class="timeline-divider">
+
+                            <h3 class="timeline-title">
+                                <a href="https://orz-ai.github.io/posts/%E7%9B%B2%E4%BA%BA%E8%A7%86%E8%A7%89%E5%8A%A9%E7%90%86/">VisionMate — 面向视障人群的AI视觉场景理解助手</a>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    
+
+                    
+                    <div class="timeline-year js-timeline-item">
+                        <div class="timeline-year-label" data-year="2024">2024</div>
+                    </div>
+                    
+                    
+
+                    <div class="timeline-item js-timeline-item year-2024">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-meta">
+                                
+                                <span class="timeline-type type-post">
+                                    <i class="fas fa-file-alt"></i> 文章
+                                </span>
+                                
+
+                                <div class="timeline-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="relative-time" data-timestamp="1704067200">2024-01-01</span>
+                                </div>
+                            </div>
+
+                            <hr class="timeline-divider">
+
+                            <h3 class="timeline-title">
+                                <a href="https://orz-ai.github.io/posts/welcome/">欢迎使用GBlog主题</a>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    
+
+                    
+                    <div class="timeline-year js-timeline-item">
+                        <div class="timeline-year-label" data-year="2023">2023</div>
+                    </div>
+                    
+                    
+
+                    <div class="timeline-item js-timeline-item year-2023">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-meta">
+                                
+                                <span class="timeline-type type-post">
+                                    <i class="fas fa-file-alt"></i> 文章
+                                </span>
+                                
+
+                                <div class="timeline-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="relative-time" data-timestamp="1700006400">2023-11-15</span>
+                                </div>
+                            </div>
+
+                            <hr class="timeline-divider">
+
+                            <h3 class="timeline-title">
+                                <a href="https://orz-ai.github.io/posts/java%E9%9D%A2%E8%AF%95%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/">JAVA面试核心知识点整理</a>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    
+
+                    
+
+                    <div class="timeline-item js-timeline-item year-2023">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-meta">
+                                
+                                <span class="timeline-type type-post">
+                                    <i class="fas fa-file-alt"></i> 文章
+                                </span>
+                                
+
+                                <div class="timeline-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="relative-time" data-timestamp="1700006400">2023-11-15</span>
+                                </div>
+                            </div>
+
+                            <hr class="timeline-divider">
+
+                            <h3 class="timeline-title">
+                                <a href="https://orz-ai.github.io/posts/go-gc-deep-dive/">深入理解Go语言垃圾回收机制：原理、流程与优化</a>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    
+
+                    
+
+                    <div class="timeline-item js-timeline-item year-2023">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-meta">
+                                
+                                <span class="timeline-type type-post">
+                                    <i class="fas fa-file-alt"></i> 文章
+                                </span>
+                                
+
+                                <div class="timeline-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="relative-time" data-timestamp="1697328000">2023-10-15</span>
+                                </div>
+                            </div>
+
+                            <hr class="timeline-divider">
+
+                            <h3 class="timeline-title">
+                                <a href="https://orz-ai.github.io/posts/your-post-name/">Go语言入门指南</a>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    
+
+                    
+
+                    <div class="timeline-item js-timeline-item year-2023">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-meta">
+                                
+                                <span class="timeline-type type-photo">
+                                    <i class="fas fa-camera"></i> 照片
+                                </span>
+                                
+
+                                <div class="timeline-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="relative-time" data-timestamp="1696464000">2023-10-05</span>
+                                </div>
+                            </div>
+
+                            <hr class="timeline-divider">
+
+                            <h3 class="timeline-title">
+                                <a href="https://orz-ai.github.io/photos/sample-photo-5/">海滨日落</a>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    
+
+                    
+
+                    <div class="timeline-item js-timeline-item year-2023">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-meta">
+                                
+                                <span class="timeline-type type-photo">
+                                    <i class="fas fa-camera"></i> 照片
+                                </span>
+                                
+
+                                <div class="timeline-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="relative-time" data-timestamp="1696464000">2023-10-05</span>
+                                </div>
+                            </div>
+
+                            <hr class="timeline-divider">
+
+                            <h3 class="timeline-title">
+                                <a href="https://orz-ai.github.io/photos/sample-photo-3/">花卉特写</a>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    
+
+                    
+
+                    <div class="timeline-item js-timeline-item year-2023">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-meta">
+                                
+                                <span class="timeline-type type-photo">
+                                    <i class="fas fa-camera"></i> 照片
+                                </span>
+                                
+
+                                <div class="timeline-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="relative-time" data-timestamp="1695168000">2023-09-20</span>
+                                </div>
+                            </div>
+
+                            <hr class="timeline-divider">
+
+                            <h3 class="timeline-title">
+                                <a href="https://orz-ai.github.io/photos/sample-photo-2/">城市夜景</a>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    
+
+                    
+
+                    <div class="timeline-item js-timeline-item year-2023">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-meta">
+                                
+                                <span class="timeline-type type-photo">
+                                    <i class="fas fa-camera"></i> 照片
+                                </span>
+                                
+
+                                <div class="timeline-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="relative-time" data-timestamp="1695168000">2023-09-20</span>
+                                </div>
+                            </div>
+
+                            <hr class="timeline-divider">
+
+                            <h3 class="timeline-title">
+                                <a href="https://orz-ai.github.io/photos/sample-photo-4/">城市夜景</a>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    
+
+                    
+
+                    <div class="timeline-item js-timeline-item year-2023">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-meta">
+                                
+                                <span class="timeline-type type-photo">
+                                    <i class="fas fa-camera"></i> 照片
+                                </span>
+                                
+
+                                <div class="timeline-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="relative-time" data-timestamp="1692057600">2023-08-15</span>
+                                </div>
+                            </div>
+
+                            <hr class="timeline-divider">
+
+                            <h3 class="timeline-title">
+                                <a href="https://orz-ai.github.io/photos/sample-photo-1/">美丽风景</a>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    
+
+                    
+                    <div class="timeline-year js-timeline-item">
+                        <div class="timeline-year-label" data-year="2022">2022</div>
+                    </div>
+                    
+                    
+
+                    <div class="timeline-item js-timeline-item year-2022">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-meta">
+                                
+                                <span class="timeline-type type-post">
+                                    <i class="fas fa-file-alt"></i> 文章
+                                </span>
+                                
+
+                                <div class="timeline-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="relative-time" data-timestamp="1651688496">2022-05-04</span>
+                                </div>
+                            </div>
+
+                            <hr class="timeline-divider">
+
+                            <h3 class="timeline-title">
+                                <a href="https://orz-ai.github.io/posts/2022-05-04-c&#43;&#43;%E7%BB%93%E6%9E%84%E4%BD%93/">C&#43;&#43;结构体和联合体</a>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    
+
+                    
+
+                    <div class="timeline-item js-timeline-item year-2022">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-meta">
+                                
+                                <span class="timeline-type type-post">
+                                    <i class="fas fa-file-alt"></i> 文章
+                                </span>
+                                
+
+                                <div class="timeline-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="relative-time" data-timestamp="1651523280">2022-05-02</span>
+                                </div>
+                            </div>
+
+                            <hr class="timeline-divider">
+
+                            <h3 class="timeline-title">
+                                <a href="https://orz-ai.github.io/posts/2022-05-02-c&#43;&#43;%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E4%B8%8E%E6%8C%87%E9%92%88/">C&#43;&#43;动态内存分配与指针</a>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    
+
+                    
+
+                    <div class="timeline-item js-timeline-item year-2022">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-meta">
+                                
+                                <span class="timeline-type type-post">
+                                    <i class="fas fa-file-alt"></i> 文章
+                                </span>
+                                
+
+                                <div class="timeline-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="relative-time" data-timestamp="1651346643">2022-04-30</span>
+                                </div>
+                            </div>
+
+                            <hr class="timeline-divider">
+
+                            <h3 class="timeline-title">
+                                <a href="https://orz-ai.github.io/posts/2022-04-30-c&#43;&#43;%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">C&#43;&#43;基本数据类型和计算</a>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    
+
+                    
+
+                    <div class="timeline-item js-timeline-item year-2022">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-meta">
+                                
+                                <span class="timeline-type type-post">
+                                    <i class="fas fa-file-alt"></i> 文章
+                                </span>
+                                
+
+                                <div class="timeline-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="relative-time" data-timestamp="1650763906">2022-04-24</span>
+                                </div>
+                            </div>
+
+                            <hr class="timeline-divider">
+
+                            <h3 class="timeline-title">
+                                <a href="https://orz-ai.github.io/posts/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">2.编译原理-编译系统设计</a>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    
+
+                    
+
+                    <div class="timeline-item js-timeline-item year-2022">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-meta">
+                                
+                                <span class="timeline-type type-post">
+                                    <i class="fas fa-file-alt"></i> 文章
+                                </span>
+                                
+
+                                <div class="timeline-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="relative-time" data-timestamp="1648425240">2022-03-27</span>
+                                </div>
+                            </div>
+
+                            <hr class="timeline-divider">
+
+                            <h3 class="timeline-title">
+                                <a href="https://orz-ai.github.io/posts/2022-03-27-%E6%9C%8D%E5%8A%A1%E5%99%A8hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%92%8Cgit%E5%90%8C%E6%AD%A5/">服务器Hexo博客部署和Git同步</a>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    
+
+                    
+                    <div class="timeline-year js-timeline-item">
+                        <div class="timeline-year-label" data-year="0001">0001</div>
+                    </div>
+                    
+                    
+
+                    <div class="timeline-item js-timeline-item year-0001">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-meta">
+                                
+                                <span class="timeline-type type-post">
+                                    <i class="fas fa-file-alt"></i> 文章
+                                </span>
+                                
+
+                                <div class="timeline-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span class="relative-time" data-timestamp="-62135596800">0001-01-01</span>
+                                </div>
+                            </div>
+
+                            <hr class="timeline-divider">
+
+                            <h3 class="timeline-title">
+                                <a href="https://orz-ai.github.io/posts/%E6%9C%AC%E5%9C%B0vm%E4%B8%80%E4%BA%9B%E9%85%8D%E7%BD%AE/"></a>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-info">
+                <p>&copy; 2025 Gang&#39;s Blog. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const yearLabels = document.querySelectorAll('.timeline-year-label');
+
+            yearLabels.forEach(function (label) {
+                label.addEventListener('click', function () {
+                    const year = this.getAttribute('data-year');
+                    const yearItems = document.querySelectorAll('.year-' + year);
+                    const isCollapsed = this.classList.contains('collapsed');
+
+                    if (isCollapsed) {
+                        
+                        this.classList.remove('collapsed');
+                        yearItems.forEach(function (item) {
+                            item.classList.remove('year-collapsed');
+                        });
+                    } else {
+                        
+                        this.classList.add('collapsed');
+                        yearItems.forEach(function (item) {
+                            item.classList.add('year-collapsed');
+                        });
+                    }
+                });
+            });
+
+            
+            function updateRelativeTime() {
+                const timeElements = document.querySelectorAll('.relative-time');
+                const now = Math.floor(Date.now() / 1000);
+
+                timeElements.forEach(function (element) {
+                    const timestamp = parseInt(element.getAttribute('data-timestamp'));
+                    const diff = now - timestamp;
+
+                    let relativeTime = '';
+                    if (diff < 60) {
+                        relativeTime = '刚刚';
+                    } else if (diff < 3600) {
+                        const minutes = Math.floor(diff / 60);
+                        relativeTime = minutes + '分钟前';
+                    } else if (diff < 86400) {
+                        const hours = Math.floor(diff / 3600);
+                        relativeTime = hours + '小时前';
+                    } else if (diff < 2592000) {
+                        const days = Math.floor(diff / 86400);
+                        relativeTime = days + '天前';
+                    } else if (diff < 31536000) {
+                        const months = Math.floor(diff / 2592000);
+                        relativeTime = months + '个月前';
+                    } else {
+                        const years = Math.floor(diff / 31536000);
+                        relativeTime = years + '年前';
+                    }
+
+                    element.textContent = relativeTime;
+                });
+            }
+
+            
+            updateRelativeTime();
+
+            
+            setInterval(updateRelativeTime, 60000);
+        });
+    </script>
+</body>
+
+</html>

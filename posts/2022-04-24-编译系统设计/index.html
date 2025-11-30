@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.编译原理-编译系统设计 - Gang&#39;s Blog</title>
+<meta name="description"
+  content="学习编译原理编译系统设计">
+<meta name="keywords" content="编译原理">
+<meta name="author" content="Gang">
+
+
+<link rel="canonical" href="https://orz-ai.github.io/posts/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">
+
+
+<link rel="stylesheet" href="https://orz-ai.github.io/css/style.css">
+<link rel="stylesheet" href="https://orz-ai.github.io/css/syntax.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://orz-ai.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://orz-ai.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://orz-ai.github.io/favicon-16x16.png">
+<meta name="theme-color" content="#4a6cf7">
+
+
+<meta property="og:title"
+  content="2.编译原理-编译系统设计 - Gang&#39;s Blog">
+<meta property="og:description"
+  content="学习编译原理编译系统设计">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://orz-ai.github.io/posts/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">
+
+<meta property="og:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+<meta property="og:site_name" content="Gang&#39;s Blog">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title"
+  content="2.编译原理-编译系统设计 - Gang&#39;s Blog">
+<meta name="twitter:description"
+  content="学习编译原理编译系统设计">
+
+<meta name="twitter:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "2.编译原理-编译系统设计",
+  "description": "学习编译原理编译系统设计",
+  "author": {
+    "@type": "Person",
+    "name": "Gang"
+  },
+  "datePublished": "2022-04-24T01:31:46Z",
+  "dateModified": "2022-04-24T01:31:46Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https:\/\/orz-ai.github.io\/posts\/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1\/"
+  },
+  
+  "image": "https:\/\/orz-ai.github.io\/images\/hero-bg.jpg",
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Gang\u0027s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/orz-ai.github.io\/favicon-32x32.png"
+    }
+  }
+}
+</script>
+
+</head>
+
+<body>
+    <header class="header">
+    <div class="container">
+        <div class="header-inner">
+            <a href="https://orz-ai.github.io/" class="logo">
+                <h1>Gang&#39;s Blog</h1>
+            </a>
+            <div class="header-right">
+                <div class="search-box">
+                    <form action="https://orz-ai.github.io/%20search" method="get">
+                        <input type="text" name="q" placeholder="搜索..." aria-label="搜索">
+                        <button type="submit" aria-label="提交搜索"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                <nav class="nav">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/" class="nav-link">首页</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/posts/" class="nav-link active">文章</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/photos/" class="nav-link">照片墙</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/timeline/" class="nav-link">时间线</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/tags/" class="nav-link">标签</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/about/" class="nav-link">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+    <main class="main">
+        <div class="container">
+            <article class="post">
+                <header class="post-header">
+                    <h1 class="post-title">2.编译原理-编译系统设计</h1>
+                    <div class="post-meta">
+                        <time datetime=" 2022-04-24T01:31:46Z">
+                            2022-04-24
+                        </time>
+
+                        
+                        <span class="post-category">
+                            <i class="fas fa-folder"></i>
+                            
+                            <a href="https://orz-ai.github.io/%20categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+                            
+                        </span>
+                        
+
+                        
+
+                        <span class="post-reading-time">
+                            <i class="fas fa-clock"></i> 6 分钟阅读
+                        </span>
+                    </div>
+
+                    
+                    <div class="post-tags">
+                        
+                        <a href='https://orz-ai.github.io/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/' class="tag">编译原理</a>
+                        
+                    </div>
+                    
+                </header>
+
+                <div class="post-content">
+                    <h1 id="编译程序的设计">编译程序的设计</h1>
+<p>编译器是编译系统的核心，主要负责解析源程序<strong>语义</strong></p>
+<p>一般情况下编译流程包含一下四个步骤 ：</p>
+<ol>
+<li>词法分析</li>
+<li>语法分析</li>
+<li>语义分析</li>
+<li>代码生成</li>
+</ol>
+<h2 id="词法分析">词法分析</h2>
+<p>词法分析器通过对源文件的<strong>扫描</strong>获得高级语言定义的<strong>词法记号</strong></p>
+<p><img src="../post_img/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20220424014552152.png" alt="image-20220424014552152"></p>
+<p>为了能从一长串代码文本中分析出每一个词法记号，需要引入<strong>有限自动机</strong>的概念</p>
+<p>有线自动机从开始状态启动，读入一个字符作为输入，并根据该字符进入下一个状态，继续读入新的字符，直到遇到结束状态。</p>
+<p><code>var2 = var1 + 100</code></p>
+<p>该语句包含了6个词法记号，分别是：</p>
+<ol>
+<li><code>var</code></li>
+<li><code>=</code></li>
+<li><code>var2</code></li>
+<li><code>+</code></li>
+<li><code>100</code></li>
+</ol>
+<h2 id="语法分析">语法分析</h2>
+<p>语法分析器的输入是词法分析器识别的<strong>词法记号序列</strong></p>
+<p><img src="../post_img/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20220424085905901.png" alt="image-20220424085905901"></p>
+<p><code>var2 = var1 + 100</code></p>
+<p>对应的<strong>抽象语法树</strong></p>
+<p><img src="../post_img/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20220424090821621.png" alt="image-20220424090821621"></p>
+<p>终结符：由图中可以看出来，所有的词法记号都出现在叶子节点，这样的叶子节点称为终结符</p>
+<p>在了解语法分析器工作之前，需要有限获得高级语言的形式化表示，即<strong>文法</strong>。文法定义了远程需的书写规则，同时也是语法分析器构造抽象语法树的规则。</p>
+<p>赋值语句的一般文法：</p>
+<p><code>&lt;赋值语句&gt;=&gt;标识符等号&lt;表达式&gt;分号</code></p>
+<ul>
+<li>被&lt;&gt;括起来的内容标识非终结符，直接书写即可</li>
+<li>上式可以读作：赋值语句推导出标识符、等号、<strong>表达式</strong>、分号</li>
+<li>其中表达式也有自己的文法</li>
+</ul>
+<p>有了高级语言的文法表示，就可以构造语法分线器来生成抽象语法树。</p>
+<p>文法分析算法：</p>
+<ul>
+<li>自顶向下的LL(1) 分析</li>
+<li>自底向上的算符优先分析</li>
+<li>LR分析</li>
+</ul>
+<p>书本中使用：LL(1)完成语法分析，使用递归下降子程序作为LL(1)算法的一宗便捷实现方式。</p>
+<p>递归下降子程序的基本原则是：</p>
+<ul>
+<li>
+<p>将产生式<strong>左侧</strong>的非终结符转化为<strong>函数定义</strong>，</p>
+</li>
+<li>
+<p>将产生式<strong>右侧</strong>的非终结符转化为<strong>函数调用</strong>，</p>
+</li>
+<li>
+<p>将终结符转化为词法记号匹配。</p>
+</li>
+<li></li>
+</ul>
+<p>赋值语句：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln">1</span><span class="cl"><span class="kt">void</span> <span class="err">赋值语句</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">    <span class="nf">match</span><span class="p">(</span><span class="err">标识符</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">    <span class="nf">match</span><span class="p">(</span><span class="err">等号</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">    <span class="err">表达式</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl">    <span class="nf">match</span><span class="p">(</span><span class="err">分号</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="符号表">符号表</h2>
+<p>是记录符号信息的数据结构</p>
+<p>符号存在两种形式：</p>
+<ol>
+<li>
+<p>变量</p>
+<p>数据的符号化形式</p>
+</li>
+<li>
+<p>函数</p>
+<p>代码的符号化形式</p>
+</li>
+</ol>
+<p><img src="../post_img/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20220424093054472.png" alt="image-20220424093054472"></p>
+<ol>
+<li></li>
+</ol>
+<h3 id="变量形式">变量形式</h3>
+<p>如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln">1</span><span class="cl"><span class="k">extern</span> <span class="kt">int</span> <span class="n">var</span><span class="p">;</span>
+</span></span></code></pre></div><p>定义了一个外部全局变量</p>
+<p>符号表结构中包含了：</p>
+<ul>
+<li>变量的名称：<code>var</code></li>
+<li>变量的类型：<code>int</code></li>
+</ul>
+<h3 id="函数形式">函数形式</h3>
+<p>如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln">1</span><span class="cl"><span class="kt">int</span> <span class="nf">sum</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span><span class="kt">int</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">     <span class="kt">int</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">     <span class="n">c</span><span class="o">=</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">     <span class="k">return</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>符号表结构中包含了：</p>
+<ul>
+<li>函数的返回类型：<code>int</code></li>
+<li>函数名：<code>sum</code></li>
+<li>参数列表：<code>int</code></li>
+<li>函数局部变量：<code>c</code></li>
+<li>参数变量：<code>a，b</code></li>
+</ul>
+<p>由于局部变量的存在，符号表必须考虑代码作用域的变化。</p>
+<p>符号表需要根据作用域的变化动态的维护变量的可见性</p>
+<h2 id="语义分析">语义分析</h2>
+<p>语言的文法分为四种：</p>
+<ol>
+<li>0型</li>
+<li>1型</li>
+<li>2型：又称为上下文无关文法，是目前计算机程序语言所采用的的文法。</li>
+<li>3型 ：正规文法，词法分析器中有限自动机能处理的语言文法正式3型文法</li>
+</ol>
+<p>这几类文法对语言的描述能力一次减弱</p>
+<p><img src="../post_img/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20220424150900195.png" alt="image-20220424150900195"></p>
+<p>语义分析是编译器处理流程中对源代码正确性的最后一次检查。</p>
+<h2 id="代码生成">代码生成</h2>
+<p>代码生成是编译器的最后一个处理阶段。</p>
+<p>根据识别的语法模块翻译出目标机器的指令</p>
+<p><img src="../post_img/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20220424151147216.png" alt="image-20220424151147216"></p>
+<h2 id="编译优化">编译优化</h2>
+<ul>
+<li>提高生成代码的质量</li>
+<li>会使代码生成过程变得复杂</li>
+</ul>
+<p>编译器设计被分为<strong>前端</strong>、<strong>优化器</strong>和<strong>后端</strong>三大部分。</p>
+<ul>
+<li>前端包含词法分析、语法分析和语义分析。</li>
+<li>后端包括指令选择、指令调度和寄存器分配。实际完成代码生成的工作</li>
+<li>优化器则是对<strong>中间代码</strong>进行优化的操作</li>
+</ul>
+<p><img src="../post_img/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20220424153421943.png" alt="image-20220424153421943"></p>
+<p>优化器</p>
+<ul>
+<li>
+<p>常量传播</p>
+</li>
+<li>
+<p>冗余消除</p>
+</li>
+<li>
+<p>复写传播</p>
+</li>
+<li>
+<p>死代码消除</p>
+<p>死代码消除优化会把无效的表达式从中间代码中删除</p>
+</li>
+</ul>
+<h1 id="x86指令格式">x86指令格式</h1>
+<p>intel手册</p>
+<p><a href="https://www.intel.cn/content/www/cn/zh/support/articles/000006715/processors.html">架构开发人员手册</a></p>
+<p>编译系统的汇编器需要把编译器生成的汇编语言程序转化为x86格式的二进制机器指令序列，然后将这些二进制信息存储为ELF格式的目标文件</p>
+<p>x86指令结构中，指令被分为前缀、操作码、<code>ModR/M</code>、<code>SIB</code>、偏移量和立即数六个部分。</p>
+<p><img src="../post_img/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20220425231441717.png" alt="image-20220425231441717"></p>
+<p>如下指令：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln">1</span><span class="cl">add eax, ebx
+</span></span></code></pre></div><p>在汇编语法的分析阶段，需要记录生成的二进制指令需要的信息：</p>
+<ul>
+<li>指令名称决定操作码</li>
+<li>指令的寻址方式决定<code>ModR/M</code>和<code>SIB</code>字段</li>
+<li>指令中的常量决定偏移量和立即数部分</li>
+</ul>
+<h1 id="elf文件格式">ELF文件格式</h1>
+<p>ELF文件格式描述了Linux下可执行文件、可重定位目标文件、共享目标文件。核心转促文件的存储格式</p>
+<p><img src="../post_img/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20220427211826225.png" alt="image-20220427211826225"></p>
+<p>Linux下可以使用<code>readelf</code>命令来查看ELF文件的信息</p>
+<p>在ELF文件中，最开始的52个字节记录了ELF文件头部信息</p>
+<p><strong>通过它可以确定ELF文件中程序头表和段表的位置和大小</strong></p>
+<p>如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="o">[</span>root@localhost c<span class="o">]</span><span class="c1"># readelf -a hello.o</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">ELF Header:
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">  Magic:   7f <span class="m">45</span> 4c <span class="m">46</span> <span class="m">02</span> <span class="m">01</span> <span class="m">01</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> <span class="m">00</span> 
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">  Class:                             ELF64
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">  Data:                              2<span class="s1">&#39;s complement, little endian
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="s1">  Version:                           1 (current)
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="s1">  OS/ABI:                            UNIX - System V
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="s1">  ABI Version:                       0
+</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="s1">  Type:                              REL (Relocatable file)
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="s1">  Machine:                           Advanced Micro Devices X86-64
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="s1">  Version:                           0x1
+</span></span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="s1">  Entry point address:               0x0
+</span></span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="s1">  Start of program headers:          0 (bytes into file)
+</span></span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="s1">  Start of section headers:          672 (bytes into file)
+</span></span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="s1">  Flags:                             0x0
+</span></span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="s1">  Size of this header:               64 (bytes)
+</span></span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="s1">  Size of program headers:           0 (bytes)
+</span></span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="s1">  Number of program headers:         0
+</span></span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="s1">  Size of section headers:           64 (bytes)
+</span></span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="s1">  Number of section headers:         13
+</span></span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="s1">  Section header string table index: 12
+</span></span></span><span class="line"><span class="ln">22</span><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="ln">23</span><span class="cl"><span class="s1">Section Headers:
+</span></span></span><span class="line"><span class="ln">24</span><span class="cl"><span class="s1">  [Nr] Name              Type             Address           Offset
+</span></span></span><span class="line"><span class="ln">25</span><span class="cl"><span class="s1">       Size              EntSize          Flags  Link  Info  Align
+</span></span></span><span class="line"><span class="ln">26</span><span class="cl"><span class="s1">  [ 0]                   NULL             0000000000000000  00000000
+</span></span></span><span class="line"><span class="ln">27</span><span class="cl"><span class="s1">       0000000000000000  0000000000000000           0     0     0
+</span></span></span><span class="line"><span class="ln">28</span><span class="cl"><span class="s1">  [ 1] .text             PROGBITS         0000000000000000  00000040
+</span></span></span><span class="line"><span class="ln">29</span><span class="cl"><span class="s1">       000000000000001a  0000000000000000  AX       0     0     1
+</span></span></span><span class="line"><span class="ln">30</span><span class="cl"><span class="s1">  [ 2] .rela.text        RELA             0000000000000000  000001f0
+</span></span></span><span class="line"><span class="ln">31</span><span class="cl"><span class="s1">       0000000000000030  0000000000000018   I      10     1     8
+</span></span></span><span class="line"><span class="ln">32</span><span class="cl"><span class="s1">  [ 3] .data             PROGBITS         0000000000000000  0000005a
+</span></span></span><span class="line"><span class="ln">33</span><span class="cl"><span class="s1">       0000000000000000  0000000000000000  WA       0     0     1
+</span></span></span><span class="line"><span class="ln">34</span><span class="cl"><span class="s1">  [ 4] .bss              NOBITS           0000000000000000  0000005a
+</span></span></span><span class="line"><span class="ln">35</span><span class="cl"><span class="s1">       0000000000000000  0000000000000000  WA       0     0     1
+</span></span></span><span class="line"><span class="ln">36</span><span class="cl"><span class="s1">  [ 5] .rodata           PROGBITS         0000000000000000  0000005a
+</span></span></span><span class="line"><span class="ln">37</span><span class="cl"><span class="s1">       000000000000000d  0000000000000000   A       0     0     1
+</span></span></span><span class="line"><span class="ln">38</span><span class="cl"><span class="s1">  [ 6] .comment          PROGBITS         0000000000000000  00000067
+</span></span></span><span class="line"><span class="ln">39</span><span class="cl"><span class="s1">       000000000000002e  0000000000000001  MS       0     0     1
+</span></span></span><span class="line"><span class="ln">40</span><span class="cl"><span class="s1">  [ 7] .note.GNU-stack   PROGBITS         0000000000000000  00000095
+</span></span></span><span class="line"><span class="ln">41</span><span class="cl"><span class="s1">       0000000000000000  0000000000000000           0     0     1
+</span></span></span><span class="line"><span class="ln">42</span><span class="cl"><span class="s1">  [ 8] .eh_frame         PROGBITS         0000000000000000  00000098
+</span></span></span><span class="line"><span class="ln">43</span><span class="cl"><span class="s1">       0000000000000038  0000000000000000   A       0     0     8
+</span></span></span><span class="line"><span class="ln">44</span><span class="cl"><span class="s1">  [ 9] .rela.eh_frame    RELA             0000000000000000  00000220
+</span></span></span><span class="line"><span class="ln">45</span><span class="cl"><span class="s1">       0000000000000018  0000000000000018   I      10     8     8
+</span></span></span><span class="line"><span class="ln">46</span><span class="cl"><span class="s1">  [10] .symtab           SYMTAB           0000000000000000  000000d0
+</span></span></span><span class="line"><span class="ln">47</span><span class="cl"><span class="s1">       0000000000000108  0000000000000018          11     9     8
+</span></span></span><span class="line"><span class="ln">48</span><span class="cl"><span class="s1">  [11] .strtab           STRTAB           0000000000000000  000001d8
+</span></span></span><span class="line"><span class="ln">49</span><span class="cl"><span class="s1">       0000000000000015  0000000000000000           0     0     1
+</span></span></span><span class="line"><span class="ln">50</span><span class="cl"><span class="s1">  [12] .shstrtab         STRTAB           0000000000000000  00000238
+</span></span></span><span class="line"><span class="ln">51</span><span class="cl"><span class="s1">       0000000000000061  0000000000000000           0     0     1
+</span></span></span><span class="line"><span class="ln">52</span><span class="cl"><span class="s1">Key to Flags:
+</span></span></span><span class="line"><span class="ln">53</span><span class="cl"><span class="s1">  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+</span></span></span><span class="line"><span class="ln">54</span><span class="cl"><span class="s1">  L (link order), O (extra OS processing required), G (group), T (TLS),
+</span></span></span><span class="line"><span class="ln">55</span><span class="cl"><span class="s1">  C (compressed), x (unknown), o (OS specific), E (exclude),
+</span></span></span><span class="line"><span class="ln">56</span><span class="cl"><span class="s1">  l (large), p (processor specific)
+</span></span></span><span class="line"><span class="ln">57</span><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="ln">58</span><span class="cl"><span class="s1">There are no section groups in this file.
+</span></span></span><span class="line"><span class="ln">59</span><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="ln">60</span><span class="cl"><span class="s1">There are no program headers in this file.
+</span></span></span><span class="line"><span class="ln">61</span><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="ln">62</span><span class="cl"><span class="s1">Relocation section &#39;</span>.rela.text<span class="s1">&#39; at offset 0x1f0 contains 2 entries:
+</span></span></span><span class="line"><span class="ln">63</span><span class="cl"><span class="s1">  Offset          Info           Type           Sym. Value    Sym. Name + Addend
+</span></span></span><span class="line"><span class="ln">64</span><span class="cl"><span class="s1">000000000005  00050000000a R_X86_64_32       0000000000000000 .rodata + 0
+</span></span></span><span class="line"><span class="ln">65</span><span class="cl"><span class="s1">00000000000f  000a00000002 R_X86_64_PC32     0000000000000000 printf - 4
+</span></span></span><span class="line"><span class="ln">66</span><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="ln">67</span><span class="cl"><span class="s1">Relocation section &#39;</span>.rela.eh_frame<span class="s1">&#39; at offset 0x220 contains 1 entries:
+</span></span></span><span class="line"><span class="ln">68</span><span class="cl"><span class="s1">  Offset          Info           Type           Sym. Value    Sym. Name + Addend
+</span></span></span><span class="line"><span class="ln">69</span><span class="cl"><span class="s1">000000000020  000200000002 R_X86_64_PC32     0000000000000000 .text + 0
+</span></span></span><span class="line"><span class="ln">70</span><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="ln">71</span><span class="cl"><span class="s1">The decoding of unwind sections for machine type Advanced Micro Devices X86-64 is not currently supported.
+</span></span></span><span class="line"><span class="ln">72</span><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="ln">73</span><span class="cl"><span class="s1">Symbol table &#39;</span>.symtab<span class="err">&#39;</span> contains <span class="m">11</span> entries:
+</span></span><span class="line"><span class="ln">74</span><span class="cl">   Num:    Value          Size Type    Bind   Vis      Ndx Name
+</span></span><span class="line"><span class="ln">75</span><span class="cl">     0: <span class="m">0000000000000000</span>     <span class="m">0</span> NOTYPE  LOCAL  DEFAULT  UND 
+</span></span><span class="line"><span class="ln">76</span><span class="cl">     1: <span class="m">0000000000000000</span>     <span class="m">0</span> FILE    LOCAL  DEFAULT  ABS hello.c
+</span></span><span class="line"><span class="ln">77</span><span class="cl">     2: <span class="m">0000000000000000</span>     <span class="m">0</span> SECTION LOCAL  DEFAULT    <span class="m">1</span> 
+</span></span><span class="line"><span class="ln">78</span><span class="cl">     3: <span class="m">0000000000000000</span>     <span class="m">0</span> SECTION LOCAL  DEFAULT    <span class="m">3</span> 
+</span></span><span class="line"><span class="ln">79</span><span class="cl">     4: <span class="m">0000000000000000</span>     <span class="m">0</span> SECTION LOCAL  DEFAULT    <span class="m">4</span> 
+</span></span><span class="line"><span class="ln">80</span><span class="cl">     5: <span class="m">0000000000000000</span>     <span class="m">0</span> SECTION LOCAL  DEFAULT    <span class="m">5</span> 
+</span></span><span class="line"><span class="ln">81</span><span class="cl">     6: <span class="m">0000000000000000</span>     <span class="m">0</span> SECTION LOCAL  DEFAULT    <span class="m">7</span> 
+</span></span><span class="line"><span class="ln">82</span><span class="cl">     7: <span class="m">0000000000000000</span>     <span class="m">0</span> SECTION LOCAL  DEFAULT    <span class="m">8</span> 
+</span></span><span class="line"><span class="ln">83</span><span class="cl">     8: <span class="m">0000000000000000</span>     <span class="m">0</span> SECTION LOCAL  DEFAULT    <span class="m">6</span> 
+</span></span><span class="line"><span class="ln">84</span><span class="cl">     9: <span class="m">0000000000000000</span>    <span class="m">26</span> FUNC    GLOBAL DEFAULT    <span class="m">1</span> main
+</span></span><span class="line"><span class="ln">85</span><span class="cl">    10: <span class="m">0000000000000000</span>     <span class="m">0</span> NOTYPE  GLOBAL DEFAULT  UND <span class="nb">printf</span>
+</span></span></code></pre></div><p>书中紧接着文件头的便是程序头表？？？</p>
+<p>ELF文件中<strong>最关键</strong>的结构是段表:<code>Section Headers</code></p>
+<p>段表记录了ELLF文件内所有端的位置和大小等信息</p>
+<ul>
+<li>保存代码二进制信息的代码段</li>
+<li>存储数据的数据段</li>
+<li>保存段宁的名称段表字符串表段</li>
+<li>存储程序字符串常量的字符串表段</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="ln"> 1</span><span class="cl">Section Headers:
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">  <span class="o">[</span>Nr<span class="o">]</span> Name              Type             Address           Offset
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">       Size              EntSize          Flags  Link  Info  Align
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">  <span class="o">[</span> 0<span class="o">]</span>                   NULL             <span class="m">0000000000000000</span>  <span class="m">00000000</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">       <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     <span class="m">0</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">  <span class="o">[</span> 1<span class="o">]</span> .text             PROGBITS         <span class="m">0000000000000000</span>  <span class="m">00000040</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">       000000000000001a  <span class="m">0000000000000000</span>  AX       <span class="m">0</span>     <span class="m">0</span>     <span class="m">1</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">  <span class="o">[</span> 2<span class="o">]</span> .rela.text        RELA             <span class="m">0000000000000000</span>  000001f0
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">       <span class="m">0000000000000030</span>  <span class="m">0000000000000018</span>   I      <span class="m">10</span>     <span class="m">1</span>     <span class="m">8</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">  <span class="o">[</span> 3<span class="o">]</span> .data             PROGBITS         <span class="m">0000000000000000</span>  0000005a
+</span></span><span class="line"><span class="ln">11</span><span class="cl">       <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     <span class="m">1</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">  <span class="o">[</span> 4<span class="o">]</span> .bss              NOBITS           <span class="m">0000000000000000</span>  0000005a
+</span></span><span class="line"><span class="ln">13</span><span class="cl">       <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>  WA       <span class="m">0</span>     <span class="m">0</span>     <span class="m">1</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">  <span class="o">[</span> 5<span class="o">]</span> .rodata           PROGBITS         <span class="m">0000000000000000</span>  0000005a
+</span></span><span class="line"><span class="ln">15</span><span class="cl">       000000000000000d  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     <span class="m">1</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">  <span class="o">[</span> 6<span class="o">]</span> .comment          PROGBITS         <span class="m">0000000000000000</span>  <span class="m">00000067</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">       000000000000002e  <span class="m">0000000000000001</span>  MS       <span class="m">0</span>     <span class="m">0</span>     <span class="m">1</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">  <span class="o">[</span> 7<span class="o">]</span> .note.GNU-stack   PROGBITS         <span class="m">0000000000000000</span>  <span class="m">00000095</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">       <span class="m">0000000000000000</span>  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     <span class="m">1</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">  <span class="o">[</span> 8<span class="o">]</span> .eh_frame         PROGBITS         <span class="m">0000000000000000</span>  <span class="m">00000098</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">       <span class="m">0000000000000038</span>  <span class="m">0000000000000000</span>   A       <span class="m">0</span>     <span class="m">0</span>     <span class="m">8</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">  <span class="o">[</span> 9<span class="o">]</span> .rela.eh_frame    RELA             <span class="m">0000000000000000</span>  <span class="m">00000220</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">       <span class="m">0000000000000018</span>  <span class="m">0000000000000018</span>   I      <span class="m">10</span>     <span class="m">8</span>     <span class="m">8</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">  <span class="o">[</span>10<span class="o">]</span> .symtab           SYMTAB           <span class="m">0000000000000000</span>  000000d0
+</span></span><span class="line"><span class="ln">25</span><span class="cl">       <span class="m">0000000000000108</span>  <span class="m">0000000000000018</span>          <span class="m">11</span>     <span class="m">9</span>     <span class="m">8</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">  <span class="o">[</span>11<span class="o">]</span> .strtab           STRTAB           <span class="m">0000000000000000</span>  000001d8
+</span></span><span class="line"><span class="ln">27</span><span class="cl">       <span class="m">0000000000000015</span>  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     <span class="m">1</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">  <span class="o">[</span>12<span class="o">]</span> .shstrtab         STRTAB           <span class="m">0000000000000000</span>  <span class="m">00000238</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">       <span class="m">0000000000000061</span>  <span class="m">0000000000000000</span>           <span class="m">0</span>     <span class="m">0</span>     <span class="m">1</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">Key to Flags:
+</span></span><span class="line"><span class="ln">31</span><span class="cl">  W <span class="o">(</span>write<span class="o">)</span>, A <span class="o">(</span>alloc<span class="o">)</span>, X <span class="o">(</span>execute<span class="o">)</span>, M <span class="o">(</span>merge<span class="o">)</span>, S <span class="o">(</span>strings<span class="o">)</span>, I <span class="o">(</span>info<span class="o">)</span>,
+</span></span><span class="line"><span class="ln">32</span><span class="cl">  L <span class="o">(</span>link order<span class="o">)</span>, O <span class="o">(</span>extra OS processing required<span class="o">)</span>, G <span class="o">(</span>group<span class="o">)</span>, T <span class="o">(</span>TLS<span class="o">)</span>,
+</span></span><span class="line"><span class="ln">33</span><span class="cl">  C <span class="o">(</span>compressed<span class="o">)</span>, x <span class="o">(</span>unknown<span class="o">)</span>, o <span class="o">(</span>OS specific<span class="o">)</span>, E <span class="o">(</span>exclude<span class="o">)</span>,
+</span></span><span class="line"><span class="ln">34</span><span class="cl">  l <span class="o">(</span>large<span class="o">)</span>, p <span class="o">(</span>processor specific<span class="o">)</span>
+</span></span></code></pre></div><p>且程序头表提示没有信息</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="ln">1</span><span class="cl">There are no section groups in this file.
+</span></span><span class="line"><span class="ln">2</span><span class="cl">
+</span></span><span class="line"><span class="ln">3</span><span class="cl">There are no program headers in this file.
+</span></span></code></pre></div><h2 id="符号表段">符号表段</h2>
+<p>表格形式</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="ln"> 1</span><span class="cl">Symbol table <span class="s1">&#39;.symtab&#39;</span> contains <span class="m">11</span> entries:
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">   Num:    Value          Size Type    Bind   Vis      Ndx Name
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">     0: <span class="m">0000000000000000</span>     <span class="m">0</span> NOTYPE  LOCAL  DEFAULT  UND 
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">     1: <span class="m">0000000000000000</span>     <span class="m">0</span> FILE    LOCAL  DEFAULT  ABS hello.c
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">     2: <span class="m">0000000000000000</span>     <span class="m">0</span> SECTION LOCAL  DEFAULT    <span class="m">1</span> 
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">     3: <span class="m">0000000000000000</span>     <span class="m">0</span> SECTION LOCAL  DEFAULT    <span class="m">3</span> 
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">     4: <span class="m">0000000000000000</span>     <span class="m">0</span> SECTION LOCAL  DEFAULT    <span class="m">4</span> 
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">     5: <span class="m">0000000000000000</span>     <span class="m">0</span> SECTION LOCAL  DEFAULT    <span class="m">5</span> 
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">     6: <span class="m">0000000000000000</span>     <span class="m">0</span> SECTION LOCAL  DEFAULT    <span class="m">7</span> 
+</span></span><span class="line"><span class="ln">10</span><span class="cl">     7: <span class="m">0000000000000000</span>     <span class="m">0</span> SECTION LOCAL  DEFAULT    <span class="m">8</span> 
+</span></span><span class="line"><span class="ln">11</span><span class="cl">     8: <span class="m">0000000000000000</span>     <span class="m">0</span> SECTION LOCAL  DEFAULT    <span class="m">6</span> 
+</span></span><span class="line"><span class="ln">12</span><span class="cl">     9: <span class="m">0000000000000000</span>    <span class="m">26</span> FUNC    GLOBAL DEFAULT    <span class="m">1</span> main
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    10: <span class="m">0000000000000000</span>     <span class="m">0</span> NOTYPE  GLOBAL DEFAULT  UND <span class="nb">printf</span>
+</span></span></code></pre></div><p>符号表段记录了汇编代码中定义的符号信息，重定位表段记录可重定位目标文件中需要重定位的符号信息。</p>
+<p>可以看到main、print</p>
+<h2 id="重定位表段">重定位表段</h2>
+<p>表格形式</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="ln">1</span><span class="cl">Relocation section <span class="s1">&#39;.rela.text&#39;</span> at offset 0x1f0 contains <span class="m">2</span> entries:
+</span></span><span class="line"><span class="ln">2</span><span class="cl">  Offset          Info           Type           Sym. Value    Sym. Name + Addend
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="m">000000000005</span>  00050000000a R_X86_64_32       <span class="m">0000000000000000</span> .rodata + <span class="m">0</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">00000000000f  000a00000002 R_X86_64_PC32     <span class="m">0000000000000000</span> <span class="nb">printf</span> - <span class="m">4</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">
+</span></span><span class="line"><span class="ln">6</span><span class="cl">Relocation section <span class="s1">&#39;.rela.eh_frame&#39;</span> at offset 0x220 contains <span class="m">1</span> entries:
+</span></span><span class="line"><span class="ln">7</span><span class="cl">  Offset          Info           Type           Sym. Value    Sym. Name + Addend
+</span></span><span class="line"><span class="ln">8</span><span class="cl"><span class="m">000000000020</span>  <span class="m">000200000002</span> R_X86_64_PC32     <span class="m">0000000000000000</span> .text + <span class="m">0</span>
+</span></span></code></pre></div><h2 id="elf格式定义">ELF格式定义</h2>
+<p>Linux提供了ELF文件格式的定义</p>
+<p>在目录<code>/usr/include/elf.h </code>中描述了ELF文件数据结构的定义。</p>
+<p>在实现汇编器和连接器的代码中都使用了该头文件</p>
+
+
+                    <div class="content-end">
+                        <div class="end-line"></div>
+                        <div class="end-text">— END —</div>
+                    </div>
+                </div>
+
+                <div class="post-extra">
+                    
+                    <div class="extra-section">
+                        <div class="extra-title">相关标签</div>
+                        <div class="tags-list">
+                            
+                            <a href='https://orz-ai.github.io/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/' class="tag-link">编译原理</a>
+                            
+                        </div>
+                    </div>
+                    
+
+                    <div class="extra-section">
+                        <div class="extra-title">推荐阅读</div>
+                        <div class="recommend-grid">
+                            
+                            
+                            
+                            <a href="https://orz-ai.github.io/posts/2022-03-27-%E6%9C%8D%E5%8A%A1%E5%99%A8hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%92%8Cgit%E5%90%8C%E6%AD%A5/" class="recommend-card">
+                                <div class="recommend-image">
+                                    
+                                    <div class="recommend-placeholder"></div>
+                                    
+                                </div>
+                                <div class="recommend-info">
+                                    <div class="recommend-title">服务器Hexo博客部署和Git同步</div>
+                                    <div class="recommend-date">2022-03-27</div>
+                                </div>
+                            </a>
+                            
+                            <a href="https://orz-ai.github.io/posts/%E6%9C%AC%E5%9C%B0vm%E4%B8%80%E4%BA%9B%E9%85%8D%E7%BD%AE/" class="recommend-card">
+                                <div class="recommend-image">
+                                    
+                                    <div class="recommend-placeholder"></div>
+                                    
+                                </div>
+                                <div class="recommend-info">
+                                    <div class="recommend-title"></div>
+                                    <div class="recommend-date">0001-01-01</div>
+                                </div>
+                            </a>
+                            
+                            <a href="https://orz-ai.github.io/search/" class="recommend-card">
+                                <div class="recommend-image">
+                                    
+                                    <div class="recommend-placeholder"></div>
+                                    
+                                </div>
+                                <div class="recommend-info">
+                                    <div class="recommend-title">搜索</div>
+                                    <div class="recommend-date">0001-01-01</div>
+                                </div>
+                            </a>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-footer">
+                    <div class="post-nav">
+                        
+                        <a href="https://orz-ai.github.io/posts/2022-03-27-%E6%9C%8D%E5%8A%A1%E5%99%A8hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%92%8Cgit%E5%90%8C%E6%AD%A5/" class="post-nav-prev">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>服务器Hexo博客部署和Git同步</span>
+                        </a>
+                        
+
+                        
+                        <a href="https://orz-ai.github.io/posts/2022-04-30-c&#43;&#43;%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/" class="post-nav-next">
+                            <span>C&#43;&#43;基本数据类型和计算</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+            </article>
+
+            
+            <div class="toc-container" id="tocContainer">
+                <div class="toc-header">
+                    <span><i class="fas fa-list"></i> 目录</span>
+                    <button class="toc-hide-btn" id="tocHideBtn" title="收起目录">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <nav class="toc-nav" id="tocNav">
+                    
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-info">
+                <p>&copy; 2025 Gang&#39;s Blog. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <a href="#" class="back-to-top" id="backToTop" aria-label="返回顶部">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    
+    <button class="toc-show-btn" id="tocShowBtn" title="显示目录" style="display: none;">
+        <i class="fas fa-list"></i>
+    </button>
+
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            var backToTop = document.getElementById('backToTop');
+
+            window.addEventListener('scroll', function () {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+            });
+
+            backToTop.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            
+            document.querySelectorAll('.highlight').forEach(function (highlight) {
+                
+                if (!highlight.querySelector('.copy-button')) {
+                    let copyButton = document.createElement('button');
+                    copyButton.className = 'copy-button';
+                    copyButton.textContent = '复制';
+
+                    highlight.appendChild(copyButton);
+
+                    copyButton.addEventListener('click', function () {
+                        let codeElement = highlight.querySelector('code');
+                        let textToCopy = codeElement.textContent;
+
+                        navigator.clipboard.writeText(textToCopy).then(function () {
+                            copyButton.textContent = '已复制!';
+                            setTimeout(function () {
+                                copyButton.textContent = '复制';
+                            }, 2000);
+                        }).catch(function (err) {
+                            console.error('无法复制文本: ', err);
+                        });
+                    });
+                }
+
+                
+                let codeClass = highlight.querySelector('code').className;
+                let langMatch = codeClass.match(/language-(\w+)/);
+
+                if (langMatch && langMatch[1]) {
+                    let lang = langMatch[1];
+                    
+                    let existingIndicator = highlight.querySelector('.language-indicator');
+                    if (existingIndicator) {
+                        existingIndicator.remove();
+                    }
+
+                    
+                    let langIndicator = document.createElement('div');
+                    langIndicator.className = 'language-indicator';
+                    langIndicator.textContent = lang;
+                    highlight.insertBefore(langIndicator, highlight.firstChild);
+                }
+            });
+
+            
+            const tocContainer = document.getElementById('tocContainer');
+            const tocNav = document.getElementById('tocNav');
+            const postContent = document.querySelector('.post-content');
+
+            if (!postContent) return;
+
+            
+            function addHeadingNumbers() {
+                const headings = postContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                let counters = [0, 0, 0, 0, 0, 0]; 
+
+                headings.forEach(heading => {
+                    const level = parseInt(heading.tagName.charAt(1)) - 1; 
+
+                    
+                    counters[level]++;
+
+                    
+                    for (let i = level + 1; i < counters.length; i++) {
+                        counters[i] = 0;
+                    }
+
+                    
+                    let numberStr = '';
+                    for (let i = 0; i <= level; i++) {
+                        if (counters[i] > 0) {
+                            numberStr += (numberStr ? '.' : '') + counters[i];
+                        }
+                    }
+                    numberStr += '. ';
+
+                    
+                    const numberSpan = document.createElement('span');
+                    numberSpan.className = 'heading-number';
+                    numberSpan.textContent = numberStr;
+                    heading.insertBefore(numberSpan, heading.firstChild);
+                });
+            }
+
+            
+            function generateTOC() {
+                const headings = postContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                if (headings.length === 0) {
+                    tocContainer.style.display = 'none';
+                    return;
+                }
+
+                tocNav.innerHTML = '';
+                let levelStack = [];
+
+                headings.forEach((heading, index) => {
+                    const level = parseInt(heading.tagName.charAt(1));
+                    const id = heading.id || `heading-${index}`;
+                    heading.id = id;
+
+                    
+                    while (levelStack.length > 0 && levelStack[levelStack.length - 1].level >= level) {
+                        levelStack.pop();
+                    }
+
+                    const listItem = document.createElement('li');
+                    listItem.className = `toc-item toc-level-${level}`;
+
+                    const link = document.createElement('a');
+                    link.href = `#${id}`;
+                    link.className = 'toc-link';
+                    link.setAttribute('data-target', id);
+                    link.innerHTML = `<span class="toc-text">${heading.textContent}</span>`;
+
+                    listItem.appendChild(link);
+
+                    
+                    if (levelStack.length === 0) {
+                        tocNav.appendChild(listItem);
+                    } else {
+                        const parent = levelStack[levelStack.length - 1];
+                        let subList = parent.element.querySelector('ul');
+                        if (!subList) {
+                            subList = document.createElement('ul');
+                            subList.className = 'toc-list';
+                            parent.element.appendChild(subList);
+
+                            
+                            const parentLink = parent.element.querySelector('.toc-link');
+                            if (parentLink && !parentLink.classList.contains('toc-expandable')) {
+                                parentLink.classList.add('toc-expandable');
+                                parentLink.addEventListener('click', function (e) {
+                                    if (e.target.closest('.toc-link') === this) {
+                                        e.preventDefault();
+                                        subList.classList.toggle('toc-collapsed');
+                                        this.classList.toggle('toc-expanded');
+                                    }
+                                });
+                            }
+                        }
+                        subList.appendChild(listItem);
+                    }
+
+                    levelStack.push({ level: level, element: listItem });
+                });
+            }
+
+            
+            function updateActiveHeading() {
+                const headings = postContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+
+                let activeHeading = null;
+                let closestHeading = null;
+                let closestDistance = Infinity;
+
+                
+                headings.forEach(heading => {
+                    const rect = heading.getBoundingClientRect();
+                    const headingCenter = rect.top + rect.height / 2;
+                    const viewportCenter = windowHeight / 2;
+                    const distance = Math.abs(headingCenter - viewportCenter);
+
+                    
+                    if (headingCenter <= viewportCenter && distance < closestDistance) {
+                        closestDistance = distance;
+                        closestHeading = heading;
+                    }
+                });
+
+                activeHeading = closestHeading;
+
+                
+                if (!activeHeading) {
+                    const isNearBottom = (scrollTop + windowHeight) >= documentHeight - 100;
+                    if (isNearBottom && headings.length > 0) {
+                        activeHeading = headings[headings.length - 1];
+                    }
+                }
+
+                
+                document.querySelectorAll('.toc-link').forEach(link => {
+                    link.classList.remove('active');
+                    link.parentElement.classList.remove('active');
+                });
+
+                
+                if (activeHeading) {
+                    const activeLink = document.querySelector(`[data-target="${activeHeading.id}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                        activeLink.parentElement.classList.add('active');
+
+                        
+                        let parent = activeLink.parentElement.parentElement;
+                        while (parent && parent.classList.contains('toc-list')) {
+                            parent.style.display = 'block';
+                            parent = parent.parentElement.parentElement;
+                        }
+                    }
+                }
+            }
+
+            
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('.toc-link')) {
+                    e.preventDefault();
+                    const targetId = e.target.closest('.toc-link').getAttribute('data-target');
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - 100;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+
+            
+            addHeadingNumbers(); 
+            generateTOC(); 
+            updateActiveHeading();
+
+            
+            const tocHideBtn = document.getElementById('tocHideBtn');
+            const tocShowBtn = document.getElementById('tocShowBtn');
+
+            if (tocHideBtn) {
+                tocHideBtn.addEventListener('click', function () {
+                    
+                    tocContainer.classList.add('hidden');
+                    if (tocShowBtn) {
+                        tocShowBtn.style.display = 'block';
+                    }
+                });
+            }
+
+            if (tocShowBtn) {
+                tocShowBtn.addEventListener('click', function () {
+                    
+                    tocContainer.classList.remove('hidden');
+                    tocShowBtn.style.display = 'none';
+                });
+            }
+
+            
+            let ticking = false;
+            window.addEventListener('scroll', function () {
+                if (!ticking) {
+                    requestAnimationFrame(function () {
+                        updateActiveHeading();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

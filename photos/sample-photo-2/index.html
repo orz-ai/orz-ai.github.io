@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>城市夜景 - Gang&#39;s Blog</title>
+<meta name="description"
+  content="这是一张城市夜景照片，灯火通明的高楼大厦在夜色中闪耀着迷人的光芒。城市的喧嚣和活力尽收眼底。">
+<meta name="keywords" content="城市, 夜景, 建筑">
+<meta name="author" content="Gang">
+
+
+<link rel="canonical" href="https://orz-ai.github.io/photos/sample-photo-2/">
+
+
+<link rel="stylesheet" href="https://orz-ai.github.io/css/style.css">
+<link rel="stylesheet" href="https://orz-ai.github.io/css/syntax.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://orz-ai.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://orz-ai.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://orz-ai.github.io/favicon-16x16.png">
+<meta name="theme-color" content="#4a6cf7">
+
+
+<meta property="og:title"
+  content="城市夜景 - Gang&#39;s Blog">
+<meta property="og:description"
+  content="这是一张城市夜景照片，灯火通明的高楼大厦在夜色中闪耀着迷人的光芒。城市的喧嚣和活力尽收眼底。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://orz-ai.github.io/photos/sample-photo-2/">
+
+<meta property="og:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+<meta property="og:site_name" content="Gang&#39;s Blog">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title"
+  content="城市夜景 - Gang&#39;s Blog">
+<meta name="twitter:description"
+  content="这是一张城市夜景照片，灯火通明的高楼大厦在夜色中闪耀着迷人的光芒。城市的喧嚣和活力尽收眼底。">
+
+<meta name="twitter:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "城市夜景",
+  "description": "这是一张城市夜景照片，灯火通明的高楼大厦在夜色中闪耀着迷人的光芒。城市的喧嚣和活力尽收眼底。",
+  "author": {
+    "@type": "Person",
+    "name": "Gang"
+  },
+  "datePublished": "2023-09-20T00:00:00Z",
+  "dateModified": "2023-09-20T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https:\/\/orz-ai.github.io\/photos\/sample-photo-2\/"
+  },
+  
+  "image": "https:\/\/orz-ai.github.io\/images\/hero-bg.jpg",
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Gang\u0027s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/orz-ai.github.io\/favicon-32x32.png"
+    }
+  }
+}
+</script>
+
+    <style>
+         
+        .photo-full-width {
+            width: 100%;
+            padding: 0;
+        }
+
+        .photo-single {
+            display: flex;
+            flex-direction: column;
+            margin: 30px 0;
+        }
+
+        .photo-gallery {
+            display: block;
+            margin-bottom: 30px;
+        }
+
+        .photo-container {
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+         
+        .photo-gallery.single-photo {
+            margin-bottom: 20px;
+        }
+
+        .photo-gallery.single-photo .photo-container {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .photo-gallery.single-photo .photo-container img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+
+         
+        .photo-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            position: relative;
+            margin: auto;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-image {
+            max-width: 95vw;
+            max-height: 95vh;
+            object-fit: contain;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1002;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover {
+            color: #bbb;
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .modal-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .modal-prev {
+            left: 20px;
+        }
+
+        .modal-next {
+            right: 20px;
+        }
+
+        .modal-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+
+        .photo-header {
+            margin-bottom: 30px;
+        }
+
+        .photo-header h1 {
+            margin-bottom: 10px;
+        }
+
+        .photo-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .photo-meta span {
+            display: flex;
+            align-items: center;
+        }
+
+        .photo-meta i {
+            margin-right: 5px;
+        }
+
+         
+        .photo-description,
+        .photo-navigation {
+            margin-top: 20px;
+        }
+
+         
+        .photo-header {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .photo-header h1 {
+            text-align: left;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+        }
+
+        .photo-description {
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .photo-description img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .photo-description p {
+            margin-bottom: 15px;
+        }
+
+        .photo-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .photo-tags .tag {
+            background: #f1f1f1;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #666;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .photo-tags .tag:hover {
+            background: #e0e0e0;
+        }
+
+        .photo-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #eaeaea;
+        }
+
+        .photo-nav a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .photo-nav a:hover {
+            color: #0066cc;
+        }
+
+        .photo-nav-prev i {
+            margin-right: 10px;
+        }
+
+        .photo-nav-next i {
+            margin-left: 10px;
+        }
+
+        @media (min-width: 768px) {
+            .photo-container img {
+                object-fit: contain;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+    <div class="container">
+        <div class="header-inner">
+            <a href="https://orz-ai.github.io/" class="logo">
+                <h1>Gang&#39;s Blog</h1>
+            </a>
+            <div class="header-right">
+                <div class="search-box">
+                    <form action="https://orz-ai.github.io/%20search" method="get">
+                        <input type="text" name="q" placeholder="搜索..." aria-label="搜索">
+                        <button type="submit" aria-label="提交搜索"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                <nav class="nav">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/" class="nav-link">首页</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/posts/" class="nav-link">文章</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/photos/" class="nav-link active">照片墙</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/timeline/" class="nav-link">时间线</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/tags/" class="nav-link">标签</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/about/" class="nav-link">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+    <main class="main">
+        <div class="container">
+            <article class="photo-single">
+                <header class="photo-header">
+                    <h1>城市夜景</h1>
+                    <div class="photo-meta">
+                        <span>
+                            <i class="fas fa-calendar"></i>
+                            2023-09-20
+                        </span>
+
+                        
+                        <span>
+                            <i class="fas fa-map-marker-alt"></i>
+                            都市中心
+                        </span>
+                        
+
+                        
+                        <span>
+                            <i class="fas fa-camera"></i>
+                            Sony A7III
+                        </span>
+                        
+                    </div>
+
+                    
+                    <div class="photo-tags">
+                        
+                        <a href="https://orz-ai.github.io/%20tags/%E5%9F%8E%E5%B8%82/" class="tag">城市</a>
+                        
+                        <a href="https://orz-ai.github.io/%20tags/%E5%A4%9C%E6%99%AF/" class="tag">夜景</a>
+                        
+                        <a href="https://orz-ai.github.io/%20tags/%E5%BB%BA%E7%AD%91/" class="tag">建筑</a>
+                        
+                    </div>
+                    
+                </header>
+
+                
+                <div class="photo-gallery" id="photoGallery">
+                    
+                    
+                    <div class="photo-container" data-src="https://orz.ai/wp-content/uploads/2024/11/1731220426-clouds-4215608_1280.jpg" data-alt="城市夜景">
+                        <img src="https://orz.ai/wp-content/uploads/2024/11/1731220426-clouds-4215608_1280.jpg" alt="城市夜景">
+                    </div>
+                    
+                </div>
+
+                <div class="photo-description">
+                    <p>这是一张城市夜景照片，灯火通明的高楼大厦在夜色中闪耀着迷人的光芒。城市的喧嚣和活力尽收眼底。</p>
+
+                </div>
+
+                
+                <div class="photo-modal" id="photoModal">
+                    <span class="close-modal">&times;</span>
+                    <div class="modal-content">
+                        <img class="modal-image" id="modalImage" src="" alt="">
+                        <button class="modal-nav modal-prev" id="modalPrev">&#10094;</button>
+                        <button class="modal-nav modal-next" id="modalNext">&#10095;</button>
+                    </div>
+                    <div class="modal-counter" id="modalCounter">1 / 1</div>
+                </div>
+
+                <div class="photo-nav">
+                    
+                    <a href="https://orz-ai.github.io/photos/sample-photo-4/" class="photo-nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>城市夜景</span>
+                    </a>
+                    
+
+                    
+                    <a href="https://orz-ai.github.io/photos/sample-photo-3/" class="photo-nav-next">
+                        <span>花卉特写</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-info">
+                <p>&copy; 2025 Gang&#39;s Blog. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const photoGallery = document.getElementById('photoGallery');
+            const photoModal = document.getElementById('photoModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalCounter = document.getElementById('modalCounter');
+            const closeModal = document.querySelector('.close-modal');
+            const modalPrev = document.getElementById('modalPrev');
+            const modalNext = document.getElementById('modalNext');
+
+            let currentImageIndex = 0;
+            let images = [];
+
+            
+            function setupContentImages() {
+                const contentImages = document.querySelectorAll('.photo-description img');
+                contentImages.forEach((img, index) => {
+                    
+                    img.addEventListener('click', function () {
+                        openModal(index + (photoGallery.querySelectorAll('.photo-container').length));
+                    });
+                });
+            }
+
+            
+            function initializeImages() {
+                
+                const photoContainers = document.querySelectorAll('.photo-container');
+                images = Array.from(photoContainers).map(container => ({
+                    src: container.getAttribute('data-src'),
+                    alt: container.getAttribute('data-alt')
+                }));
+
+                
+                const contentImages = document.querySelectorAll('.photo-description img');
+                contentImages.forEach(img => {
+                    images.push({
+                        src: img.src,
+                        alt: img.alt || '图片'
+                    });
+                });
+
+                
+                if (images.length === 1) {
+                    photoGallery.classList.add('single-photo');
+                }
+
+                
+                photoContainers.forEach((container, index) => {
+                    container.addEventListener('click', () => {
+                        openModal(index);
+                    });
+                });
+            }
+
+            
+            function openModal(index) {
+                currentImageIndex = index;
+                modalImage.src = images[index].src;
+                modalImage.alt = images[index].alt;
+                updateCounter();
+                photoModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+
+            
+            function closeModalFunc() {
+                photoModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            
+            function updateCounter() {
+                modalCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+            }
+
+            
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                modalImage.src = images[currentImageIndex].src;
+                modalImage.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                modalImage.src = images[currentImageIndex].src;
+                modalImage.alt = images[currentImageIndex].alt;
+                updateCounter();
+            }
+
+            
+            closeModal.addEventListener('click', closeModalFunc);
+            modalPrev.addEventListener('click', showPrevImage);
+            modalNext.addEventListener('click', showNextImage);
+
+            
+            photoModal.addEventListener('click', function (e) {
+                if (e.target === photoModal) {
+                    closeModalFunc();
+                }
+            });
+
+            
+            document.addEventListener('keydown', function (e) {
+                if (photoModal.style.display === 'block') {
+                    switch (e.key) {
+                        case 'Escape':
+                            closeModalFunc();
+                            break;
+                        case 'ArrowLeft':
+                            showPrevImage();
+                            break;
+                        case 'ArrowRight':
+                            showNextImage();
+                            break;
+                    }
+                }
+            });
+
+            
+            function updateNavigation() {
+                if (images.length <= 1) {
+                    modalPrev.style.display = 'none';
+                    modalNext.style.display = 'none';
+                } else {
+                    modalPrev.style.display = 'block';
+                    modalNext.style.display = 'block';
+                }
+            }
+
+            
+            setupContentImages();
+            initializeImages();
+            updateNavigation();
+        });
+    </script>
+</body>
+
+</html>

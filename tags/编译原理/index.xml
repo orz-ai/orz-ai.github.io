@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>编译原理 on Gang&#39;s Blog</title>
+    <link>https://orz-ai.github.io/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/</link>
+    <description>Recent content in 编译原理 on Gang&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <managingEditor>deepincode@qq.com (Gang)</managingEditor>
+    <webMaster>deepincode@qq.com (Gang)</webMaster>
+    <lastBuildDate>Sun, 24 Apr 2022 01:31:46 +0000</lastBuildDate>
+    <atom:link href="https://orz-ai.github.io/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2.编译原理-编译系统设计</title>
+      <link>https://orz-ai.github.io/posts/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/</link>
+      <pubDate>Sun, 24 Apr 2022 01:31:46 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
+      <guid>https://orz-ai.github.io/posts/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/</guid>
+      <description>学习编译原理编译系统设计</description>
+    </item>
+  </channel>
+</rss>

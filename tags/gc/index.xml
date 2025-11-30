@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GC on Gang&#39;s Blog</title>
+    <link>https://orz-ai.github.io/tags/gc/</link>
+    <description>Recent content in GC on Gang&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <managingEditor>deepincode@qq.com (Gang)</managingEditor>
+    <webMaster>deepincode@qq.com (Gang)</webMaster>
+    <lastBuildDate>Wed, 15 Nov 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://orz-ai.github.io/tags/gc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>深入理解Go语言垃圾回收机制：原理、流程与优化</title>
+      <link>https://orz-ai.github.io/posts/go-gc-deep-dive/</link>
+      <pubDate>Wed, 15 Nov 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
+      <guid>https://orz-ai.github.io/posts/go-gc-deep-dive/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://oss.hackfun.net/aurora-image/aurora/articles/6bc8178ffe84b39432920b18f4e5ad26.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Go语言的垃圾回收（Garbage Collection，简称GC）机制是其内存管理的核心部分，它能够自动识别和回收不再使用的内存，让开发者免于手动内存管理的负担。本文将深入探讨Go语言GC的工作原理、演变历史、实现细节以及性能优化技巧。&lt;/p&gt;&#xA;&lt;h2 id=&#34;go-gc的演变历史&#34;&gt;Go GC的演变历史&lt;/h2&gt;&#xA;&lt;p&gt;Go语言的垃圾回收器从诞生到现在经历了多次重大更新，每次更新都显著提升了性能和减少了延迟：&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

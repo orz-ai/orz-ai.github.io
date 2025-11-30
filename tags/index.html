@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tags - Gang&#39;s Blog</title>
+<meta name="description"
+  content="个人博客网站 - 分享技术、知识和生活感悟">
+<meta name="keywords" content="博客, 技术, 生活, 编程, Go语言, Hugo">
+<meta name="author" content="Gang">
+
+
+<link rel="canonical" href="https://orz-ai.github.io/tags/">
+
+
+<link rel="stylesheet" href="https://orz-ai.github.io/css/style.css">
+<link rel="stylesheet" href="https://orz-ai.github.io/css/syntax.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://orz-ai.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://orz-ai.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://orz-ai.github.io/favicon-16x16.png">
+<meta name="theme-color" content="#4a6cf7">
+
+
+<meta property="og:title"
+  content="Tags - Gang&#39;s Blog">
+<meta property="og:description"
+  content="个人博客网站 - 分享技术、知识和生活感悟">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://orz-ai.github.io/tags/">
+
+<meta property="og:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+<meta property="og:site_name" content="Gang&#39;s Blog">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title"
+  content="Tags - Gang&#39;s Blog">
+<meta name="twitter:description"
+  content="个人博客网站 - 分享技术、知识和生活感悟">
+
+<meta name="twitter:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Gang\u0027s Blog",
+  "url": "https:\/\/orz-ai.github.io\/",
+  "description": "个人博客网站 - 分享技术、知识和生活感悟",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Gang\u0027s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/orz-ai.github.io\/favicon-32x32.png"
+    }
+  }
+}
+</script>
+
+    <style>
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, #4a6cf7, #6a89ff);
+            border-radius: 3px;
+        }
+
+        .tags-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .tags-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .tag-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: white;
+            border: 2px solid #e5e5e5;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #555;
+            transition: all 0.3s ease;
+            font-size: 15px;
+        }
+
+        .tag-item:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(74, 108, 247, 0.2);
+        }
+
+        .tag-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 24px;
+            height: 24px;
+            padding: 0 6px;
+            background: #f5f5f5;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #999;
+        }
+
+        .tag-item:hover .tag-count {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .tags-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .tag-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e5e5e5;
+            transition: all 0.3s ease;
+        }
+
+        .tag-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 5px 15px rgba(74, 108, 247, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .tag-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .tag-card-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .tag-card-count {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .tag-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .tag-post-item {
+            font-size: 14px;
+            color: #666;
+            text-decoration: none;
+            padding: 8px 0;
+            border-left: 2px solid transparent;
+            padding-left: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .tag-post-item:hover {
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+            padding-left: 16px;
+        }
+
+        .view-mode {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .mode-btn {
+            padding: 8px 20px;
+            background: white;
+            border: 2px solid #e5e5e5;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mode-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .mode-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .tags-list {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+    <div class="container">
+        <div class="header-inner">
+            <a href="https://orz-ai.github.io/" class="logo">
+                <h1>Gang&#39;s Blog</h1>
+            </a>
+            <div class="header-right">
+                <div class="search-box">
+                    <form action="https://orz-ai.github.io/%20search" method="get">
+                        <input type="text" name="q" placeholder="搜索..." aria-label="搜索">
+                        <button type="submit" aria-label="提交搜索"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                <nav class="nav">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/" class="nav-link">首页</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/posts/" class="nav-link">文章</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/photos/" class="nav-link">照片墙</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/timeline/" class="nav-link">时间线</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/tags/" class="nav-link active">标签</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/about/" class="nav-link">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+    <main class="main">
+        <div class="container">
+            <div class="page-header">
+                <p>28 个标签 · 18 篇文章</p>
+            </div>
+
+            <div class="tags-container">
+                <div class="tags-cloud">
+                    
+                    <a href='https://orz-ai.github.io/tags/ai/' class="tag-item">
+                        <span>ai</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/c&#43;&#43;%E5%9F%BA%E7%A1%80/' class="tag-item">
+                        <span>c&#43;&#43;基础</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/gc/' class="tag-item">
+                        <span>gc</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/go/' class="tag-item">
+                        <span>go</span>
+                        <span class="tag-count">2</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/hugo/' class="tag-item">
+                        <span>hugo</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/java/' class="tag-item">
+                        <span>java</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/linux/' class="tag-item">
+                        <span>linux</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/' class="tag-item">
+                        <span>内存管理</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E5%8D%9A%E5%AE%A2/' class="tag-item">
+                        <span>博客</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E5%9F%8E%E5%B8%82/' class="tag-item">
+                        <span>城市</span>
+                        <span class="tag-count">2</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E5%A4%9C%E6%99%AF/' class="tag-item">
+                        <span>夜景</span>
+                        <span class="tag-count">2</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E5%BB%BA%E7%AD%91/' class="tag-item">
+                        <span>建筑</span>
+                        <span class="tag-count">2</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/' class="tag-item">
+                        <span>性能优化</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E6%8C%87%E9%92%88/' class="tag-item">
+                        <span>指针</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E6%95%99%E7%A8%8B/' class="tag-item">
+                        <span>教程</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E6%97%A5%E8%90%BD/' class="tag-item">
+                        <span>日落</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9/' class="tag-item">
+                        <span>核心知识点</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E6%B5%B7%E6%99%AF/' class="tag-item">
+                        <span>海景</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E7%89%B9%E5%86%99/' class="tag-item">
+                        <span>特写</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E7%BB%93%E6%9E%84%E4%BD%93/' class="tag-item">
+                        <span>结构体</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E7%BC%96%E7%A8%8B/' class="tag-item">
+                        <span>编程</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/' class="tag-item">
+                        <span>编译原理</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E8%87%AA%E7%84%B6/' class="tag-item">
+                        <span>自然</span>
+                        <span class="tag-count">2</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E8%8A%B1%E5%8D%89/' class="tag-item">
+                        <span>花卉</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E9%9D%A2%E8%AF%95/' class="tag-item">
+                        <span>面试</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E9%A1%B9%E7%9B%AE/' class="tag-item">
+                        <span>项目</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E9%A3%8E%E6%99%AF/' class="tag-item">
+                        <span>风景</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                    <a href='https://orz-ai.github.io/tags/%E9%BB%84%E6%98%8F/' class="tag-item">
+                        <span>黄昏</span>
+                        <span class="tag-count">1</span>
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-info">
+                <p>&copy; 2025 Gang&#39;s Blog. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <a href="#" class="back-to-top" id="backToTop" aria-label="返回顶部">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var backToTop = document.getElementById('backToTop');
+
+            window.addEventListener('scroll', function () {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+            });
+
+            backToTop.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+
+    </script>
+</body>
+
+</html>

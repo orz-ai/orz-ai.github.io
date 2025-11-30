@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C&#43;&#43;基本数据类型和计算 - Gang&#39;s Blog</title>
+<meta name="description"
+  content="复习C&#43;&#43;基础知识~">
+<meta name="keywords" content="C&#43;&#43;基础">
+<meta name="author" content="Gang">
+
+
+<link rel="canonical" href="https://orz-ai.github.io/posts/2022-04-30-c&#43;&#43;%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">
+
+
+<link rel="stylesheet" href="https://orz-ai.github.io/css/style.css">
+<link rel="stylesheet" href="https://orz-ai.github.io/css/syntax.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://orz-ai.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://orz-ai.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://orz-ai.github.io/favicon-16x16.png">
+<meta name="theme-color" content="#4a6cf7">
+
+
+<meta property="og:title"
+  content="C&#43;&#43;基本数据类型和计算 - Gang&#39;s Blog">
+<meta property="og:description"
+  content="复习C&#43;&#43;基础知识~">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://orz-ai.github.io/posts/2022-04-30-c&#43;&#43;%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">
+
+<meta property="og:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+<meta property="og:site_name" content="Gang&#39;s Blog">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title"
+  content="C&#43;&#43;基本数据类型和计算 - Gang&#39;s Blog">
+<meta name="twitter:description"
+  content="复习C&#43;&#43;基础知识~">
+
+<meta name="twitter:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "C\u002b\u002b基本数据类型和计算",
+  "description": "复习C\u002b\u002b基础知识~",
+  "author": {
+    "@type": "Person",
+    "name": "Gang"
+  },
+  "datePublished": "2022-04-30T19:24:03Z",
+  "dateModified": "2022-04-30T19:24:03Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https:\/\/orz-ai.github.io\/posts\/2022-04-30-c\u002b\u002b%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86\/"
+  },
+  
+  "image": "https:\/\/orz-ai.github.io\/images\/hero-bg.jpg",
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Gang\u0027s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/orz-ai.github.io\/favicon-32x32.png"
+    }
+  }
+}
+</script>
+
+</head>
+
+<body>
+    <header class="header">
+    <div class="container">
+        <div class="header-inner">
+            <a href="https://orz-ai.github.io/" class="logo">
+                <h1>Gang&#39;s Blog</h1>
+            </a>
+            <div class="header-right">
+                <div class="search-box">
+                    <form action="https://orz-ai.github.io/%20search" method="get">
+                        <input type="text" name="q" placeholder="搜索..." aria-label="搜索">
+                        <button type="submit" aria-label="提交搜索"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                <nav class="nav">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/" class="nav-link">首页</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/posts/" class="nav-link active">文章</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/photos/" class="nav-link">照片墙</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/timeline/" class="nav-link">时间线</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/tags/" class="nav-link">标签</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/about/" class="nav-link">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+    <main class="main">
+        <div class="container">
+            <article class="post">
+                <header class="post-header">
+                    <h1 class="post-title">C&#43;&#43;基本数据类型和计算</h1>
+                    <div class="post-meta">
+                        <time datetime=" 2022-04-30T19:24:03Z">
+                            2022-04-30
+                        </time>
+
+                        
+                        <span class="post-category">
+                            <i class="fas fa-folder"></i>
+                            
+                            <a href="https://orz-ai.github.io/%20categories/c&#43;&#43;/">C&#43;&#43;</a>
+                            
+                        </span>
+                        
+
+                        
+
+                        <span class="post-reading-time">
+                            <i class="fas fa-clock"></i> 4 分钟阅读
+                        </span>
+                    </div>
+
+                    
+                    <div class="post-tags">
+                        
+                        <a href='https://orz-ai.github.io/tags/c&#43;&#43;%E5%9F%BA%E7%A1%80/' class="tag">C&#43;&#43;基础</a>
+                        
+                    </div>
+                    
+                </header>
+
+                <div class="post-content">
+                    <h1 id="赋值和运算">赋值和运算</h1>
+<table>
+<thead>
+<tr>
+<th>进制</th>
+<th>表达方式</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>二进制</td>
+<td>0b+二进制+后缀</td>
+<td></td>
+</tr>
+<tr>
+<td>八进制</td>
+<td>0+八进制数+后缀</td>
+<td></td>
+</tr>
+<tr>
+<td>十进制</td>
+<td>十进制数+后缀</td>
+<td></td>
+</tr>
+<tr>
+<td>十六进制</td>
+<td>0x+十六进制数+后缀</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>后缀</strong>：</p>
+<ul>
+<li><code>L/l</code>：表示<code>long</code>型</li>
+<li><code>LL/ll</code>：表示<code>long long</code>型</li>
+<li><code>U/u</code>：表示<code> unsigned</code>型</li>
+</ul>
+<h1 id="类型转换">类型转换</h1>
+<p>顺序：</p>
+<ol>
+<li><code>long double</code></li>
+<li><code>double</code></li>
+<li><code>float</code></li>
+<li><code>unsigned long long</code></li>
+<li><code>long long</code></li>
+<li><code>unsigned long</code></li>
+<li><code>long </code></li>
+<li><code>unsigned int </code></li>
+<li><code>int</code></li>
+</ol>
+<h1 id="字符">字符</h1>
+<p>字符数据类型</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>内存占用</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>char</td>
+<td>1</td>
+<td>Ascii字符</td>
+<td></td>
+</tr>
+<tr>
+<td>wchart_t</td>
+<td>2/4</td>
+<td>宽字节字符</td>
+<td><code>wchar_t wcharA{L'A'};</code></td>
+</tr>
+<tr>
+<td>char16_t</td>
+<td>2</td>
+<td>utf_16字符</td>
+<td><code>char16_t wchar16{u'A'};</code></td>
+</tr>
+<tr>
+<td>char32_t</td>
+<td>4</td>
+<td>utf_32字符</td>
+<td><code>char32_t wchar32{U'A'};</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="类型推断">类型推断</h1>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1">// a变量的类型是float
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">a</span><span class="p">{</span><span class="mf">1.0f</span><span class="p">}</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1">// 可以使用typeid(a).name()输出来来查看
+</span></span></span></code></pre></div><h1 id="格式化输出">格式化输出</h1>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>std::fixed</td>
+<td>以小数点模式输出浮点数</td>
+</tr>
+<tr>
+<td>std::scientific</td>
+<td>以科学计数法输出小数</td>
+</tr>
+<tr>
+<td>std::defaultfloat</td>
+<td>恢复默认小数输出</td>
+</tr>
+<tr>
+<td><font color="red">std::setprecision(int)</font></td>
+<td>设置小数精度</td>
+</tr>
+<tr>
+<td>std::dec</td>
+<td>十进制输出数字</td>
+</tr>
+<tr>
+<td>std::hex</td>
+<td>十六进制输出数字</td>
+</tr>
+<tr>
+<td>std::oct</td>
+<td>八进制输出数字</td>
+</tr>
+<tr>
+<td>std::showbase</td>
+<td>十六进制和八进制显示前缀</td>
+</tr>
+<tr>
+<td>std::shownobase</td>
+<td>十六进制和八进制不显示前缀</td>
+</tr>
+<tr>
+<td><font color="red">std::setw(int)</font></td>
+<td>把输出内容设置成指定宽度输出</td>
+</tr>
+<tr>
+<td><font color="red">std::setfill(char)</font></td>
+<td>当显示宽度查过字符宽度时，用指定的字符串填充剩余内容</td>
+</tr>
+<tr>
+<td>std::left</td>
+<td>设置字符左对齐</td>
+</tr>
+<tr>
+<td>std::right</td>
+<td>设置字符右对齐</td>
+</tr>
+</tbody>
+</table>
+<p>其中红色方法需要引入头文件<code>iomanip</code></p>
+<h1 id="转义">转义</h1>
+<h1 id="运算优先级">运算优先级</h1>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>关联性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>()  []  -&gt;  .  后缀++  后缀&ndash;  typeid  const_cast  dynamic_cast  static_cast  reinterpret_cast</td>
+<td>表达式从左往右</td>
+</tr>
+<tr>
+<td>!  ~  一元+  一元&ndash;  前缀++  前缀&ndash;  &amp;  *  （类型)  sizeof  new  new[]  delete  delete[]</td>
+<td>表达式从左往右</td>
+</tr>
+<tr>
+<td>.*  0&gt;*</td>
+<td>表达式从右往左</td>
+</tr>
+<tr>
+<td>*  /  %</td>
+<td>表达式从左往右</td>
+</tr>
+<tr>
+<td>+  -</td>
+<td>表达式从左往右</td>
+</tr>
+<tr>
+<td>&laquo;  &raquo;</td>
+<td>表达式从左往右</td>
+</tr>
+<tr>
+<td>&lt;  &lt;=  &gt;  &gt;=</td>
+<td>表达式从左往右</td>
+</tr>
+<tr>
+<td>==  !=</td>
+<td>表达式从左往右</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>表达式从左往右</td>
+</tr>
+<tr>
+<td>^</td>
+<td>表达式从左往右</td>
+</tr>
+<tr>
+<td>|</td>
+<td>表达式从左往右</td>
+</tr>
+<tr>
+<td>&amp;&amp;</td>
+<td>表达式从左往右</td>
+</tr>
+<tr>
+<td>||</td>
+<td>表达式从左往右</td>
+</tr>
+<tr>
+<td>?  :  op=</td>
+<td>表达式从右往左</td>
+</tr>
+<tr>
+<td>throw</td>
+<td>表达式从右往左</td>
+</tr>
+<tr>
+<td>.</td>
+<td>表达式从左往右</td>
+</tr>
+</tbody>
+</table>
+<h1 id="字符编码">字符编码</h1>
+<h1 id="枚举">枚举</h1>
+<p><strong>代码示例</strong>：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1">// 基本类型只能是整形 int short
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="c1"></span><span class="k">enum</span> <span class="k">class</span> <span class="err">类型名称:基本类型</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="err">类型</span><span class="mi">1</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="c1">// 基本类型写默认是int
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="c1">// 不赋值默认是从0开始
+</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="c1"></span><span class="k">enum</span> <span class="k">class</span> <span class="nc">EquipLv</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="n">normal</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="n">high</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">    <span class="n">rare</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="n">epic</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    <span class="n">legend</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="n">myth</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="k">enum</span> <span class="k">class</span> <span class="nc">EquipLv</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">    <span class="n">normal</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">    <span class="n">high</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">    <span class="n">rare</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">    <span class="n">epic</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">    <span class="n">legend</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">    <span class="n">myth</span><span class="o">=</span><span class="mi">1000</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">
+</span></span><span class="line"><span class="ln">27</span><span class="cl"><span class="c1">// 使用
+</span></span></span><span class="line"><span class="ln">28</span><span class="cl"><span class="c1"></span><span class="n">EquipLv</span> <span class="n">weaponeCLV</span><span class="p">{</span> <span class="n">EquipLv</span><span class="o">::</span><span class="n">normal</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl"><span class="n">EquipLv</span> <span class="n">weaponeDLV</span><span class="p">{</span> <span class="n">EquipLv</span><span class="o">::</span><span class="n">legend</span> <span class="p">};</span>
+</span></span></code></pre></div><p><strong>枚举类型总结</strong>：</p>
+<ul>
+<li>枚举类型可以提高代码的可读性和安全性。</li>
+<li>枚举类型默认是int类型。</li>
+<li>枚举类型的成员只能是整数类型。</li>
+<li>枚举类型和其他类型转换需要强制转换。</li>
+<li>默认情况下，枚举类型的下一个项的初始值是上一项的初始值+1。</li>
+</ul>
+<h1 id="自定义类型名称">自定义类型名称</h1>
+<p>给类型名称改名的方式：(TypeName被替换为A)</p>
+<ol>
+<li><code>#define TypeName A </code></li>
+<li><code>typedef TypeName A</code></li>
+<li><code>using A = Typename</code></li>
+</ol>
+<h1 id="命名空间">命名空间</h1>
+<p><code>using namespace </code></p>
+<h1 id="变量生命周期">变量生命周期</h1>
+<ul>
+<li>代码块中的变量的生命从声明开始，直到这个代码块结束。</li>
+<li>声明在代码开始前的变量叫做全局变量，全局变量的生命是从程序运行开始的，一直到程序结束。</li>
+<li>在变量名冲突的分情况下，采用就近原则</li>
+<li>要访问名称冲突的全局变量，可以使用限定符::来访问</li>
+</ul>
+<h1 id="自定义数据类型">自定义数据类型</h1>
+<ul>
+<li>结构体的本质是按照我们自己的方式定义一块连续的内存结构</li>
+<li>声明一个结构体变量的本质是像计算机申请一块内存，而这块内存的大小<strong>至少</strong>是我们定义的结构成员需要占用的内存之和（内存对齐）</li>
+<li>使用结构体则是按照我们定义好的方式从这块内存读取和写入数据。</li>
+</ul>
+<h1 id="位运算">位运算</h1>
+<h2 id="输出二进制内容">输出二进制内容</h2>
+<ol>
+<li>引入<code>bitset</code>头文件</li>
+<li><code>std::bitset&lt;需要显示的二进制位数&gt;(要显示的变量)</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp">#include&lt;bitset&gt;
+</span></span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span> <span class="n">a</span><span class="p">{(</span><span class="kt">int</span><span class="p">)</span> <span class="mb">0b11111101111111101111111</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">bitset</span><span class="o">&lt;</span><span class="mi">32</span><span class="o">&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="mo">00000000011111101111111101111111</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="nl">D</span><span class="p">:</span><span class="err">\</span><span class="n">project</span><span class="err">\</span><span class="n">cpp</span><span class="err">\</span><span class="n">demo1</span><span class="err">\</span><span class="n">Debug</span><span class="err">\</span><span class="n">demo1</span><span class="p">.</span><span class="n">exe</span> <span class="p">(</span><span class="n">process</span> <span class="mi">75568</span><span class="p">)</span> <span class="n">exited</span> <span class="n">with</span> <span class="n">code</span> <span class="mf">0.</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="n">Press</span> <span class="n">any</span> <span class="n">key</span> <span class="n">to</span> <span class="n">close</span> <span class="k">this</span> <span class="n">window</span> <span class="p">.</span> <span class="p">.</span> <span class="p">.</span>
+</span></span></code></pre></div><h2 id="左移">左移</h2>
+<p>&laquo;</p>
+<h2 id="右移">右移</h2>
+<p>&gt;&gt;</p>
+<p>带符号的数右移的时候，最高位用符号位 补齐</p>
+<h2 id="取反">取反</h2>
+<p>~</p>
+<h2 id="与运算">与运算</h2>
+<p>&amp;</p>
+<h2 id="或运算">或运算</h2>
+<p>|</p>
+<h2 id="异或运算">异或运算</h2>
+<p>^</p>
+<h1 id="关系运算符">关系运算符</h1>
+<table>
+<thead>
+<tr>
+<th>关系运算符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&gt;</td>
+<td>大于</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+</tr>
+<tr>
+<td>==</td>
+<td>等于</td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td>大于等于</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>小于等于</td>
+</tr>
+<tr>
+<td>!=</td>
+<td>不等于</td>
+</tr>
+</tbody>
+</table>
+<h2 id="逻辑运算符号">逻辑运算符号</h2>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&amp;&amp;</td>
+<td>逻辑与</td>
+<td>1. 注意和位运算符&amp;的区别<br />2. 操作数都为true的时候，表达式为true</td>
+</tr>
+<tr>
+<td>||</td>
+<td>逻辑与</td>
+<td>1. 注意和位运算符|的区别<br />2. 操作数中有一个为true，表达式为true</td>
+</tr>
+<tr>
+<td>!</td>
+<td>逻辑非</td>
+<td>1. 注意和位运算符~的区别<br />2. 操作数为false时 表达式为true</td>
+</tr>
+</tbody>
+</table>
+<p>注意：</p>
+<ul>
+<li>一元运算符的优先级高于二元运算符</li>
+<li>位运算的优先级高于逻辑运算</li>
+<li>~! &gt; &amp; &gt; |</li>
+</ul>
+<p>数值在逻辑运算中的本质是吧数值转换成boolean值，再进行逻辑运算</p>
+<h1 id="字符串处理">字符串处理</h1>
+<p>字符串处理函数（cctype头文件）</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int isupper(char)</td>
+<td>判断字符是否是大写字母</td>
+</tr>
+<tr>
+<td>int islower(char)</td>
+<td>判断字符是否为小写字母</td>
+</tr>
+<tr>
+<td>int isalpha(char)</td>
+<td>判断字符是否为字母</td>
+</tr>
+<tr>
+<td>int isdigit(char)</td>
+<td>判断字符是否是数字</td>
+</tr>
+<tr>
+<td>int isalnum(char)</td>
+<td>判断字符是否是字母或者数字</td>
+</tr>
+<tr>
+<td>int isspace(char)</td>
+<td>判断字符是否是空白</td>
+</tr>
+<tr>
+<td>int isblank(char)</td>
+<td>判断字符是否是空格</td>
+</tr>
+<tr>
+<td>int ispunct(char)</td>
+<td>判断字符是否是标点符号</td>
+</tr>
+<tr>
+<td>int isprint(char)</td>
+<td>判断字符是否是可打印字符</td>
+</tr>
+<tr>
+<td>int iscntrl(char)</td>
+<td>判断字符是否是控制字符</td>
+</tr>
+<tr>
+<td>int isgraph(char)</td>
+<td>判断字符是否是图形个字符</td>
+</tr>
+<tr>
+<td>int tolower(char)</td>
+<td>将字符转换为小写</td>
+</tr>
+<tr>
+<td>int toupper(char)</td>
+<td>将字符转换为大写</td>
+</tr>
+</tbody>
+</table>
+<h1 id="语句块的中变量">语句块的中变量</h1>
+<p>C++17新语法</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="k">if</span><span class="p">(</span><span class="err">变量生命</span><span class="p">;</span> <span class="err">条件</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">    
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="p">}</span> 
+</span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="k">else</span> 
+</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl">       
+</span></span><span class="line"><span class="ln">8</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h1 id="格式化流输出以及转义">格式化流输出以及转义</h1>
+<blockquote>
+<p>printf</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>d</td>
+<td>十进制数</td>
+</tr>
+<tr>
+<td>o</td>
+<td>八进制数</td>
+</tr>
+<tr>
+<td>u</td>
+<td>无符号十进制数</td>
+</tr>
+<tr>
+<td>x/X</td>
+<td>十六进制整数</td>
+</tr>
+<tr>
+<td>f</td>
+<td>float小数</td>
+</tr>
+<tr>
+<td>lf</td>
+<td>double小数</td>
+</tr>
+<tr>
+<td>s</td>
+<td>字符串</td>
+</tr>
+<tr>
+<td>0</td>
+<td>用0来补齐</td>
+</tr>
+<tr>
+<td>+</td>
+<td>替数字输出</td>
+</tr>
+</tbody>
+</table>
+<h2 id="无显示的输入">无显示的输入</h2>
+<p>控制台不会显示输入的内容。</p>
+<p>头文件需要引入&lt;conio.h&gt;</p>
+<p><code>int _getch();</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="cp">#include&lt;conio.h&gt;
+</span></span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">	<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="n">_getch</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">	<span class="n">printf</span><span class="p">(</span><span class="s">&#34;输入的字符是： %d&#34;</span><span class="p">,</span> <span class="n">a</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h1 id="goto">goto</h1>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">	<span class="kt">char</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="nl">rep</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="n">printf</span><span class="p">(</span><span class="s">&#34;请输入一个大写字母： &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="mi">64</span> <span class="o">&amp;&amp;</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">91</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">		<span class="n">a</span> <span class="o">+=</span> <span class="mi">32</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="k">else</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">		<span class="k">goto</span> <span class="n">rep</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h1 id="数组本质">数组本质</h1>
+<ul>
+<li>一维数组的本质是按照所申请的数据类型，想操作系统申请了一段<strong>连续</strong>的内存空间</li>
+<li>多维数组的本质也是想操作系统申请一块连续的内存，一般来讲是按照低维度有线排序的方式来排序（可能因为操作系统和编译器的不同而不同）而索引只是为了方便访问对应的额你村区域</li>
+</ul>
+<h1 id="一维数组">一维数组</h1>
+<p>定义方式：</p>
+<p><code>数据类型名  数组名[常量表达式];</code></p>
+<p>初始化方式：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">};</span>
+</span></span></code></pre></div><h1 id="二维数组">二维数组</h1>
+<p>定义方式：</p>
+<p><code>数据类型名  数组名[常量表达式1][常量表达式2];</code></p>
+<p>初始化方式：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1">// 全部定义在大括号内
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="c1">// 可以省略一维长度
+</span></span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">a</span><span class="p">[][</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">
+</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="c1">// 对部分元素赋值
+</span></span></span><span class="line"><span class="ln">7</span><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">{{</span><span class="mi">1</span><span class="p">},{</span><span class="mi">5</span><span class="p">},{</span><span class="mi">9</span><span class="p">}};</span>
+</span></span></code></pre></div><h1 id="基于数组的循环">基于数组的循环</h1>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">	<span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span> <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="c1">// 第一种方式
+</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="c1">// 第二种方式
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="c1"></span>    <span class="c1">// 数据类型可以写成auto
+</span></span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="c1"></span>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="nl">value</span> <span class="p">:</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">value</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">
+</span></span><span class="line"><span class="ln">17</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h1 id="stdarray">std::array</h1>
+<p>原生数组+额外功能</p>
+<p>语法：</p>
+<p><code>std::array&lt;变量类型, 元素数量&gt; 变量名</code></p>
+<p>如：<code>std::array&lt;int, 5&gt; studentId;</code></p>
+<p>常见用法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1">// 返回studentId的元素个数
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1"></span><span class="n">studentId</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="c1">// 设置studentId中所有的元素为250
+</span></span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1"></span><span class="n">studentId</span><span class="p">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">250</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="c1">// 返回studentId[1]的内容，越界会报错
+</span></span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="c1"></span><span class="n">studentId</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span></code></pre></div><h1 id="stdvector">std::vector</h1>
+<p>语法：</p>
+<p><code>std::vector&lt;数据类型&gt; 变量名</code></p>
+<p>如：</p>
+<p><code>std::vector&lt;int&gt; studentId</code></p>
+<p>常用方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1">// 初始化一个vector元素为1,2,3
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">studentId</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1">// 设置这个vector拥有5个元素
+</span></span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">studentId</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl">
+</span></span><span class="line"><span class="ln">7</span><span class="cl"><span class="c1">// 设置这个额vector拥有5个元素，并且初始化为100
+</span></span></span><span class="line"><span class="ln">8</span><span class="cl"><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">studentId</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+</span></span></code></pre></div><p>常用方法：</p>
+<p><code>std::array</code>中的方法<code> std::vector</code>基本都可以使用</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1">// 将值添加到vector中
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="c1"></span><span class="n">studentId</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="err">值</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="c1">// 将studentId重新初始化拥有10个元素，每个元素为100
+</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="c1"></span><span class="n">studentId</span><span class="p">.</span><span class="n">assign</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="c1">// 将studentId清空
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="c1"></span><span class="n">studentId</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1">// 判断studentId是否是空的
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="c1"></span><span class="n">studentId</span><span class="p">.</span><span class="n">emtpty</span><span class="p">();</span>
+</span></span></code></pre></div><h1 id="输入">输入</h1>
+<h2 id="c语言">C语言</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln">1</span><span class="cl"><span class="kt">char</span> <span class="n">str</span><span class="p">[</span><span class="mh">0xff</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="nf">scanf</span><span class="p">(</span><span class="s">&#34;%s&#34;</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="kt">wchar_t</span> <span class="n">wstr</span><span class="p">[</span><span class="mh">0xff</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="nf">wscanf</span><span class="p">(</span><span class="sa">L</span><span class="s">&#34;%s&#34;</span><span class="p">,</span> <span class="n">wstr</span><span class="p">);</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="ln"> 1</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp">#define  _CRT_SECURE_NO_WARNINGS
+</span></span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">username</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="n">printf</span><span class="p">(</span><span class="s">&#34;请输入您的名字：&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="n">scanf</span><span class="p">(</span><span class="s">&#34;%s&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">username</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">
+</span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="n">printf</span><span class="p">(</span><span class="s">&#34;</span><span class="se">\n</span><span class="s">您的名字是: %s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">username</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl">	<span class="c1">// 宽字符
+</span></span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="c1"></span>	<span class="n">setlocale</span><span class="p">(</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s">&#34;chs&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">	<span class="kt">wchar_t</span><span class="o">*</span> <span class="n">w_username</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">wchar_t</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">	<span class="n">printf</span><span class="p">(</span><span class="s">&#34;【宽字符】请输入您的名字：&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">	<span class="n">wscanf</span><span class="p">(</span><span class="sa">L</span><span class="s">&#34;%s&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">username</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">	<span class="n">wprintf</span><span class="p">(</span><span class="sa">L</span><span class="s">&#34;</span><span class="se">\n</span><span class="s">【宽字符】您的名字是: %s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">username</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">
+</span></span><span class="line"><span class="ln">20</span><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h1 id="字符长度">字符长度</h1>
+<p><code>strlen()</code></p>
+<p>宽字符求长度：</p>
+<p><code>wslen()</code></p>
+
+
+                    <div class="content-end">
+                        <div class="end-line"></div>
+                        <div class="end-text">— END —</div>
+                    </div>
+                </div>
+
+                <div class="post-extra">
+                    
+                    <div class="extra-section">
+                        <div class="extra-title">相关标签</div>
+                        <div class="tags-list">
+                            
+                            <a href='https://orz-ai.github.io/tags/c&#43;&#43;%E5%9F%BA%E7%A1%80/' class="tag-link">C&#43;&#43;基础</a>
+                            
+                        </div>
+                    </div>
+                    
+
+                    <div class="extra-section">
+                        <div class="extra-title">推荐阅读</div>
+                        <div class="recommend-grid">
+                            
+                            
+                            
+                            <a href="https://orz-ai.github.io/posts/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="recommend-card">
+                                <div class="recommend-image">
+                                    
+                                    <div class="recommend-placeholder"></div>
+                                    
+                                </div>
+                                <div class="recommend-info">
+                                    <div class="recommend-title">2.编译原理-编译系统设计</div>
+                                    <div class="recommend-date">2022-04-24</div>
+                                </div>
+                            </a>
+                            
+                            <a href="https://orz-ai.github.io/posts/2022-03-27-%E6%9C%8D%E5%8A%A1%E5%99%A8hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%92%8Cgit%E5%90%8C%E6%AD%A5/" class="recommend-card">
+                                <div class="recommend-image">
+                                    
+                                    <div class="recommend-placeholder"></div>
+                                    
+                                </div>
+                                <div class="recommend-info">
+                                    <div class="recommend-title">服务器Hexo博客部署和Git同步</div>
+                                    <div class="recommend-date">2022-03-27</div>
+                                </div>
+                            </a>
+                            
+                            <a href="https://orz-ai.github.io/posts/%E6%9C%AC%E5%9C%B0vm%E4%B8%80%E4%BA%9B%E9%85%8D%E7%BD%AE/" class="recommend-card">
+                                <div class="recommend-image">
+                                    
+                                    <div class="recommend-placeholder"></div>
+                                    
+                                </div>
+                                <div class="recommend-info">
+                                    <div class="recommend-title"></div>
+                                    <div class="recommend-date">0001-01-01</div>
+                                </div>
+                            </a>
+                            
+                            <a href="https://orz-ai.github.io/search/" class="recommend-card">
+                                <div class="recommend-image">
+                                    
+                                    <div class="recommend-placeholder"></div>
+                                    
+                                </div>
+                                <div class="recommend-info">
+                                    <div class="recommend-title">搜索</div>
+                                    <div class="recommend-date">0001-01-01</div>
+                                </div>
+                            </a>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-footer">
+                    <div class="post-nav">
+                        
+                        <a href="https://orz-ai.github.io/posts/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="post-nav-prev">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>2.编译原理-编译系统设计</span>
+                        </a>
+                        
+
+                        
+                        <a href="https://orz-ai.github.io/posts/2022-05-02-c&#43;&#43;%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E4%B8%8E%E6%8C%87%E9%92%88/" class="post-nav-next">
+                            <span>C&#43;&#43;动态内存分配与指针</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+            </article>
+
+            
+            <div class="toc-container" id="tocContainer">
+                <div class="toc-header">
+                    <span><i class="fas fa-list"></i> 目录</span>
+                    <button class="toc-hide-btn" id="tocHideBtn" title="收起目录">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <nav class="toc-nav" id="tocNav">
+                    
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-info">
+                <p>&copy; 2025 Gang&#39;s Blog. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <a href="#" class="back-to-top" id="backToTop" aria-label="返回顶部">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    
+    <button class="toc-show-btn" id="tocShowBtn" title="显示目录" style="display: none;">
+        <i class="fas fa-list"></i>
+    </button>
+
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            var backToTop = document.getElementById('backToTop');
+
+            window.addEventListener('scroll', function () {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+            });
+
+            backToTop.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            
+            document.querySelectorAll('.highlight').forEach(function (highlight) {
+                
+                if (!highlight.querySelector('.copy-button')) {
+                    let copyButton = document.createElement('button');
+                    copyButton.className = 'copy-button';
+                    copyButton.textContent = '复制';
+
+                    highlight.appendChild(copyButton);
+
+                    copyButton.addEventListener('click', function () {
+                        let codeElement = highlight.querySelector('code');
+                        let textToCopy = codeElement.textContent;
+
+                        navigator.clipboard.writeText(textToCopy).then(function () {
+                            copyButton.textContent = '已复制!';
+                            setTimeout(function () {
+                                copyButton.textContent = '复制';
+                            }, 2000);
+                        }).catch(function (err) {
+                            console.error('无法复制文本: ', err);
+                        });
+                    });
+                }
+
+                
+                let codeClass = highlight.querySelector('code').className;
+                let langMatch = codeClass.match(/language-(\w+)/);
+
+                if (langMatch && langMatch[1]) {
+                    let lang = langMatch[1];
+                    
+                    let existingIndicator = highlight.querySelector('.language-indicator');
+                    if (existingIndicator) {
+                        existingIndicator.remove();
+                    }
+
+                    
+                    let langIndicator = document.createElement('div');
+                    langIndicator.className = 'language-indicator';
+                    langIndicator.textContent = lang;
+                    highlight.insertBefore(langIndicator, highlight.firstChild);
+                }
+            });
+
+            
+            const tocContainer = document.getElementById('tocContainer');
+            const tocNav = document.getElementById('tocNav');
+            const postContent = document.querySelector('.post-content');
+
+            if (!postContent) return;
+
+            
+            function addHeadingNumbers() {
+                const headings = postContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                let counters = [0, 0, 0, 0, 0, 0]; 
+
+                headings.forEach(heading => {
+                    const level = parseInt(heading.tagName.charAt(1)) - 1; 
+
+                    
+                    counters[level]++;
+
+                    
+                    for (let i = level + 1; i < counters.length; i++) {
+                        counters[i] = 0;
+                    }
+
+                    
+                    let numberStr = '';
+                    for (let i = 0; i <= level; i++) {
+                        if (counters[i] > 0) {
+                            numberStr += (numberStr ? '.' : '') + counters[i];
+                        }
+                    }
+                    numberStr += '. ';
+
+                    
+                    const numberSpan = document.createElement('span');
+                    numberSpan.className = 'heading-number';
+                    numberSpan.textContent = numberStr;
+                    heading.insertBefore(numberSpan, heading.firstChild);
+                });
+            }
+
+            
+            function generateTOC() {
+                const headings = postContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                if (headings.length === 0) {
+                    tocContainer.style.display = 'none';
+                    return;
+                }
+
+                tocNav.innerHTML = '';
+                let levelStack = [];
+
+                headings.forEach((heading, index) => {
+                    const level = parseInt(heading.tagName.charAt(1));
+                    const id = heading.id || `heading-${index}`;
+                    heading.id = id;
+
+                    
+                    while (levelStack.length > 0 && levelStack[levelStack.length - 1].level >= level) {
+                        levelStack.pop();
+                    }
+
+                    const listItem = document.createElement('li');
+                    listItem.className = `toc-item toc-level-${level}`;
+
+                    const link = document.createElement('a');
+                    link.href = `#${id}`;
+                    link.className = 'toc-link';
+                    link.setAttribute('data-target', id);
+                    link.innerHTML = `<span class="toc-text">${heading.textContent}</span>`;
+
+                    listItem.appendChild(link);
+
+                    
+                    if (levelStack.length === 0) {
+                        tocNav.appendChild(listItem);
+                    } else {
+                        const parent = levelStack[levelStack.length - 1];
+                        let subList = parent.element.querySelector('ul');
+                        if (!subList) {
+                            subList = document.createElement('ul');
+                            subList.className = 'toc-list';
+                            parent.element.appendChild(subList);
+
+                            
+                            const parentLink = parent.element.querySelector('.toc-link');
+                            if (parentLink && !parentLink.classList.contains('toc-expandable')) {
+                                parentLink.classList.add('toc-expandable');
+                                parentLink.addEventListener('click', function (e) {
+                                    if (e.target.closest('.toc-link') === this) {
+                                        e.preventDefault();
+                                        subList.classList.toggle('toc-collapsed');
+                                        this.classList.toggle('toc-expanded');
+                                    }
+                                });
+                            }
+                        }
+                        subList.appendChild(listItem);
+                    }
+
+                    levelStack.push({ level: level, element: listItem });
+                });
+            }
+
+            
+            function updateActiveHeading() {
+                const headings = postContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+
+                let activeHeading = null;
+                let closestHeading = null;
+                let closestDistance = Infinity;
+
+                
+                headings.forEach(heading => {
+                    const rect = heading.getBoundingClientRect();
+                    const headingCenter = rect.top + rect.height / 2;
+                    const viewportCenter = windowHeight / 2;
+                    const distance = Math.abs(headingCenter - viewportCenter);
+
+                    
+                    if (headingCenter <= viewportCenter && distance < closestDistance) {
+                        closestDistance = distance;
+                        closestHeading = heading;
+                    }
+                });
+
+                activeHeading = closestHeading;
+
+                
+                if (!activeHeading) {
+                    const isNearBottom = (scrollTop + windowHeight) >= documentHeight - 100;
+                    if (isNearBottom && headings.length > 0) {
+                        activeHeading = headings[headings.length - 1];
+                    }
+                }
+
+                
+                document.querySelectorAll('.toc-link').forEach(link => {
+                    link.classList.remove('active');
+                    link.parentElement.classList.remove('active');
+                });
+
+                
+                if (activeHeading) {
+                    const activeLink = document.querySelector(`[data-target="${activeHeading.id}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                        activeLink.parentElement.classList.add('active');
+
+                        
+                        let parent = activeLink.parentElement.parentElement;
+                        while (parent && parent.classList.contains('toc-list')) {
+                            parent.style.display = 'block';
+                            parent = parent.parentElement.parentElement;
+                        }
+                    }
+                }
+            }
+
+            
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('.toc-link')) {
+                    e.preventDefault();
+                    const targetId = e.target.closest('.toc-link').getAttribute('data-target');
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - 100;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+
+            
+            addHeadingNumbers(); 
+            generateTOC(); 
+            updateActiveHeading();
+
+            
+            const tocHideBtn = document.getElementById('tocHideBtn');
+            const tocShowBtn = document.getElementById('tocShowBtn');
+
+            if (tocHideBtn) {
+                tocHideBtn.addEventListener('click', function () {
+                    
+                    tocContainer.classList.add('hidden');
+                    if (tocShowBtn) {
+                        tocShowBtn.style.display = 'block';
+                    }
+                });
+            }
+
+            if (tocShowBtn) {
+                tocShowBtn.addEventListener('click', function () {
+                    
+                    tocContainer.classList.remove('hidden');
+                    tocShowBtn.style.display = 'none';
+                });
+            }
+
+            
+            let ticking = false;
+            window.addEventListener('scroll', function () {
+                if (!ticking) {
+                    requestAnimationFrame(function () {
+                        updateActiveHeading();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
