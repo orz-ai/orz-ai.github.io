@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>博客教程 on Gang&#39;s Blog</title>
-    <link>https://orz-ai.github.io/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/</link>
+    <link>http://localhost:1313/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/</link>
     <description>Recent content in 博客教程 on Gang&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <managingEditor>deepincode@qq.com (Gang)</managingEditor>
     <webMaster>deepincode@qq.com (Gang)</webMaster>
     <lastBuildDate>Mon, 01 Jan 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://orz-ai.github.io/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>欢迎使用GBlog主题</title>
-      <link>https://orz-ai.github.io/posts/welcome/</link>
+      <link>http://localhost:1313/posts/welcome/</link>
       <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/posts/welcome/</guid>
+      <guid>http://localhost:1313/posts/welcome/</guid>
       <description>欢迎使用GBlog主题！这是一个简洁现代的Hugo博客主题，专为中文博客设计。&#xA;主题特点 响应式设计，完美适配各种设备 清晰的文章布局 支持文章标签 简洁的导航菜单 优雅的排版 如何使用 创建新文章： 1hugo new posts/my-first-post.md 编辑文章内容，修改文章头部的draft状态： 1--- 2title: &amp;#34;我的第一篇文章&amp;#34; 3date: 2024-01-01 4draft: false 5tags: [&amp;#34;博客&amp;#34;] 6--- 本地预览： 1hugo server -D 自定义主题 你可以通过修改hugo.toml配置文件来自定义网站的各项设置，包括：&#xA;网站标题和描述 作者信息 导航菜单 主题颜色（通过CSS变量） 获取帮助 如果你在使用过程中遇到任何问题，欢迎通过以下方式获取帮助：&#xA;查看Hugo官方文档 提交Issue 发送邮件咨询 祝你使用愉快！</description>
     </item>
   </channel>

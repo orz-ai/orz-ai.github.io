@@ -2,138 +2,138 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Gang&#39;s Blog</title>
-    <link>https://orz-ai.github.io/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on Gang&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <managingEditor>deepincode@qq.com (Gang)</managingEditor>
     <webMaster>deepincode@qq.com (Gang)</webMaster>
     <lastBuildDate>Sun, 19 Oct 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://orz-ai.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>VisionMate — 面向视障人群的AI视觉场景理解助手</title>
-      <link>https://orz-ai.github.io/posts/%E7%9B%B2%E4%BA%BA%E8%A7%86%E8%A7%89%E5%8A%A9%E7%90%86/</link>
+      <link>http://localhost:1313/posts/2025-10-01-%E7%9B%B2%E4%BA%BA%E8%A7%86%E8%A7%89%E5%8A%A9%E7%90%86/</link>
       <pubDate>Sun, 19 Oct 2025 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/posts/%E7%9B%B2%E4%BA%BA%E8%A7%86%E8%A7%89%E5%8A%A9%E7%90%86/</guid>
+      <guid>http://localhost:1313/posts/2025-10-01-%E7%9B%B2%E4%BA%BA%E8%A7%86%E8%A7%89%E5%8A%A9%E7%90%86/</guid>
       <description>🧠 项目构想：VisionMate — 面向视障人群的AI视觉场景理解助手 一、项目概述 项目名称： VisionMate 智能视觉陪伴系统 核心理念： VisionMate 是一款基于多模态AI的智能视觉辅助设备，专为盲人和低视力人群设计。通过实时图像识别、语音交互和环境建模，帮助用户&amp;quot;看见&amp;quot;周围的世界。 用户佩戴轻量化摄像头设备或使用手机端应用，系统会自动识别前方场景、障碍物、人物、文字信息，并通过语音自然描述输出。&#xA;二、市场痛点与需求分析 全球有超 2.85亿 视力障碍者，其中约 3900万为盲人（WHO数据）。 国内约有 1700万视障人群，但可获得的科技辅助产品极其有限，大多数为传统读屏软件或导盲杖。 视障人士在出行安全、信息获取、社交参与等方面长期依赖他人，缺乏独立性。 当前AI视觉产品（如 Seeing AI、Envision AI）主要支持英文，且价格昂贵、不适应中文语境和生活环境。 → VisionMate 的机会点：&#xA;聚焦中文语境与中国本地生活场景； 降低硬件门槛； 利用国产AI视觉与语音模型，实现实时场景理解； 打造真正的&amp;quot;AI导盲伙伴&amp;quot;。 三、产品设计与AI技术方案 产品形态：&#xA;手机App + 可选穿戴设备（如挂耳式摄像头或AR眼镜） 用户只需通过语音指令即可获取环境信息。 AI技术架构：&#xA;多模态场景识别模型：&#xA;识别行人、障碍物、红绿灯、楼梯、地标、文字等； 支持场景语义分割+空间建模。 语音交互与辅助导航：&#xA;用户通过语音询问&amp;quot;前面是什么&amp;quot;&amp;ldquo;有人吗&amp;rdquo;，系统即时回答； 结合地图API实现步行导航、障碍提醒。 情感识别与安全检测：&#xA;识别周围人的语气变化（如焦急、危险）； 支持异常情况报警。 离线+在线混合模式：&#xA;离线识别基本场景； 在线云端增强模型能力，节省算力。 四、商业模式 C端订阅制： 免费试用 + 会员功能（月费制，提供高级识别与导航功能）。 B端合作： 与残联、公益组织、无障碍出行服务平台合作，作为定制化辅助解决方案。 硬件合作： 与国内AR眼镜厂、智能耳机厂商联合开发&amp;quot;视觉AI伴侣硬件&amp;quot;。 社会价值背书： 项目具备强社会责任属性，可申请政府创新补贴及CSR资金。 五、团队与资源需求 团队构成：&#xA;AI算法工程师 ×2（视觉+语音） 移动开发工程师 ×2（iOS/Android） 产品经理 ×1 无障碍体验顾问 ×1（盲人或相关机构成员） 资源需求：</description>
     </item>
     <item>
       <title>欢迎使用GBlog主题</title>
-      <link>https://orz-ai.github.io/posts/welcome/</link>
+      <link>http://localhost:1313/posts/welcome/</link>
       <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/posts/welcome/</guid>
+      <guid>http://localhost:1313/posts/welcome/</guid>
       <description>欢迎使用GBlog主题！这是一个简洁现代的Hugo博客主题，专为中文博客设计。&#xA;主题特点 响应式设计，完美适配各种设备 清晰的文章布局 支持文章标签 简洁的导航菜单 优雅的排版 如何使用 创建新文章： 1hugo new posts/my-first-post.md 编辑文章内容，修改文章头部的draft状态： 1--- 2title: &amp;#34;我的第一篇文章&amp;#34; 3date: 2024-01-01 4draft: false 5tags: [&amp;#34;博客&amp;#34;] 6--- 本地预览： 1hugo server -D 自定义主题 你可以通过修改hugo.toml配置文件来自定义网站的各项设置，包括：&#xA;网站标题和描述 作者信息 导航菜单 主题颜色（通过CSS变量） 获取帮助 如果你在使用过程中遇到任何问题，欢迎通过以下方式获取帮助：&#xA;查看Hugo官方文档 提交Issue 发送邮件咨询 祝你使用愉快！</description>
     </item>
     <item>
       <title>JAVA面试核心知识点整理</title>
-      <link>https://orz-ai.github.io/posts/java%E9%9D%A2%E8%AF%95%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</link>
+      <link>http://localhost:1313/posts/java%E9%9D%A2%E8%AF%95%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</link>
       <pubDate>Wed, 15 Nov 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/posts/java%E9%9D%A2%E8%AF%95%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</guid>
+      <guid>http://localhost:1313/posts/java%E9%9D%A2%E8%AF%95%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</guid>
       <description>JVM (1) 基本概念：&#xA;JVM是可运行Java代码的假想计算机 ，包括一套字节码指令集、一组寄存器、一个栈、一个垃圾回收，堆 和 一个存储方法域。JVM 是运行在操作系统之上的，它与硬件没有直接的交互。&#xA;(2) 运行过程：&#xA;我们都知道 Java 源文件，通过编译器，能够生产相应的.Class 文件，也就是字节码文件，而字节码文件又通过 Java 虚拟机中的解释器，编译成特定机器上的机器码 。&#xA;也就是如下：&#xA;① Java 源文件—-&amp;gt;编译器—-&amp;gt;字节码文件&#xA;② 字节码文件—-&amp;gt;JVM—-&amp;gt;机器码&#xA;每一种平台的解释器是不同的，但是实现的虚拟机是相同的，这也就是 Java 为什么能够跨平台的原因了 ，当一个程序从开始运行，这时虚拟机就开始实例化了，多个程序启动就会存在多个虚拟机实例。程序退出或者关闭，则虚拟机实例消亡，多个虚拟机实例之间数据不能共享。&#xA;线程 这里所说的线程指程序执行过程中的一个线程实体。JVM 允许一个应用并发执行多个线程。 Hotspot JVM 中的 Java 线程与原生操作系统线程有直接的映射关系。当线程本地存储、缓冲区分配、同步对象、栈、程序计数器等准备好以后，就会创建一个操作系统原生线程。&#xA;Java 线程结束，原生线程随之被回收。操作系统负责调度所有线程，并把它们分配到任何可用的 CPU 上。当原生线程初始化完毕，就会调用 Java 线程的 run() 方法。当线程结束时，会释放原生线程和 Java 线程的所有资源。&#xA;Hotspot JVM 后台运行的系统线程主要有下面几个：&#xA;虚拟机线程 （VM thread） 这个线程等待 JVM 到达安全点操作出现。这些操作必须要在独立的线程里执行，因为当堆修改无法进行时，线程都需要 JVM 位于安全点。这些操作的类型有：stop-the- world 垃圾回收、线程栈 dump、线程暂停、线程偏向锁（biased locking）解除。 周期性任务线程 这线程负责定时器事件（也就是中断），用来调度周期性操作的执行。 GC 线程 这些线程支持 JVM 中不同的垃圾回收活动。 编译器线程 这些线程在运行时将字节码动态编译成本地平台相关的机器码。 信号分发线程 这个线程接收发送到 JVM 的信号并调用适当的 JVM 方法处理。 JVM 内存区域 JVM 内存区域主要分为线程私有区域【程序计数器、虚拟机栈、本地方法区】、线程共享区域【JAVA 堆、方法区】、直接内存。</description>
     </item>
     <item>
       <title>深入理解Go语言垃圾回收机制：原理、流程与优化</title>
-      <link>https://orz-ai.github.io/posts/go-gc-deep-dive/</link>
+      <link>http://localhost:1313/posts/go-gc-deep-dive/</link>
       <pubDate>Wed, 15 Nov 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/posts/go-gc-deep-dive/</guid>
+      <guid>http://localhost:1313/posts/go-gc-deep-dive/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;https://oss.hackfun.net/aurora-image/aurora/articles/6bc8178ffe84b39432920b18f4e5ad26.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Go语言的垃圾回收（Garbage Collection，简称GC）机制是其内存管理的核心部分，它能够自动识别和回收不再使用的内存，让开发者免于手动内存管理的负担。本文将深入探讨Go语言GC的工作原理、演变历史、实现细节以及性能优化技巧。&lt;/p&gt;&#xA;&lt;h2 id=&#34;go-gc的演变历史&#34;&gt;Go GC的演变历史&lt;/h2&gt;&#xA;&lt;p&gt;Go语言的垃圾回收器从诞生到现在经历了多次重大更新，每次更新都显著提升了性能和减少了延迟：&lt;/p&gt;</description>
     </item>
     <item>
       <title>Go语言入门指南</title>
-      <link>https://orz-ai.github.io/posts/your-post-name/</link>
+      <link>http://localhost:1313/posts/your-post-name/</link>
       <pubDate>Sun, 15 Oct 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/posts/your-post-name/</guid>
+      <guid>http://localhost:1313/posts/your-post-name/</guid>
       <description>Explain函数 MySQL 的 EXPLAIN 语句用于分析 SQL 查询的执行计划，帮助开发者理解查询是如何执行的，以及优化查询性能。以下是 EXPLAIN 语句输出各个字段的详细深入解释：&#xA;字段意义 测试SQL:&#xA;1-- 演员表 2DROP TABLE IF EXISTS `actor`; 3CREATE TABLE `actor` ( 4 `id` int(11) NOT NULL, 5 `name` varchar(45) DEFAULT NULL, 6 `update_time` datetime DEFAULT NULL, 7 PRIMARY KEY (`id`) 8) ENGINE=InnoDB DEFAULT CHARSET=utf8; 9INSERT INTO `actor` (`id`, `name`, `update_time`) VALUES (1,&amp;#39;a&amp;#39;,&amp;#39;2017-12-22 15:27:18&amp;#39;), (2,&amp;#39;b&amp;#39;,&amp;#39;2017-12-22 15:27:18&amp;#39;), (3,&amp;#39;c&amp;#39;,&amp;#39;2017-12-22 15:27:18&amp;#39;); 10 11-- 电影表 12DROP TABLE IF EXISTS `film`; 13CREATE TABLE `film` ( 14 `id` int(11) NOT NULL AUTO_INCREMENT, 15 `name` varchar(10) DEFAULT NULL, 16 PRIMARY KEY (`id`), 17 KEY `idx_name` (`name`) 18) ENGINE=InnoDB DEFAULT CHARSET=utf8; 19INSERT INTO `film` (`id`, `name`) VALUES (3,&amp;#39;film0&amp;#39;),(1,&amp;#39;film1&amp;#39;),(2,&amp;#39;film2&amp;#39;); 20 21-- 电影和演员关联表 22DROP TABLE IF EXISTS `film_actor`; 23CREATE TABLE `film_actor` ( 24 `id` int(11) NOT NULL, 25 `film_id` int(11) NOT NULL, 26 `actor_id` int(11) NOT NULL, 27 `remark` varchar(255) DEFAULT NULL, 28 PRIMARY KEY (`id`), 29 KEY `idx_film_actor_id` (`film_id`,`actor_id`) 30) ENGINE=InnoDB DEFAULT CHARSET=utf8; 31INSERT INTO `film_actor` (`id`, `film_id`, `actor_id`) VALUES (1,1,1),(2,1,2),(3,2,1); 1.</description>
     </item>
     <item>
       <title>海滨日落</title>
-      <link>https://orz-ai.github.io/photos/sample-photo-5/</link>
+      <link>http://localhost:1313/photos/sample-photo-5/</link>
       <pubDate>Thu, 05 Oct 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/photos/sample-photo-5/</guid>
+      <guid>http://localhost:1313/photos/sample-photo-5/</guid>
       <description>这是一张温暖的海滨日落照片，拍摄于宁静的海边小镇。夕阳西下时分，金色的阳光洒在波光粼粼的海面上，远处的渔船在夕阳的映衬下显得格外诗意。海鸥在天空中自由翱翔，为这幅美景增添了生机。</description>
     </item>
     <item>
       <title>花卉特写</title>
-      <link>https://orz-ai.github.io/photos/sample-photo-3/</link>
+      <link>http://localhost:1313/photos/sample-photo-3/</link>
       <pubDate>Thu, 05 Oct 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/photos/sample-photo-3/</guid>
+      <guid>http://localhost:1313/photos/sample-photo-3/</guid>
       <description>这是一张花卉特写照片，捕捉了花朵细腻的纹理和鲜艳的色彩。阳光透过花瓣，使整个画面散发着温暖的气息。</description>
     </item>
     <item>
       <title>城市夜景</title>
-      <link>https://orz-ai.github.io/photos/sample-photo-2/</link>
+      <link>http://localhost:1313/photos/sample-photo-2/</link>
       <pubDate>Wed, 20 Sep 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/photos/sample-photo-2/</guid>
+      <guid>http://localhost:1313/photos/sample-photo-2/</guid>
       <description>这是一张城市夜景照片，灯火通明的高楼大厦在夜色中闪耀着迷人的光芒。城市的喧嚣和活力尽收眼底。</description>
     </item>
     <item>
       <title>城市夜景</title>
-      <link>https://orz-ai.github.io/photos/sample-photo-4/</link>
+      <link>http://localhost:1313/photos/sample-photo-4/</link>
       <pubDate>Wed, 20 Sep 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/photos/sample-photo-4/</guid>
+      <guid>http://localhost:1313/photos/sample-photo-4/</guid>
       <description>这是一张迷人的城市夜景照片，拍摄于繁华的都市中心。霓虹灯光与高楼大厦交相辉映，展现了现代都市的璀璨魅力。车流如光带般穿梭在街道上，为这座不夜城增添了动感与活力。</description>
     </item>
     <item>
       <title>美丽风景</title>
-      <link>https://orz-ai.github.io/photos/sample-photo-1/</link>
+      <link>http://localhost:1313/photos/sample-photo-1/</link>
       <pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/photos/sample-photo-1/</guid>
+      <guid>http://localhost:1313/photos/sample-photo-1/</guid>
       <description>这是一张美丽的风景照片，拍摄于山水之间的一个清晨。阳光透过云层洒在山峦上，呈现出梦幻般的光影效果。&#xA;测试一下描述啊这个张图阿德买书是一个美丽的风景照片，拍摄于山水之间的一个清晨。阳光透过云层洒在山峦上，呈现出梦幻般的光影效果。&#xA;挖机哦记得覅就死哦到付件阿斯哦东风及哦啊束带结发i哦啊世纪东方i哦啊手机大发i哦房间大搜i囧萨迪哦分局阿斯哦发i哦啊三等奖覅哦啊扫地机覅哦阿圣诞节覅哦啊是点击哦发阿是滴哦飞机阿山地哦放假啊搜if及哦啊是大家佛i啊是的家佛i阿圣诞节佛is啊等级哦if久啊山东if久啊山东if搜就爱代发久啊死都is哦i阿加覅哦啊束带结发iOS啊到就覅哦阿斯顿金佛i就是烦i哦啊三等奖覅哦啊都是就覅哦撒大家佛i啊是的i哦放假啊搜if就啊搜地风机哦i阿斯蒂芬及哦啊受打击佛</description>
     </item>
     <item>
       <title>关于</title>
-      <link>https://orz-ai.github.io/about/</link>
+      <link>http://localhost:1313/about/</link>
       <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/about/</guid>
+      <guid>http://localhost:1313/about/</guid>
       <description>一个写代码的。&#xA;平时喜欢折腾各种技术，偶尔也拍拍照片。这个博客主要是记录一些学习笔记和日常碎片，顺便当作备忘录用。</description>
     </item>
     <item>
       <title>C&#43;&#43;结构体和联合体</title>
-      <link>https://orz-ai.github.io/posts/2022-05-04-c&#43;&#43;%E7%BB%93%E6%9E%84%E4%BD%93/</link>
+      <link>http://localhost:1313/posts/2022-05-04-c&#43;&#43;%E7%BB%93%E6%9E%84%E4%BD%93/</link>
       <pubDate>Wed, 04 May 2022 18:21:36 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/posts/2022-05-04-c&#43;&#43;%E7%BB%93%E6%9E%84%E4%BD%93/</guid>
+      <guid>http://localhost:1313/posts/2022-05-04-c&#43;&#43;%E7%BB%93%E6%9E%84%E4%BD%93/</guid>
       <description>复习C++动态内存分配与指针~</description>
     </item>
     <item>
       <title>C&#43;&#43;动态内存分配与指针</title>
-      <link>https://orz-ai.github.io/posts/2022-05-02-c&#43;&#43;%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E4%B8%8E%E6%8C%87%E9%92%88/</link>
+      <link>http://localhost:1313/posts/2022-05-02-c&#43;&#43;%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E4%B8%8E%E6%8C%87%E9%92%88/</link>
       <pubDate>Mon, 02 May 2022 20:28:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/posts/2022-05-02-c&#43;&#43;%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E4%B8%8E%E6%8C%87%E9%92%88/</guid>
+      <guid>http://localhost:1313/posts/2022-05-02-c&#43;&#43;%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E4%B8%8E%E6%8C%87%E9%92%88/</guid>
       <description>复习C++动态内存分配与指针~</description>
     </item>
     <item>
       <title>C&#43;&#43;基本数据类型和计算</title>
-      <link>https://orz-ai.github.io/posts/2022-04-30-c&#43;&#43;%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</link>
+      <link>http://localhost:1313/posts/2022-04-30-c&#43;&#43;%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</link>
       <pubDate>Sat, 30 Apr 2022 19:24:03 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/posts/2022-04-30-c&#43;&#43;%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</guid>
+      <guid>http://localhost:1313/posts/2022-04-30-c&#43;&#43;%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</guid>
       <description>复习C++基础知识~</description>
     </item>
     <item>
       <title>2.编译原理-编译系统设计</title>
-      <link>https://orz-ai.github.io/posts/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/</link>
+      <link>http://localhost:1313/posts/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/</link>
       <pubDate>Sun, 24 Apr 2022 01:31:46 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/posts/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/</guid>
+      <guid>http://localhost:1313/posts/2022-04-24-%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/</guid>
       <description>学习编译原理编译系统设计</description>
     </item>
     <item>
       <title>服务器Hexo博客部署和Git同步</title>
-      <link>https://orz-ai.github.io/posts/2022-03-27-%E6%9C%8D%E5%8A%A1%E5%99%A8hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%92%8Cgit%E5%90%8C%E6%AD%A5/</link>
+      <link>http://localhost:1313/posts/2022-03-27-%E6%9C%8D%E5%8A%A1%E5%99%A8hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%92%8Cgit%E5%90%8C%E6%AD%A5/</link>
       <pubDate>Sun, 27 Mar 2022 23:54:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/posts/2022-03-27-%E6%9C%8D%E5%8A%A1%E5%99%A8hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%92%8Cgit%E5%90%8C%E6%AD%A5/</guid>
+      <guid>http://localhost:1313/posts/2022-03-27-%E6%9C%8D%E5%8A%A1%E5%99%A8hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%92%8Cgit%E5%90%8C%E6%AD%A5/</guid>
       <description>搬瓦工服务器搭建Hexo博客并使用git同步</description>
     </item>
     <item>
       <title></title>
-      <link>https://orz-ai.github.io/posts/%E6%9C%AC%E5%9C%B0vm%E4%B8%80%E4%BA%9B%E9%85%8D%E7%BD%AE/</link>
+      <link>http://localhost:1313/posts/%E6%9C%AC%E5%9C%B0vm%E4%B8%80%E4%BA%9B%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/posts/%E6%9C%AC%E5%9C%B0vm%E4%B8%80%E4%BA%9B%E9%85%8D%E7%BD%AE/</guid>
+      <guid>http://localhost:1313/posts/%E6%9C%AC%E5%9C%B0vm%E4%B8%80%E4%BA%9B%E9%85%8D%E7%BD%AE/</guid>
       <description>yum配置镜像源 1# 备份源文件 2mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup 3 4# 下载阿里的替换 5wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo Docker配置 一些数据库配置 1# mongodb 2docker run -d \ 3 --name mongodb \ 4 -p 27017:27017 \ 5 -v /data/mongodb:/data/db \ 6 -e MONGO_INITDB_ROOT_USERNAME=root \ 7 -e MONGO_INITDB_ROOT_PASSWORD=123456 \ 8 mongo --bind_ip_all 9 10 11# redis 12docker run -d \ 13 --name myredis \ 14 -p 6379:6379 \ 15 -e REDIS_PASSWORD=123456 \ 16 redis:latest \ 17 redis-server --requirepass 123456 18 19# etcd </description>
     </item>
     <item>
       <title>搜索</title>
-      <link>https://orz-ai.github.io/search/</link>
+      <link>http://localhost:1313/search/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/search/</guid>
+      <guid>http://localhost:1313/search/</guid>
       <description>搜索站内内容</description>
     </item>
   </channel>

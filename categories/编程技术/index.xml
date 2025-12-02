@@ -2,33 +2,33 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>编程技术 on Gang&#39;s Blog</title>
-    <link>https://orz-ai.github.io/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/</link>
+    <link>http://localhost:1313/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/</link>
     <description>Recent content in 编程技术 on Gang&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <managingEditor>deepincode@qq.com (Gang)</managingEditor>
     <webMaster>deepincode@qq.com (Gang)</webMaster>
     <lastBuildDate>Wed, 15 Nov 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://orz-ai.github.io/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>JAVA面试核心知识点整理</title>
-      <link>https://orz-ai.github.io/posts/java%E9%9D%A2%E8%AF%95%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</link>
+      <link>http://localhost:1313/posts/java%E9%9D%A2%E8%AF%95%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</link>
       <pubDate>Wed, 15 Nov 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/posts/java%E9%9D%A2%E8%AF%95%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</guid>
+      <guid>http://localhost:1313/posts/java%E9%9D%A2%E8%AF%95%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</guid>
       <description>JVM (1) 基本概念：&#xA;JVM是可运行Java代码的假想计算机 ，包括一套字节码指令集、一组寄存器、一个栈、一个垃圾回收，堆 和 一个存储方法域。JVM 是运行在操作系统之上的，它与硬件没有直接的交互。&#xA;(2) 运行过程：&#xA;我们都知道 Java 源文件，通过编译器，能够生产相应的.Class 文件，也就是字节码文件，而字节码文件又通过 Java 虚拟机中的解释器，编译成特定机器上的机器码 。&#xA;也就是如下：&#xA;① Java 源文件—-&amp;gt;编译器—-&amp;gt;字节码文件&#xA;② 字节码文件—-&amp;gt;JVM—-&amp;gt;机器码&#xA;每一种平台的解释器是不同的，但是实现的虚拟机是相同的，这也就是 Java 为什么能够跨平台的原因了 ，当一个程序从开始运行，这时虚拟机就开始实例化了，多个程序启动就会存在多个虚拟机实例。程序退出或者关闭，则虚拟机实例消亡，多个虚拟机实例之间数据不能共享。&#xA;线程 这里所说的线程指程序执行过程中的一个线程实体。JVM 允许一个应用并发执行多个线程。 Hotspot JVM 中的 Java 线程与原生操作系统线程有直接的映射关系。当线程本地存储、缓冲区分配、同步对象、栈、程序计数器等准备好以后，就会创建一个操作系统原生线程。&#xA;Java 线程结束，原生线程随之被回收。操作系统负责调度所有线程，并把它们分配到任何可用的 CPU 上。当原生线程初始化完毕，就会调用 Java 线程的 run() 方法。当线程结束时，会释放原生线程和 Java 线程的所有资源。&#xA;Hotspot JVM 后台运行的系统线程主要有下面几个：&#xA;虚拟机线程 （VM thread） 这个线程等待 JVM 到达安全点操作出现。这些操作必须要在独立的线程里执行，因为当堆修改无法进行时，线程都需要 JVM 位于安全点。这些操作的类型有：stop-the- world 垃圾回收、线程栈 dump、线程暂停、线程偏向锁（biased locking）解除。 周期性任务线程 这线程负责定时器事件（也就是中断），用来调度周期性操作的执行。 GC 线程 这些线程支持 JVM 中不同的垃圾回收活动。 编译器线程 这些线程在运行时将字节码动态编译成本地平台相关的机器码。 信号分发线程 这个线程接收发送到 JVM 的信号并调用适当的 JVM 方法处理。 JVM 内存区域 JVM 内存区域主要分为线程私有区域【程序计数器、虚拟机栈、本地方法区】、线程共享区域【JAVA 堆、方法区】、直接内存。</description>
     </item>
     <item>
       <title>深入理解Go语言垃圾回收机制：原理、流程与优化</title>
-      <link>https://orz-ai.github.io/posts/go-gc-deep-dive/</link>
+      <link>http://localhost:1313/posts/go-gc-deep-dive/</link>
       <pubDate>Wed, 15 Nov 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/posts/go-gc-deep-dive/</guid>
+      <guid>http://localhost:1313/posts/go-gc-deep-dive/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;https://oss.hackfun.net/aurora-image/aurora/articles/6bc8178ffe84b39432920b18f4e5ad26.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Go语言的垃圾回收（Garbage Collection，简称GC）机制是其内存管理的核心部分，它能够自动识别和回收不再使用的内存，让开发者免于手动内存管理的负担。本文将深入探讨Go语言GC的工作原理、演变历史、实现细节以及性能优化技巧。&lt;/p&gt;&#xA;&lt;h2 id=&#34;go-gc的演变历史&#34;&gt;Go GC的演变历史&lt;/h2&gt;&#xA;&lt;p&gt;Go语言的垃圾回收器从诞生到现在经历了多次重大更新，每次更新都显著提升了性能和减少了延迟：&lt;/p&gt;</description>
     </item>
     <item>
       <title>Go语言入门指南</title>
-      <link>https://orz-ai.github.io/posts/your-post-name/</link>
+      <link>http://localhost:1313/posts/your-post-name/</link>
       <pubDate>Sun, 15 Oct 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/posts/your-post-name/</guid>
+      <guid>http://localhost:1313/posts/your-post-name/</guid>
       <description>Explain函数 MySQL 的 EXPLAIN 语句用于分析 SQL 查询的执行计划，帮助开发者理解查询是如何执行的，以及优化查询性能。以下是 EXPLAIN 语句输出各个字段的详细深入解释：&#xA;字段意义 测试SQL:&#xA;1-- 演员表 2DROP TABLE IF EXISTS `actor`; 3CREATE TABLE `actor` ( 4 `id` int(11) NOT NULL, 5 `name` varchar(45) DEFAULT NULL, 6 `update_time` datetime DEFAULT NULL, 7 PRIMARY KEY (`id`) 8) ENGINE=InnoDB DEFAULT CHARSET=utf8; 9INSERT INTO `actor` (`id`, `name`, `update_time`) VALUES (1,&amp;#39;a&amp;#39;,&amp;#39;2017-12-22 15:27:18&amp;#39;), (2,&amp;#39;b&amp;#39;,&amp;#39;2017-12-22 15:27:18&amp;#39;), (3,&amp;#39;c&amp;#39;,&amp;#39;2017-12-22 15:27:18&amp;#39;); 10 11-- 电影表 12DROP TABLE IF EXISTS `film`; 13CREATE TABLE `film` ( 14 `id` int(11) NOT NULL AUTO_INCREMENT, 15 `name` varchar(10) DEFAULT NULL, 16 PRIMARY KEY (`id`), 17 KEY `idx_name` (`name`) 18) ENGINE=InnoDB DEFAULT CHARSET=utf8; 19INSERT INTO `film` (`id`, `name`) VALUES (3,&amp;#39;film0&amp;#39;),(1,&amp;#39;film1&amp;#39;),(2,&amp;#39;film2&amp;#39;); 20 21-- 电影和演员关联表 22DROP TABLE IF EXISTS `film_actor`; 23CREATE TABLE `film_actor` ( 24 `id` int(11) NOT NULL, 25 `film_id` int(11) NOT NULL, 26 `actor_id` int(11) NOT NULL, 27 `remark` varchar(255) DEFAULT NULL, 28 PRIMARY KEY (`id`), 29 KEY `idx_film_actor_id` (`film_id`,`actor_id`) 30) ENGINE=InnoDB DEFAULT CHARSET=utf8; 31INSERT INTO `film_actor` (`id`, `film_id`, `actor_id`) VALUES (1,1,1),(2,1,2),(3,2,1); 1.</description>
     </item>
   </channel>

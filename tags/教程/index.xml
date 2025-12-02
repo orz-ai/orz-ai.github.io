@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>教程 on Gang&#39;s Blog</title>
-    <link>https://orz-ai.github.io/tags/%E6%95%99%E7%A8%8B/</link>
+    <link>http://localhost:1313/tags/%E6%95%99%E7%A8%8B/</link>
     <description>Recent content in 教程 on Gang&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <managingEditor>deepincode@qq.com (Gang)</managingEditor>
     <webMaster>deepincode@qq.com (Gang)</webMaster>
     <lastBuildDate>Sun, 15 Oct 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://orz-ai.github.io/tags/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go语言入门指南</title>
-      <link>https://orz-ai.github.io/posts/your-post-name/</link>
+      <link>http://localhost:1313/posts/your-post-name/</link>
       <pubDate>Sun, 15 Oct 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/posts/your-post-name/</guid>
+      <guid>http://localhost:1313/posts/your-post-name/</guid>
       <description>Explain函数 MySQL 的 EXPLAIN 语句用于分析 SQL 查询的执行计划，帮助开发者理解查询是如何执行的，以及优化查询性能。以下是 EXPLAIN 语句输出各个字段的详细深入解释：&#xA;字段意义 测试SQL:&#xA;1-- 演员表 2DROP TABLE IF EXISTS `actor`; 3CREATE TABLE `actor` ( 4 `id` int(11) NOT NULL, 5 `name` varchar(45) DEFAULT NULL, 6 `update_time` datetime DEFAULT NULL, 7 PRIMARY KEY (`id`) 8) ENGINE=InnoDB DEFAULT CHARSET=utf8; 9INSERT INTO `actor` (`id`, `name`, `update_time`) VALUES (1,&amp;#39;a&amp;#39;,&amp;#39;2017-12-22 15:27:18&amp;#39;), (2,&amp;#39;b&amp;#39;,&amp;#39;2017-12-22 15:27:18&amp;#39;), (3,&amp;#39;c&amp;#39;,&amp;#39;2017-12-22 15:27:18&amp;#39;); 10 11-- 电影表 12DROP TABLE IF EXISTS `film`; 13CREATE TABLE `film` ( 14 `id` int(11) NOT NULL AUTO_INCREMENT, 15 `name` varchar(10) DEFAULT NULL, 16 PRIMARY KEY (`id`), 17 KEY `idx_name` (`name`) 18) ENGINE=InnoDB DEFAULT CHARSET=utf8; 19INSERT INTO `film` (`id`, `name`) VALUES (3,&amp;#39;film0&amp;#39;),(1,&amp;#39;film1&amp;#39;),(2,&amp;#39;film2&amp;#39;); 20 21-- 电影和演员关联表 22DROP TABLE IF EXISTS `film_actor`; 23CREATE TABLE `film_actor` ( 24 `id` int(11) NOT NULL, 25 `film_id` int(11) NOT NULL, 26 `actor_id` int(11) NOT NULL, 27 `remark` varchar(255) DEFAULT NULL, 28 PRIMARY KEY (`id`), 29 KEY `idx_film_actor_id` (`film_id`,`actor_id`) 30) ENGINE=InnoDB DEFAULT CHARSET=utf8; 31INSERT INTO `film_actor` (`id`, `film_id`, `actor_id`) VALUES (1,1,1),(2,1,2),(3,2,1); 1.</description>
     </item>
   </channel>

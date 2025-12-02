@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>日落 on Gang&#39;s Blog</title>
-    <link>https://orz-ai.github.io/tags/%E6%97%A5%E8%90%BD/</link>
+    <link>http://localhost:1313/tags/%E6%97%A5%E8%90%BD/</link>
     <description>Recent content in 日落 on Gang&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <managingEditor>deepincode@qq.com (Gang)</managingEditor>
     <webMaster>deepincode@qq.com (Gang)</webMaster>
     <lastBuildDate>Thu, 05 Oct 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://orz-ai.github.io/tags/%E6%97%A5%E8%90%BD/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/%E6%97%A5%E8%90%BD/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>海滨日落</title>
-      <link>https://orz-ai.github.io/photos/sample-photo-5/</link>
+      <link>http://localhost:1313/photos/sample-photo-5/</link>
       <pubDate>Thu, 05 Oct 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/photos/sample-photo-5/</guid>
+      <guid>http://localhost:1313/photos/sample-photo-5/</guid>
       <description>这是一张温暖的海滨日落照片，拍摄于宁静的海边小镇。夕阳西下时分，金色的阳光洒在波光粼粼的海面上，远处的渔船在夕阳的映衬下显得格外诗意。海鸥在天空中自由翱翔，为这幅美景增添了生机。</description>
     </item>
   </channel>

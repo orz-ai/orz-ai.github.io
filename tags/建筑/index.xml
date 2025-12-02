@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>建筑 on Gang&#39;s Blog</title>
-    <link>https://orz-ai.github.io/tags/%E5%BB%BA%E7%AD%91/</link>
+    <link>http://localhost:1313/tags/%E5%BB%BA%E7%AD%91/</link>
     <description>Recent content in 建筑 on Gang&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <managingEditor>deepincode@qq.com (Gang)</managingEditor>
     <webMaster>deepincode@qq.com (Gang)</webMaster>
     <lastBuildDate>Wed, 20 Sep 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://orz-ai.github.io/tags/%E5%BB%BA%E7%AD%91/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/%E5%BB%BA%E7%AD%91/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>城市夜景</title>
-      <link>https://orz-ai.github.io/photos/sample-photo-2/</link>
+      <link>http://localhost:1313/photos/sample-photo-2/</link>
       <pubDate>Wed, 20 Sep 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/photos/sample-photo-2/</guid>
+      <guid>http://localhost:1313/photos/sample-photo-2/</guid>
       <description>这是一张城市夜景照片，灯火通明的高楼大厦在夜色中闪耀着迷人的光芒。城市的喧嚣和活力尽收眼底。</description>
     </item>
     <item>
       <title>城市夜景</title>
-      <link>https://orz-ai.github.io/photos/sample-photo-4/</link>
+      <link>http://localhost:1313/photos/sample-photo-4/</link>
       <pubDate>Wed, 20 Sep 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/photos/sample-photo-4/</guid>
+      <guid>http://localhost:1313/photos/sample-photo-4/</guid>
       <description>这是一张迷人的城市夜景照片，拍摄于繁华的都市中心。霓虹灯光与高楼大厦交相辉映，展现了现代都市的璀璨魅力。车流如光带般穿梭在街道上，为这座不夜城增添了动感与活力。</description>
     </item>
   </channel>

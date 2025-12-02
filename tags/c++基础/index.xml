@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>C&#43;&#43;基础 on Gang&#39;s Blog</title>
-    <link>https://orz-ai.github.io/tags/c&#43;&#43;%E5%9F%BA%E7%A1%80/</link>
+    <link>http://localhost:1313/tags/c&#43;&#43;%E5%9F%BA%E7%A1%80/</link>
     <description>Recent content in C&#43;&#43;基础 on Gang&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <managingEditor>deepincode@qq.com (Gang)</managingEditor>
     <webMaster>deepincode@qq.com (Gang)</webMaster>
     <lastBuildDate>Sat, 30 Apr 2022 19:24:03 +0000</lastBuildDate>
-    <atom:link href="https://orz-ai.github.io/tags/c++%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/c++%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>C&#43;&#43;基本数据类型和计算</title>
-      <link>https://orz-ai.github.io/posts/2022-04-30-c&#43;&#43;%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</link>
+      <link>http://localhost:1313/posts/2022-04-30-c&#43;&#43;%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</link>
       <pubDate>Sat, 30 Apr 2022 19:24:03 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>https://orz-ai.github.io/posts/2022-04-30-c&#43;&#43;%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</guid>
+      <guid>http://localhost:1313/posts/2022-04-30-c&#43;&#43;%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/</guid>
       <description>复习C++基础知识~</description>
     </item>
   </channel>
