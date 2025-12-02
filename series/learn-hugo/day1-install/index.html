@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 1 - Hugo 安装与环境配置 - Gang&#39;s Blog</title>
+<meta name="description" content="安装 Hugo 本文介绍如何在不同操作系统上安装 Hugo。
+Windows 安装 使用 Chocolatey 安装：
+1choco install hugo-extended 或使用 Scoop：
+1scoop install hugo-extended macOS 安装 使用 Homebrew 安装：
+1brew …">
+<meta name="keywords" content="Hugo, 教程, 安装">
+<meta name="author" content="Gang">
+
+
+<link rel="canonical" href="https://orz-ai.github.io/series/learn-hugo/day1-install/">
+
+
+<link rel="stylesheet" href="https://orz-ai.github.io/css/style.css">
+<link rel="stylesheet" href="https://orz-ai.github.io/css/syntax.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<link rel="icon" href="https://orz-ai.github.io/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="https://orz-ai.github.io/favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="https://orz-ai.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://orz-ai.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://orz-ai.github.io/favicon-16x16.png">
+<link rel="manifest" href="https://orz-ai.github.io/site.webmanifest">
+<meta name="theme-color" content="#4a6cf7">
+
+
+<meta property="og:title"
+  content="Day 1 - Hugo 安装与环境配置 - Gang&#39;s Blog">
+<meta property="og:description"
+  content="安装 Hugo 本文介绍如何在不同操作系统上安装 Hugo。
+Windows 安装 使用 Chocolatey 安装：
+1choco install hugo-extended 或使用 Scoop：
+1scoop install hugo-extended macOS 安装 使用 Homebrew 安装：
+1brew …">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://orz-ai.github.io/series/learn-hugo/day1-install/">
+
+<meta property="og:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+<meta property="og:site_name" content="Gang&#39;s Blog">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title"
+  content="Day 1 - Hugo 安装与环境配置 - Gang&#39;s Blog">
+<meta name="twitter:description"
+  content="安装 Hugo 本文介绍如何在不同操作系统上安装 Hugo。
+Windows 安装 使用 Chocolatey 安装：
+1choco install hugo-extended 或使用 Scoop：
+1scoop install hugo-extended macOS 安装 使用 Homebrew 安装：
+1brew …">
+
+<meta name="twitter:image" content="https://orz-ai.github.io/%20images/hero-bg.jpg">
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Day 1 - Hugo 安装与环境配置",
+  "description": "安装 Hugo 本文介绍如何在不同操作系统上安装 Hugo。\nWindows 安装 使用 Chocolatey 安装：\n1choco install hugo-extended 或使用 Scoop：\n1scoop install hugo-extended macOS 安装 使用 Homebrew 安装：\n1brew …",
+  "author": {
+    "@type": "Person",
+    "name": "Gang"
+  },
+  "datePublished": "2024-01-01T00:00:00Z",
+  "dateModified": "2024-01-01T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https:\/\/orz-ai.github.io\/series\/learn-hugo\/day1-install\/"
+  },
+  
+  "image": "https:\/\/orz-ai.github.io\/images\/hero-bg.jpg",
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Gang\u0027s Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/orz-ai.github.io\/favicon-32x32.png"
+    }
+  }
+}
+</script>
+
+</head>
+
+<body>
+    <header class="header">
+    <div class="container">
+        <div class="header-inner">
+            <a href="https://orz-ai.github.io/" class="logo">
+                <h1>Gang&#39;s Blog</h1>
+            </a>
+            <div class="header-right">
+                <div class="search-box">
+                    <form action="https://orz-ai.github.io/%20search" method="get">
+                        <input type="text" name="q" placeholder="搜索..." aria-label="搜索">
+                        <button type="submit" aria-label="提交搜索"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                <nav class="nav">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/" class="nav-link">首页</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/posts/" class="nav-link">文章</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/series/" class="nav-link active">系列</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/photos/" class="nav-link">照片墙</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/timeline/" class="nav-link">时间线</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/tags/" class="nav-link">标签</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <a href="https://orz-ai.github.io/about/" class="nav-link">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+    <main class="main">
+        <div class="container">
+            <article class="post">
+                <header class="post-header">
+                    <h1 class="post-title">Day 1 - Hugo 安装与环境配置</h1>
+                    <div class="post-meta">
+                        <time datetime=" 2024-01-01T00:00:00Z">
+                            2024-01-01
+                        </time>
+
+                        
+
+                        
+
+                        <span class="post-reading-time">
+                            <i class="fas fa-clock"></i> 1 分钟阅读
+                        </span>
+                    </div>
+
+                    
+                    <div class="post-tags">
+                        
+                        <a href='https://orz-ai.github.io/tags/hugo/' class="tag">Hugo</a>
+                        
+                        <a href='https://orz-ai.github.io/tags/%E6%95%99%E7%A8%8B/' class="tag">教程</a>
+                        
+                        <a href='https://orz-ai.github.io/tags/%E5%AE%89%E8%A3%85/' class="tag">安装</a>
+                        
+                    </div>
+                    
+                </header>
+
+                <div class="post-content">
+                    <h2 id="安装-hugo">安装 Hugo</h2>
+<p>本文介绍如何在不同操作系统上安装 Hugo。</p>
+<h3 id="windows-安装">Windows 安装</h3>
+<p>使用 Chocolatey 安装：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">choco install hugo-extended
+</span></span></code></pre></div><p>或使用 Scoop：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">scoop install hugo-extended
+</span></span></code></pre></div><h3 id="macos-安装">macOS 安装</h3>
+<p>使用 Homebrew 安装：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">brew install hugo
+</span></span></code></pre></div><h3 id="linux-安装">Linux 安装</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">sudo apt-get install hugo
+</span></span></code></pre></div><h3 id="验证安装">验证安装</h3>
+<p>安装完成后，运行以下命令验证：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">hugo version
+</span></span></code></pre></div><p>如果看到版本号，说明安装成功！</p>
+<h2 id="下一步">下一步</h2>
+<p>下一篇我们将学习如何构建第一个 Hugo 网站。</p>
+
+
+                    <div class="content-end">
+                        <div class="end-line"></div>
+                        <div class="end-text">— END —</div>
+                    </div>
+                </div>
+
+                <div class="post-extra">
+                    
+                    <div class="extra-section">
+                        <div class="extra-title">相关标签</div>
+                        <div class="tags-list">
+                            
+                            <a href='https://orz-ai.github.io/tags/hugo/' class="tag-link">Hugo</a>
+                            
+                            <a href='https://orz-ai.github.io/tags/%E6%95%99%E7%A8%8B/' class="tag-link">教程</a>
+                            
+                            <a href='https://orz-ai.github.io/tags/%E5%AE%89%E8%A3%85/' class="tag-link">安装</a>
+                            
+                        </div>
+                    </div>
+                    
+
+                    <div class="extra-section">
+                        <div class="extra-title">推荐阅读</div>
+                        <div class="recommend-grid">
+                            
+                            
+                            
+                            <a href="https://orz-ai.github.io/posts/welcome/" class="recommend-card">
+                                <div class="recommend-image">
+                                    
+                                    <div class="recommend-placeholder"></div>
+                                    
+                                </div>
+                                <div class="recommend-info">
+                                    <div class="recommend-title">欢迎使用GBlog主题</div>
+                                    <div class="recommend-date">2024-01-01</div>
+                                </div>
+                            </a>
+                            
+                            <a href="https://orz-ai.github.io/posts/your-post-name/" class="recommend-card">
+                                <div class="recommend-image">
+                                    
+                                    <div class="recommend-placeholder"></div>
+                                    
+                                </div>
+                                <div class="recommend-info">
+                                    <div class="recommend-title">Go语言入门指南</div>
+                                    <div class="recommend-date">2023-10-15</div>
+                                </div>
+                            </a>
+                            
+                            <a href="https://orz-ai.github.io/posts/java%E9%9D%A2%E8%AF%95%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" class="recommend-card">
+                                <div class="recommend-image">
+                                    
+                                    <div class="recommend-placeholder"></div>
+                                    
+                                </div>
+                                <div class="recommend-info">
+                                    <div class="recommend-title">JAVA面试核心知识点整理</div>
+                                    <div class="recommend-date">2023-11-15</div>
+                                </div>
+                            </a>
+                            
+                            <a href="https://orz-ai.github.io/posts/go-gc-deep-dive/" class="recommend-card">
+                                <div class="recommend-image">
+                                    
+                                    <div class="recommend-placeholder"></div>
+                                    
+                                </div>
+                                <div class="recommend-info">
+                                    <div class="recommend-title">深入理解Go语言垃圾回收机制：原理、流程与优化</div>
+                                    <div class="recommend-date">2023-11-15</div>
+                                </div>
+                            </a>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-footer">
+                    <div class="post-nav">
+                        
+                        <a href="https://orz-ai.github.io/series/learn-hugo/day2-build/" class="post-nav-prev">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>Day 2 - 构建第一个 Hugo 网站</span>
+                        </a>
+                        
+
+                        
+                    </div>
+                </div>
+            </article>
+
+            
+            <div class="toc-container" id="tocContainer">
+                <div class="toc-header">
+                    <span><i class="fas fa-list"></i> 目录</span>
+                    <button class="toc-hide-btn" id="tocHideBtn" title="收起目录">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <nav class="toc-nav" id="tocNav">
+                    
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-info">
+                <p>&copy; 2025 Gang&#39;s Blog. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <a href="#" class="back-to-top" id="backToTop" aria-label="返回顶部">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    
+    <button class="toc-show-btn" id="tocShowBtn" title="显示目录" style="display: none;">
+        <i class="fas fa-list"></i>
+    </button>
+
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            var backToTop = document.getElementById('backToTop');
+
+            window.addEventListener('scroll', function () {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+            });
+
+            backToTop.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            
+            document.querySelectorAll('.highlight').forEach(function (highlight) {
+                
+                if (!highlight.querySelector('.copy-button')) {
+                    let copyButton = document.createElement('button');
+                    copyButton.className = 'copy-button';
+                    copyButton.textContent = '复制';
+
+                    highlight.appendChild(copyButton);
+
+                    copyButton.addEventListener('click', function () {
+                        let codeElement = highlight.querySelector('code');
+                        let textToCopy = codeElement.textContent;
+
+                        navigator.clipboard.writeText(textToCopy).then(function () {
+                            copyButton.textContent = '已复制!';
+                            setTimeout(function () {
+                                copyButton.textContent = '复制';
+                            }, 2000);
+                        }).catch(function (err) {
+                            console.error('无法复制文本: ', err);
+                        });
+                    });
+                }
+
+                
+                let codeClass = highlight.querySelector('code').className;
+                let langMatch = codeClass.match(/language-(\w+)/);
+
+                if (langMatch && langMatch[1]) {
+                    let lang = langMatch[1];
+                    
+                    let existingIndicator = highlight.querySelector('.language-indicator');
+                    if (existingIndicator) {
+                        existingIndicator.remove();
+                    }
+
+                    
+                    let langIndicator = document.createElement('div');
+                    langIndicator.className = 'language-indicator';
+                    langIndicator.textContent = lang;
+                    highlight.insertBefore(langIndicator, highlight.firstChild);
+                }
+            });
+
+            
+            const tocContainer = document.getElementById('tocContainer');
+            const tocNav = document.getElementById('tocNav');
+            const postContent = document.querySelector('.post-content');
+
+            if (!postContent) return;
+
+            
+            function addHeadingNumbers() {
+                const headings = postContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                let counters = [0, 0, 0, 0, 0, 0]; 
+
+                headings.forEach(heading => {
+                    const level = parseInt(heading.tagName.charAt(1)) - 1; 
+
+                    
+                    counters[level]++;
+
+                    
+                    for (let i = level + 1; i < counters.length; i++) {
+                        counters[i] = 0;
+                    }
+
+                    
+                    let numberStr = '';
+                    for (let i = 0; i <= level; i++) {
+                        if (counters[i] > 0) {
+                            numberStr += (numberStr ? '.' : '') + counters[i];
+                        }
+                    }
+                    numberStr += '. ';
+
+                    
+                    const numberSpan = document.createElement('span');
+                    numberSpan.className = 'heading-number';
+                    numberSpan.textContent = numberStr;
+                    heading.insertBefore(numberSpan, heading.firstChild);
+                });
+            }
+
+            
+            function generateTOC() {
+                const headings = postContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                if (headings.length === 0) {
+                    tocContainer.style.display = 'none';
+                    return;
+                }
+
+                tocNav.innerHTML = '';
+                let levelStack = [];
+
+                headings.forEach((heading, index) => {
+                    const level = parseInt(heading.tagName.charAt(1));
+                    const id = heading.id || `heading-${index}`;
+                    heading.id = id;
+
+                    
+                    while (levelStack.length > 0 && levelStack[levelStack.length - 1].level >= level) {
+                        levelStack.pop();
+                    }
+
+                    const listItem = document.createElement('li');
+                    listItem.className = `toc-item toc-level-${level}`;
+
+                    const link = document.createElement('a');
+                    link.href = `#${id}`;
+                    link.className = 'toc-link';
+                    link.setAttribute('data-target', id);
+                    link.innerHTML = `<span class="toc-text">${heading.textContent}</span>`;
+
+                    listItem.appendChild(link);
+
+                    
+                    if (levelStack.length === 0) {
+                        tocNav.appendChild(listItem);
+                    } else {
+                        const parent = levelStack[levelStack.length - 1];
+                        let subList = parent.element.querySelector('ul');
+                        if (!subList) {
+                            subList = document.createElement('ul');
+                            subList.className = 'toc-list';
+                            parent.element.appendChild(subList);
+
+                            
+                            const parentLink = parent.element.querySelector('.toc-link');
+                            if (parentLink && !parentLink.classList.contains('toc-expandable')) {
+                                parentLink.classList.add('toc-expandable');
+                                parentLink.addEventListener('click', function (e) {
+                                    if (e.target.closest('.toc-link') === this) {
+                                        e.preventDefault();
+                                        subList.classList.toggle('toc-collapsed');
+                                        this.classList.toggle('toc-expanded');
+                                    }
+                                });
+                            }
+                        }
+                        subList.appendChild(listItem);
+                    }
+
+                    levelStack.push({ level: level, element: listItem });
+                });
+            }
+
+            
+            function updateActiveHeading() {
+                const headings = postContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+
+                let activeHeading = null;
+                let closestHeading = null;
+                let closestDistance = Infinity;
+
+                
+                headings.forEach(heading => {
+                    const rect = heading.getBoundingClientRect();
+                    const headingCenter = rect.top + rect.height / 2;
+                    const viewportCenter = windowHeight / 2;
+                    const distance = Math.abs(headingCenter - viewportCenter);
+
+                    
+                    if (headingCenter <= viewportCenter && distance < closestDistance) {
+                        closestDistance = distance;
+                        closestHeading = heading;
+                    }
+                });
+
+                activeHeading = closestHeading;
+
+                
+                if (!activeHeading) {
+                    const isNearBottom = (scrollTop + windowHeight) >= documentHeight - 100;
+                    if (isNearBottom && headings.length > 0) {
+                        activeHeading = headings[headings.length - 1];
+                    }
+                }
+
+                
+                document.querySelectorAll('.toc-link').forEach(link => {
+                    link.classList.remove('active');
+                    link.parentElement.classList.remove('active');
+                });
+
+                
+                if (activeHeading) {
+                    const activeLink = document.querySelector(`[data-target="${activeHeading.id}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                        activeLink.parentElement.classList.add('active');
+
+                        
+                        let parent = activeLink.parentElement.parentElement;
+                        while (parent && parent.classList.contains('toc-list')) {
+                            parent.style.display = 'block';
+                            parent = parent.parentElement.parentElement;
+                        }
+                    }
+                }
+            }
+
+            
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('.toc-link')) {
+                    e.preventDefault();
+                    const targetId = e.target.closest('.toc-link').getAttribute('data-target');
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - 100;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+
+            
+            addHeadingNumbers(); 
+            generateTOC(); 
+            updateActiveHeading();
+
+            
+            const tocHideBtn = document.getElementById('tocHideBtn');
+            const tocShowBtn = document.getElementById('tocShowBtn');
+
+            if (tocHideBtn) {
+                tocHideBtn.addEventListener('click', function () {
+                    
+                    tocContainer.classList.add('hidden');
+                    if (tocShowBtn) {
+                        tocShowBtn.style.display = 'block';
+                    }
+                });
+            }
+
+            if (tocShowBtn) {
+                tocShowBtn.addEventListener('click', function () {
+                    
+                    tocContainer.classList.remove('hidden');
+                    tocShowBtn.style.display = 'none';
+                });
+            }
+
+            
+            let ticking = false;
+            window.addEventListener('scroll', function () {
+                if (!ticking) {
+                    requestAnimationFrame(function () {
+                        updateActiveHeading();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

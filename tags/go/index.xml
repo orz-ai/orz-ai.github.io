@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Go on Gang&#39;s Blog</title>
-    <link>http://localhost:1313/tags/go/</link>
+    <link>https://orz-ai.github.io/tags/go/</link>
     <description>Recent content in Go on Gang&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <managingEditor>deepincode@qq.com (Gang)</managingEditor>
     <webMaster>deepincode@qq.com (Gang)</webMaster>
     <lastBuildDate>Wed, 15 Nov 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://orz-ai.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>深入理解Go语言垃圾回收机制：原理、流程与优化</title>
-      <link>http://localhost:1313/posts/go-gc-deep-dive/</link>
+      <link>https://orz-ai.github.io/posts/go-gc-deep-dive/</link>
       <pubDate>Wed, 15 Nov 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>http://localhost:1313/posts/go-gc-deep-dive/</guid>
+      <guid>https://orz-ai.github.io/posts/go-gc-deep-dive/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;https://oss.hackfun.net/aurora-image/aurora/articles/6bc8178ffe84b39432920b18f4e5ad26.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Go语言的垃圾回收（Garbage Collection，简称GC）机制是其内存管理的核心部分，它能够自动识别和回收不再使用的内存，让开发者免于手动内存管理的负担。本文将深入探讨Go语言GC的工作原理、演变历史、实现细节以及性能优化技巧。&lt;/p&gt;&#xA;&lt;h2 id=&#34;go-gc的演变历史&#34;&gt;Go GC的演变历史&lt;/h2&gt;&#xA;&lt;p&gt;Go语言的垃圾回收器从诞生到现在经历了多次重大更新，每次更新都显著提升了性能和减少了延迟：&lt;/p&gt;</description>
     </item>
     <item>
       <title>Go语言入门指南</title>
-      <link>http://localhost:1313/posts/your-post-name/</link>
+      <link>https://orz-ai.github.io/posts/your-post-name/</link>
       <pubDate>Sun, 15 Oct 2023 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
-      <guid>http://localhost:1313/posts/your-post-name/</guid>
+      <guid>https://orz-ai.github.io/posts/your-post-name/</guid>
       <description>Explain函数 MySQL 的 EXPLAIN 语句用于分析 SQL 查询的执行计划，帮助开发者理解查询是如何执行的，以及优化查询性能。以下是 EXPLAIN 语句输出各个字段的详细深入解释：&#xA;字段意义 测试SQL:&#xA;1-- 演员表 2DROP TABLE IF EXISTS `actor`; 3CREATE TABLE `actor` ( 4 `id` int(11) NOT NULL, 5 `name` varchar(45) DEFAULT NULL, 6 `update_time` datetime DEFAULT NULL, 7 PRIMARY KEY (`id`) 8) ENGINE=InnoDB DEFAULT CHARSET=utf8; 9INSERT INTO `actor` (`id`, `name`, `update_time`) VALUES (1,&amp;#39;a&amp;#39;,&amp;#39;2017-12-22 15:27:18&amp;#39;), (2,&amp;#39;b&amp;#39;,&amp;#39;2017-12-22 15:27:18&amp;#39;), (3,&amp;#39;c&amp;#39;,&amp;#39;2017-12-22 15:27:18&amp;#39;); 10 11-- 电影表 12DROP TABLE IF EXISTS `film`; 13CREATE TABLE `film` ( 14 `id` int(11) NOT NULL AUTO_INCREMENT, 15 `name` varchar(10) DEFAULT NULL, 16 PRIMARY KEY (`id`), 17 KEY `idx_name` (`name`) 18) ENGINE=InnoDB DEFAULT CHARSET=utf8; 19INSERT INTO `film` (`id`, `name`) VALUES (3,&amp;#39;film0&amp;#39;),(1,&amp;#39;film1&amp;#39;),(2,&amp;#39;film2&amp;#39;); 20 21-- 电影和演员关联表 22DROP TABLE IF EXISTS `film_actor`; 23CREATE TABLE `film_actor` ( 24 `id` int(11) NOT NULL, 25 `film_id` int(11) NOT NULL, 26 `actor_id` int(11) NOT NULL, 27 `remark` varchar(255) DEFAULT NULL, 28 PRIMARY KEY (`id`), 29 KEY `idx_film_actor_id` (`film_id`,`actor_id`) 30) ENGINE=InnoDB DEFAULT CHARSET=utf8; 31INSERT INTO `film_actor` (`id`, `film_id`, `actor_id`) VALUES (1,1,1),(2,1,2),(3,2,1); 1.</description>
     </item>
   </channel>

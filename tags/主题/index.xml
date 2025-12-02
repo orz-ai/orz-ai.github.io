@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>主题 on Gang&#39;s Blog</title>
+    <link>https://orz-ai.github.io/tags/%E4%B8%BB%E9%A2%98/</link>
+    <description>Recent content in 主题 on Gang&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <managingEditor>deepincode@qq.com (Gang)</managingEditor>
+    <webMaster>deepincode@qq.com (Gang)</webMaster>
+    <lastBuildDate>Wed, 03 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://orz-ai.github.io/tags/%E4%B8%BB%E9%A2%98/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Day 3 - 自定义主题与样式</title>
+      <link>https://orz-ai.github.io/series/learn-hugo/day3-custom/</link>
+      <pubDate>Wed, 03 Jan 2024 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
+      <guid>https://orz-ai.github.io/series/learn-hugo/day3-custom/</guid>
+      <description>自定义主题 本文介绍如何自定义 Hugo 主题的样式和布局。&#xA;修改布局 在 layouts 目录下创建或修改模板文件：&#xA;1layouts/ 2├── _default/ 3│ ├── single.html # 单页模板 4│ ├── list.html # 列表页模板 5│ └── baseof.html # 基础模板 6└── partials/ 7 ├── header.html # 页眉 8 └── footer.html # 页脚 添加自定义 CSS 在 static/css/ 目录下创建 CSS 文件：&#xA;1/* static/css/custom.css */ 2body { 3 font-family: &amp;#34;Noto Sans SC&amp;#34;, sans-serif; 4} 5 6.post-title { 7 color: #333; 8 font-size: 2rem; 9} 在模板中引用：&#xA;1&amp;lt;link rel=&amp;#34;stylesheet&amp;#34; href=&amp;#34;{{ &amp;#34;css/custom.</description>
+    </item>
+  </channel>
+</rss>

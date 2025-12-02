@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>安装 on Gang&#39;s Blog</title>
+    <link>https://orz-ai.github.io/tags/%E5%AE%89%E8%A3%85/</link>
+    <description>Recent content in 安装 on Gang&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <managingEditor>deepincode@qq.com (Gang)</managingEditor>
+    <webMaster>deepincode@qq.com (Gang)</webMaster>
+    <lastBuildDate>Mon, 01 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://orz-ai.github.io/tags/%E5%AE%89%E8%A3%85/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Day 1 - Hugo 安装与环境配置</title>
+      <link>https://orz-ai.github.io/series/learn-hugo/day1-install/</link>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate><author>deepincode@qq.com (Gang)</author>
+      <guid>https://orz-ai.github.io/series/learn-hugo/day1-install/</guid>
+      <description>安装 Hugo 本文介绍如何在不同操作系统上安装 Hugo。&#xA;Windows 安装 使用 Chocolatey 安装：&#xA;1choco install hugo-extended 或使用 Scoop：&#xA;1scoop install hugo-extended macOS 安装 使用 Homebrew 安装：&#xA;1brew install hugo Linux 安装 1sudo apt-get install hugo 验证安装 安装完成后，运行以下命令验证：&#xA;1hugo version 如果看到版本号，说明安装成功！&#xA;下一步 下一篇我们将学习如何构建第一个 Hugo 网站。</description>
+    </item>
+  </channel>
+</rss>
